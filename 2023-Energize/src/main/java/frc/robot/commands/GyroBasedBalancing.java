@@ -1,7 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.autos.exampleAuto;
 import frc.robot.subsystems.Swerve;
 
 
@@ -40,10 +43,19 @@ public class GyroBasedBalancing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      new DriveStraight(swerve, 0.01, 0, 0);
-      if (current > prev) {
+    System.out.println("IN EXECUTE");
+    yaw = swerve.getYaw(); 
+    pitch = swerve.getPitch();
+    roll = swerve.getRoll();
+    SmartDashboard.putNumber("Pitch", pitch.getDegrees());
+    SmartDashboard.putNumber("Roll", roll.getDegrees());
+    current = Math.sqrt(Math.pow(pitch.getDegrees(), 2) + Math.pow(roll.getDegrees(), 2));
+    SmartDashboard.putNumber("Combined", current);
+    new InstantCommand(() -> new exampleAuto(swerve, 0.02, 0, 0));
+    if (current > prev) {
       multiplier = -1;
-     }
+    }
+    prev = current;
   }
 
   // Called once the command ends or is interrupted.

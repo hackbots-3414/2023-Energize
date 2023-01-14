@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveStraight;
+import frc.robot.autos.exampleAuto;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
@@ -60,7 +60,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    balance.whileTrue(new GyroBasedBalancing(s_Swerve));
+    balance.onTrue(new GyroBasedBalancing(s_Swerve));
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
   }
 
@@ -72,9 +72,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    // return new exampleAuto(s_Swerve);
-    DriveStraight move5Meters = new DriveStraight(s_Swerve, 5.0, 2.0, 0.0);
-    return move5Meters;
+    return new exampleAuto(s_Swerve, 0, 0, 0);
   }
 
   public void resetAngleMotors() {
