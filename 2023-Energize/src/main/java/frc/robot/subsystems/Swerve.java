@@ -58,6 +58,7 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
+        getStates();
     }    
 
     /* Used by SwerveControllerCommand in Auto */
@@ -82,6 +83,7 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             states[mod.moduleNumber] = mod.getState();
         }
+        System.out.println(states[0].speedMetersPerSecond);
         return states;
     }
 
