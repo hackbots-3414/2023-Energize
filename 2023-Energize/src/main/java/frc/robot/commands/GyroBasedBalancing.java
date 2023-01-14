@@ -15,7 +15,7 @@ public class GyroBasedBalancing extends CommandBase {
   public Rotation2d pitch;
   public Rotation2d roll;
   public double netBalance;
-  public double goal = 2.3;
+  public double goal = 1;
   public double current;
   public double previous;
   public Swerve swerve;
@@ -40,7 +40,7 @@ public class GyroBasedBalancing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      new DriveStraight(swerve, 0.03, 0, 0);
+      new DriveStraight(swerve, 0.01, 0, 0);
       if (current > prev) {
       multiplier = -1;
      }
