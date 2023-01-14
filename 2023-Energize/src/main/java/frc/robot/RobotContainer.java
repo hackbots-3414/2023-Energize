@@ -71,4 +71,8 @@ public class RobotContainer {
     DriveStraight move5Meters = new DriveStraight(s_Swerve, 5.0, 2.0, 0.0);
     return move5Meters;
   }
+
+  public void resetAngleMotors() {
+    s_Swerve.resetAll();
+  }
 }

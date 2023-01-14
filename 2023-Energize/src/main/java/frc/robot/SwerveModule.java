@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -59,10 +60,13 @@ public class SwerveModule {
         lastAngle = angle;
     }
 
-    private void resetToAbsolute(){
-        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset, Constants.Swerve.angleGearRatio);
-        mAngleMotor.setSelectedSensorPosition(absolutePosition);
-        System.out.println(moduleNumber + " Reset: " + absolutePosition);
+    public void resetToAbsolute(){
+        if (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
+            resetToAbsolute();
+        } else {
+            double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset, Constants.Swerve.angleGearRatio);
+            mAngleMotor.setSelectedSensorPosition(absolutePosition);
+        }
     }
 
     private void configAngleEncoder(){        

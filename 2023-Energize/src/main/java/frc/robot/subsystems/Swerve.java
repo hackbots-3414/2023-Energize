@@ -27,8 +27,6 @@ public class Swerve extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, "CANivore");
         gyro.configFactoryDefault();
         zeroGyro();
-        
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -36,6 +34,9 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+        
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
+
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -110,6 +111,17 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        }
+    }
+
+    public void setX() {
+        SwerveModuleState[] states = {new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4))};
+        setModuleStates(states);
+    }
+
+    public void resetAll() {
+        for (SwerveModule mod : mSwerveMods) {
+            mod.resetToAbsolute();
         }
     }
 }

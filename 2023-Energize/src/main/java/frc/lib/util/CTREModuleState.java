@@ -54,3 +54,9 @@ public class CTREModuleState {
       return newAngle;
   }
 }
+
+// public static void main(String[] args) {
+//     SwerveModuleState state = null;
+//     Rotation2d angle = null;
+//     System.out.println(optimize(state, angle));
+// }
