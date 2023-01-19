@@ -66,7 +66,8 @@ public final class Constants {
         public static final double driveKA = (0.27 / 12);
 
         /* Swerve Profiling Values */
-        public static final double maxSpeed = 4.5; //meters per second
+        public static final double maxSpeed = 4.5; //meters per second (Max for robot is 4.5)
+        public static final double maxTeleopSpeed = 3.0; //meters per second (Max for robot is 4.5)
         public static final double maxAngularVelocity = 11.5;
 
         /* Neutral Modes */

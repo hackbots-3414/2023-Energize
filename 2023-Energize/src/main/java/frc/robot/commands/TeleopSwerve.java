@@ -46,11 +46,17 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
+<<<<<<< HEAD
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
+=======
+        translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxTeleopSpeed);
+
+        //System.out.println(translation);
+>>>>>>> main
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
 
         //Rotation in omega radians
-        // 
+        //
     }
 }
