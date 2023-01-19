@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.exampleAuto;
+import frc.robot.autos.AutonomousFactory;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
@@ -72,7 +72,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve, 0, 0, 0);
+    return AutonomousFactory.getInstance(s_Swerve).testAuto();
   }
 
   public void resetAngleMotors() {
