@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.AutonomousFactory;
+import frc.robot.autos.DriveStraight;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
@@ -72,7 +73,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return AutonomousFactory.getInstance(s_Swerve).testAuto();
+    return new DriveStraight(s_Swerve, 100000000, 0);
   }
 
   public void resetAngleMotors() {

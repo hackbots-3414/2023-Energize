@@ -22,6 +22,7 @@ public final class Constants {
         public static final double wheelCircumference = wheelDiameter * Math.PI;
         public static final double ticksPerRevolution = 2048;
         public static final double driveGearRatio = (8.14 / 1.0); // https://www.swervedrivespecialties.com/products/mk4i-swerve-module
+        public static final double inchesPerTick = 4.42 * Math.PI / 2048;
 
         public static final double distanceToTicks = wheelDiameter * Math.PI/ticksPerRevolution/driveGearRatio;
         public static final double tickstoDistance = 1.0 / (wheelDiameter * Math.PI/ticksPerRevolution/driveGearRatio);

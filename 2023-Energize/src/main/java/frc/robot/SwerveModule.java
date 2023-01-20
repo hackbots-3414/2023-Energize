@@ -105,4 +105,8 @@ public class SwerveModule {
         Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
         return new SwerveModulePosition(distance, angle);
     }
+
+    public double getSensorPosition() {
+        return mDriveMotor.getSelectedSensorPosition();
+    }
 }
