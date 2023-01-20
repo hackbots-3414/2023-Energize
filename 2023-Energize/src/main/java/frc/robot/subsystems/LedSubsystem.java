@@ -14,7 +14,7 @@ public class LedSubsystem extends SubsystemBase {
   Spark ledcontroller; 
   public LedSubsystem() {
     ledcontroller = new Spark(9);
-    ledcontroller.set(0.47);
+    ledcontroller.set(0.4);
   }
 
   public void setColor(double color) {
