@@ -6,7 +6,6 @@ Both systems have PhotonVision installed
 Both systems have the system network scan disabled
 Boot time is about 1 minute
 Both systems have net-tools installed in order to bring up ifconfig
+Both systems have a static ip adress set up at 10.34.14.20.
 Photonvision can be accessed using the ip adress then :5800
-
-We need to set up a static ip adress for both Beelink systems.
 PhotonVision has the team number set and is now looking for AprilTags on both systems.
