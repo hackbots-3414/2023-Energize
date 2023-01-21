@@ -14,6 +14,7 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 6;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+        public static final String canbusString = "CANivore";
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(25.86);
@@ -139,5 +140,11 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
       }
+
+    public static final class IntakeConstants {
+        public static final int handMotorID = 0;
+        public static final int wristMotorID = 0;
+        public static final int shoulderMotorID = 0;
+    }
 
 }
