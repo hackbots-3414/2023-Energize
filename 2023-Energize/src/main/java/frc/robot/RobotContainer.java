@@ -4,6 +4,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.LedCommand;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LedSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,13 +15,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   private final LedSubsystem m_ledSubsystem;
+  private final IntakeSubsystem m_Intake;
 
   private final XboxController m_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
+      
 
 
   public RobotContainer() {
     m_ledSubsystem = new LedSubsystem();
+    m_Intake = new IntakeSubsystem();
     configureBindings();
     
   m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
@@ -28,7 +32,9 @@ public class RobotContainer {
 
   private void configureBindings() {
     JoystickButton aButton = new JoystickButton(m_driverController, 1);
-    aButton.whileHeld(new LedCommand(m_ledSubsystem));
+    aButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
+    JoystickButton xButton = new JoystickButton(m_driverController, 3);
+    xButton.whileHeld(new LedCommand(m_ledSubsystem,m_Intake));
   }
 
   /**
