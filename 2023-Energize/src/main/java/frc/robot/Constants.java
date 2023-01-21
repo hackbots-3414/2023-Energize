@@ -145,6 +145,9 @@ public final class Constants {
         public static final int handMotorID = 0;
         public static final int wristMotorID = 0;
         public static final int shoulderMotorID = 0;
+
+        public static final int wristCanCoderID = 0;
+        public static final int ShoulderCanCoderID = 0;
     }
 
 }
