@@ -16,10 +16,6 @@ import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Swerve;
 
 public class RobotContainer {
-  private final LedSubsystem m_ledSubsystem;
-  private final IntakeSubsystem m_Intake;
-
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
   /* Controllers */
   private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
@@ -41,15 +37,13 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final LedSubsystem m_ledSubsystem = new LedSubsystem();
+  private final IntakeSubsystem m_Intake = new IntakeSubsystem();
 
   public RobotContainer() {
-    m_ledSubsystem = new LedSubsystem();
-    m_Intake = new IntakeSubsystem();
-
     boolean fieldRelative = true;
     boolean openLoop = true;
-    s_Swerve.setDefaultCommand(
-        new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
     configureBindings();
