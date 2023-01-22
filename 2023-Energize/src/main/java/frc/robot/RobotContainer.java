@@ -22,13 +22,16 @@ public class RobotContainer {
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
   /* Controllers */
-  private final Joystick driver = new Joystick(1);
-  private final Joystick operator = new Joystick(1);
+  private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
+  private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
-  /* Drive Controls */
+  /* Driver Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+  /* Operator Controls */
+  public final
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
