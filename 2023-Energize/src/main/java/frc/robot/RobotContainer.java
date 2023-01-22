@@ -43,25 +43,24 @@ public class RobotContainer {
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
+
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
-
-    configureBindings();
-  }
-
-  private void configureBindings() {
-    aButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
-    xButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
 
     // Configure the button bindings
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
+
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     balance.onTrue(new GyroBasedBalancing(s_Swerve));
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
+
+    /* Operator Buttons */
+    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
   }
 
   public Command getAutonomousCommand() {
