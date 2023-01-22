@@ -139,5 +139,8 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
       }
+      public static final class OperatorConstants {
+        public static final int kDriverControllerPort = 0;
+      }
 
 }
