@@ -25,18 +25,19 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
   private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
-  /* Driver Controls */
+  /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
-
-  /* Operator Controls */
-  public final
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton balance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
+
+  /* Operator Buttons */
+  public final JoystickButton aButton = new JoystickButton(operator, XboxController.Button.kA.value);
+  public final JoystickButton xButton = new JoystickButton(operator, XboxController.Button.kX.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -55,9 +56,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    JoystickButton aButton = new JoystickButton(m_driverController, 1);
     aButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
-    JoystickButton xButton = new JoystickButton(m_driverController, 3);
     xButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
 
     // Configure the button bindings
