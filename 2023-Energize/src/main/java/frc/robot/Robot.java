@@ -57,10 +57,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    count++;
-    if (count % 50 == 0) {
-      m_robotContainer.resetAngleMotors();
-    }
+    // count++;
+    // if (count % 50 == 0) {
+    //   m_robotContainer.resetAngleMotors();
+    // }
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_robotContainer.resetAngleMotors();
+    // m_robotContainer.resetAngleMotors();
     
   }
 
