@@ -12,7 +12,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.commands.GyroBasedBalancing;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.ejectCommand;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -34,10 +37,12 @@ public class RobotContainer {
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton balance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
-  private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton intakeButton = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton ejectButton = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
-  private final Swerve s_Swerve = new Swerve();
+  //private final Swerve s_Swerve = new Swerve();
+  private final Intake m_Intake = new Intake();
 
 
 
@@ -46,7 +51,7 @@ public class RobotContainer {
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    //s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -60,9 +65,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    balance.onTrue(new GyroBasedBalancing(s_Swerve));
-    setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
+    // zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    // balance.onTrue(new GyroBasedBalancing(s_Swerve));
+    // setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
+    intakeButton.whileTrue(new IntakeCommand(m_Intake));
+    ejectButton.whileTrue(new ejectCommand(m_Intake));
   }
 
   /**
@@ -71,12 +78,12 @@ public class RobotContainer {
    * @return the command to run in autonomous
    *
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return AutonomousFactory.getInstance(s_Swerve).testAuto();
-  }
+  // public Command getAutonomousCommand() {
+  //   // An ExampleCommand will run in autonomous
+  //   return AutonomousFactory.getInstance(s_Swerve).testAuto();
+  // }
 
   public void resetAngleMotors() {
-    s_Swerve.resetAll();
+    //s_Swerve.resetAll();
   }
 }

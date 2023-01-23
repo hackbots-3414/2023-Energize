@@ -148,6 +148,9 @@ public final class Constants {
 
         public static final int wristCanCoderID = 0;
         public static final int ShoulderCanCoderID = 0;
+
+        public static final double intakeSpeedPercent = 0.1;
+        public static final double ejectSpeedPercent = -1;
     }
 
 }

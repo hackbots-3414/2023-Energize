@@ -17,8 +17,8 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
 
   CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
-  WPI_TalonFX wrist = new WPI_TalonFX(Constants.IntakeConstants.wristMotorID, Constants.Swerve.canbusString);
-  WPI_TalonFX shoulder = new WPI_TalonFX(Constants.IntakeConstants.shoulderMotorID, Constants.Swerve.canbusString);
+  WPI_TalonFX wrist = new WPI_TalonFX(Constants.IntakeConstants.wristMotorID);
+  WPI_TalonFX shoulder = new WPI_TalonFX(Constants.IntakeConstants.shoulderMotorID);
   // CANCoder wristCanCoder = new CANCoder(Constants.IntakeConstants.wristCanCoderID, Constants.Swerve.canbusString);
   // CANCoder ShoulderCanCoder = new CANCoder(Constants.IntakeConstants.ShoulderCanCoderID, Constants.Swerve.canbusString);
 
@@ -29,18 +29,53 @@ public class Intake extends SubsystemBase {
   // private final Color cubeTarget = new Color(.168, .023, .178);
   // private final Color coneTarget = new Color( .235, .221, .011); 
   
-  public Intake() {}
+  public Intake() {
+    configWristMotor();
+    configShoulderMotor();
+  }
 
   public void spinAll(double speed) {
     hand.set(speed);
-    wrist.set(ControlMode.Velocity, speed);
-    shoulder.set(ControlMode.Velocity, speed);
+    wrist.set(speed);
+    shoulder.set(speed);
   }
 
   public void stopAll() {
     hand.set(0);
-    wrist.set(ControlMode.Velocity, 0);
-    shoulder.set(ControlMode.Velocity, 0);
+    wrist.set(0);
+    shoulder.set(0);
+  }
+
+  public void spinWrist(double speed) {
+    wrist.set(speed);
+  }
+
+  public void spinHand(double speed) {
+    hand.set(speed);
+  }
+
+  public void spinShoulder(double speed) {
+    shoulder.set(speed);
+  }
+
+  public void stopWrist() {
+    wrist.set(0.0);
+  }
+
+  public void stopHand() {
+    hand.set(0.0);
+  }
+
+  public void stopShoulder() {
+    shoulder.set(0.0);
+  }
+
+  private void configWristMotor(){        
+    wrist.configFactoryDefault();
+  }
+
+  private void configShoulderMotor() {
+    shoulder.configFactoryDefault();
   }
 
   @Override
@@ -64,5 +99,5 @@ public class Intake extends SubsystemBase {
   // public void robotInit(){
   //   m_colorMatcher.addColorMatch(cubeTarget);
   //   m_colorMatcher.addColorMatch(coneTarget);
-  // }
+  // 
 }
