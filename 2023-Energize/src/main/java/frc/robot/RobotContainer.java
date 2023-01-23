@@ -1,10 +1,5 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,23 +15,11 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Swerve;
 
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  private final LedSubsystem m_ledSubsystem;
-  private final IntakeSubsystem m_Intake;
-
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
   /* Controllers */
-  private final Joystick driver = new Joystick(1);
+  private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
+  private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -48,58 +31,39 @@ public class RobotContainer {
   private final JoystickButton balance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
 
+  /* Operator Buttons */
+  public final JoystickButton aButton = new JoystickButton(operator, XboxController.Button.kA.value);
+  public final JoystickButton xButton = new JoystickButton(operator, XboxController.Button.kX.value);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final LedSubsystem m_ledSubsystem = new LedSubsystem();
+  private final IntakeSubsystem m_Intake = new IntakeSubsystem();
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
   public RobotContainer() {
-    m_ledSubsystem = new LedSubsystem();
-    m_Intake = new IntakeSubsystem();
-
     boolean fieldRelative = true;
     boolean openLoop = true;
-    s_Swerve.setDefaultCommand(
-        new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
-
-    configureBindings();
-  }
-
-  private void configureBindings() {
-    JoystickButton aButton = new JoystickButton(m_driverController, 1);
-    aButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
-    JoystickButton xButton = new JoystickButton(m_driverController, 3);
-    xButton.whileHeld(new LedCommand(m_ledSubsystem, m_Intake));
 
     // Configure the button bindings
     configureButtonBindings();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
   private void configureButtonBindings() {
+
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     balance.onTrue(new GyroBasedBalancing(s_Swerve));
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
+
+    /* Operator Buttons */
+    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   *
-   */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return AutonomousFactory.getInstance(s_Swerve).testAuto();
   }
 
