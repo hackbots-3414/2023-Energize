@@ -2,14 +2,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LedSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Intake;
 
 public class LedCommand extends CommandBase {
 
   private LedSubsystem m_LedSubsystem;
-  final IntakeSubsystem m_Intake; 
+  final Intake m_Intake; 
 
-  public LedCommand(LedSubsystem m_LedSubsystem, IntakeSubsystem m_Intake) {
+  public LedCommand(LedSubsystem m_LedSubsystem, Intake m_Intake) {
     this.m_LedSubsystem = m_LedSubsystem;
     this.m_Intake = m_Intake;
     

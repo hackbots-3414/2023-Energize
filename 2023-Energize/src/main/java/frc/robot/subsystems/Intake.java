@@ -1,16 +1,10 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -21,6 +15,8 @@ public class Intake extends SubsystemBase {
   WPI_TalonFX shoulder = new WPI_TalonFX(Constants.IntakeConstants.shoulderMotorID);
   // CANCoder wristCanCoder = new CANCoder(Constants.IntakeConstants.wristCanCoderID, Constants.Swerve.canbusString);
   // CANCoder ShoulderCanCoder = new CANCoder(Constants.IntakeConstants.ShoulderCanCoderID, Constants.Swerve.canbusString);
+
+  DigitalInput irInput = new DigitalInput(9);
 
   // private final I2C.Port i2cPort = I2C.Port.kOnboard;
   // private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
@@ -76,6 +72,10 @@ public class Intake extends SubsystemBase {
 
   private void configShoulderMotor() {
     shoulder.configFactoryDefault();
+  }
+
+  public boolean getIRInput() {
+    return !irInput.get();
   }
 
   @Override
