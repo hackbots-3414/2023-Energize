@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import java.lang.annotation.Target;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
@@ -36,17 +34,17 @@ public class MoveShoulder extends CommandBase {
   public void execute() {
     double currentShoulderPosition = intake.getShoulderPosition();
     if (currentShoulderPosition < rotationTarget) {
-      intake.setShoulderSpeed(0.20);
+      intake.spinShoulder(0.20);
     }
     else if (currentShoulderPosition > rotationTarget) {
-      intake.setShoulderSpeed(-0.20);
+      intake.spinShoulder(-0.20);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setShoulderSpeed(0);
+    intake.spinShoulder(0);
     
   }
 
