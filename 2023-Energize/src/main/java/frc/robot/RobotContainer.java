@@ -47,9 +47,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    JoystickButton aButton = new JoystickButton(m_driverController, 1);
+    JoystickButton aButton = new JoystickButton(driver, 1);
     aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    JoystickButton xButton = new JoystickButton(m_driverController, 3);
+    JoystickButton xButton = new JoystickButton(driver, 3);
     xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
 
 
