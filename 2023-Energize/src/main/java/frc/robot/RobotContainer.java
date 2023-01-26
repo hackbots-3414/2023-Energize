@@ -46,6 +46,18 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, fieldRelative, openLoop));
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
+
+    configureBindings();
+  }
+
+  private void configureBindings() {
+    JoystickButton aButton = new JoystickButton(driver, 1);
+    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    JoystickButton xButton = new JoystickButton(driver, 3);
+    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+
+
+    // Configure the button bindings
     configureButtonBindings();
   }
 
