@@ -106,6 +106,10 @@ public class Intake extends SubsystemBase {
     return shoulder.getSelectedSensorPosition();
 
   }
+public double getWristPosition(){
+  // FIX ME USE CAN CODER
 
+  return wrist.getSelectedSensorPosition();
+}
 
 }
