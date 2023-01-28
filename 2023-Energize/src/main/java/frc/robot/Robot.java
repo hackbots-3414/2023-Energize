@@ -1,10 +1,14 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Robot extends TimedRobot {
+  final static Logger logger = LoggerFactory.getLogger(Constants.class);
   public static CTREConfigs ctreConfigs;
 
   private Command m_autonomousCommand;
@@ -17,6 +21,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
+    DataLogManager.start();
   }
 
   @Override

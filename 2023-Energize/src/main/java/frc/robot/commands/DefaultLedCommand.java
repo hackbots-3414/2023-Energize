@@ -1,9 +1,15 @@
-package frc.robot.commands;
+package frc.robot.commands; 
+
 
 import frc.robot.subsystems.LedSubsystem;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class DefaultLedCommand extends CommandBase {
+  final static Logger logger = LoggerFactory.getLogger(DefaultLedCommand.class);
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final LedSubsystem m_subsystem;
   private double m_color;
@@ -18,6 +24,8 @@ public class DefaultLedCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    logger.info("logging");
+    DataLogManager.start();
     done = false;
   }
 
