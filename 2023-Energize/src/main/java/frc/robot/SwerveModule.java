@@ -116,4 +116,8 @@ public class SwerveModule {
                 Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
         return new SwerveModulePosition(distance, angle);
     }
+
+    public double getSensorPosition() {
+        return mDriveMotor.getSelectedSensorPosition();
+    }
 }

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
+import frc.robot.autos.DriveStraight;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.IntakeCommand;
@@ -54,6 +55,18 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, fieldRelative, openLoop));
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
+
+    configureBindings();
+  }
+
+  private void configureBindings() {
+    JoystickButton aButton = new JoystickButton(driver, 1);
+    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    JoystickButton xButton = new JoystickButton(driver, 3);
+    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+
+
+    // Configure the button bindings
     configureButtonBindings();
   }
 
@@ -74,7 +87,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return AutonomousFactory.getInstance(s_Swerve).testAuto();
+    // An ExampleCommand will run in autonomous
+    return new DriveStraight(s_Swerve, 100000000, 0);
   }
 
   public void resetAngleMotors() {
