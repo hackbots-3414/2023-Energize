@@ -17,16 +17,15 @@ public final class Constants {
         public static final String canbusString = "CANivore";
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(25.86);
-        public static final double wheelBase = Units.inchesToMeters(26.125);
-        public static final double wheelDiameter = Units.inchesToMeters(4.42);
+        public static final double trackWidth = Units.inchesToMeters(20.75);
+        public static final double wheelBase = Units.inchesToMeters(20.75);
+        public static final double wheelDiameter = Units.inchesToMeters(4.0);
         public static final double wheelCircumference = wheelDiameter * Math.PI;
-        public static final double ticksPerRevolution = 2048;
+        public static final double ticksPerMotorShaftRev = 2048;
         public static final double driveGearRatio = (8.14 / 1.0); // https://www.swervedrivespecialties.com/products/mk4i-swerve-module
-        public static final double inchesPerTick = 4.42 * Math.PI / 2048;
 
-        public static final double distanceToTicks = wheelDiameter * Math.PI/ticksPerRevolution/driveGearRatio;
-        public static final double tickstoDistance = 1.0 / (wheelDiameter * Math.PI/ticksPerRevolution/driveGearRatio);
+        public static final double distanceToTicks = wheelCircumference/ticksPerMotorShaftRev/driveGearRatio;
+        public static final double tickstoDistance = 1.0 / (distanceToTicks);
 
         public static final double openLoopRamp = 0.25;
         public static final double closedLoopRamp = 0.0;
@@ -57,15 +56,15 @@ public final class Constants {
         public static final double angleKF = 0.0;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.11237;
+        public static final double driveKP = 0.14226;
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
 
         /* Drive Motor Characterization Values */
         public static final double driveKS = (0.10933 / 12); //divide by 12 to convert from volts to percent output for CTRE
-        public static final double driveKV = (2.4855 / 12);
-        public static final double driveKA = (0.21837 / 12);
+        public static final double driveKV = (2.7472 / 12);
+        public static final double driveKA = (0.24136 / 12);
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4.5; //meters per second (Max for robot is 4.5)

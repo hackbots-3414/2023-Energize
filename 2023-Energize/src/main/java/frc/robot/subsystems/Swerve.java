@@ -98,7 +98,7 @@ public class Swerve extends SubsystemBase {
             positions[mod.moduleNumber] = mod.getSensorPosition();
         }
 
-        return ((positions[0] + positions[2]) / 2D) + ((positions[1] + positions[3]) / 2D) / 2D;
+        return ((positions[0] + positions[2] + positions[1] + positions[3]) / 4D);
     }
 
     public void zeroGyro(){
