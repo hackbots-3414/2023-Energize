@@ -12,6 +12,8 @@ import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LedCommand;
+import frc.robot.commands.MoveShoulder;
+import frc.robot.commands.MoveWrist;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
@@ -39,6 +41,12 @@ public class RobotContainer {
   private final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
   private final Intake m_Intake = new Intake();
+
+  // Shoulder Movement
+  private final JoystickButton testShoulder = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
+  // Wrist movement
+  private final JoystickButton testWrist = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
   public RobotContainer() {
     boolean fieldRelative = true;
@@ -74,6 +82,8 @@ public class RobotContainer {
     xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
+    testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Intake));
+    testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
   }
 
   public Command getAutonomousCommand() {

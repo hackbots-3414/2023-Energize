@@ -86,18 +86,31 @@ public class Intake extends SubsystemBase {
     // ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     // if (match.color == cubeTarget) {
-    //   colorString = "Cube";
+    // colorString = "Cube";
     // } else if (match.color == coneTarget) {
-    //   colorString = "Cone";
+    // colorString = "Cone";
     // } else {
-    //   colorString = "Unknown";
+    // colorString = "Unknown";
     // }
 
     // SmartDashboard.putString("Detected Color", colorString);
   }
 
   // public void robotInit(){
-  //   m_colorMatcher.addColorMatch(cubeTarget);
-  //   m_colorMatcher.addColorMatch(coneTarget);
-  // 
+  // m_colorMatcher.addColorMatch(cubeTarget);
+  // m_colorMatcher.addColorMatch(coneTarget);
+  // }
+  public double getShoulderPosition() {
+    // FIXME USE CAN CODER
+
+    return shoulder.getSelectedSensorPosition();
+
+  }
+  
+  public double getWristPosition(){
+    // FIX ME USE CAN CODER
+
+    return wrist.getSelectedSensorPosition();
+  }
+
 }
