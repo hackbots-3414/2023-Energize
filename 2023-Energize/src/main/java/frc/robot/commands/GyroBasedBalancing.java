@@ -13,7 +13,6 @@ import frc.robot.subsystems.Swerve;
 
 
 public class GyroBasedBalancing extends CommandBase {
-  /** Creates a new gyroBasedBalancing. */
   public Rotation2d yaw;
   public Rotation2d pitch;
   public Rotation2d roll;
@@ -33,14 +32,12 @@ public class GyroBasedBalancing extends CommandBase {
     netBalance = Math.sqrt(Math.pow(pitch.getDegrees(), 2) + Math.pow(roll.getDegrees(), 2));
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     current = netBalance;
     prev = netBalance;
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     yaw = swerve.getYaw(); 
@@ -57,13 +54,11 @@ public class GyroBasedBalancing extends CommandBase {
     prev = current;
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     swerve.setX();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return current < goal ? true : false;

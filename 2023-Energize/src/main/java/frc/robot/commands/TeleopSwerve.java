@@ -16,9 +16,7 @@ public class TeleopSwerve extends CommandBase {
     
     private Swerve s_Swerve;
 
-    /**
-     * Driver control
-     */
+    
     public TeleopSwerve(Swerve s_Swerve, boolean fieldRelative, boolean openLoop) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
@@ -45,6 +43,5 @@ public class TeleopSwerve extends CommandBase {
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
 
         //Rotation in omega radians
-        //
     }
 }

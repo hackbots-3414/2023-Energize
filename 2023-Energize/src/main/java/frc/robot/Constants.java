@@ -157,6 +157,9 @@ public final class Constants {
 
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
+
+        public static final double wristRotationTarget = 4000;
+        public static final double shoulderRotationTarget = 4000;
     }
 
 }
