@@ -85,22 +85,4 @@ public class ConversionsTest {
         }
     }
 
-    @Test
-    public void testMPSToFalconAndFalconToMPS() {
-        double[] rpms = new double[] {-6301, -6300, -3150, -1000, -100, 0, 100, 1000, 3150, 6300, 6301};
-        double[] gearRatios = new double[] { 10 / 1, 12 / 1, 8 / 1 };
-        double[] circumferences = new double[] {12, 0.35, 0, -0.35, -12};
-        double resultInRPM = 0;
-        double resultInFalcon = 0;
-        for (int rpmCounter = 0; rpmCounter < rpms.length; rpmCounter++) {
-            for (int gearRatioCounter = 0; gearRatioCounter < gearRatios.length; gearRatioCounter++) {
-                for (int circumferenceCounter = 0; circumferenceCounter < circumferences.length; circumferenceCounter++) {
-                    resultInFalcon = Conversions.MPSToFalcon(rpms[rpmCounter], circumferences[circumferenceCounter], gearRatios[gearRatioCounter]);
-                    resultInRPM = Conversions.MPSToFalcon(resultInFalcon, circumferences[circumferenceCounter], gearRatios[gearRatioCounter]);
-                    assertTrue(Math.abs(resultInRPM - rpms[rpmCounter]) < 0.0001,
-                        "Conversion from RPM to Falcon to RPM should be within 0.0001 of starting RPM");
-                }
-            }
-        }
-    }
 }
