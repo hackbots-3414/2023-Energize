@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
@@ -71,14 +72,20 @@ public class SwerveModule {
         lastAngle = angle;
     }
 
-    public void resetToAbsolute() {
-        // if (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
-        //     resetToAbsolute();
-        // } else {
-        //     double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset,
-        //             Constants.Swerve.angleGearRatio);
-        //     mAngleMotor.setSelectedSensorPosition(absolutePosition);
-        // }
+    public void setDesiredAngle(SwerveModuleState desiredState){
+        desiredState = CTREModuleState.optimize(desiredState, getState().angle); //Custom optimize command, since default WPILib optimize assumes continuous controller which CTRE is not
+
+        double angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle.getDegrees(); //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+        mAngleMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle, Constants.Swerve.angleGearRatio));
+        lastAngle = angle;
+    }
+
+    public void resetToAbsolute(){
+        while (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
+            Timer.delay(0.1);
+            SwerveModuleState state = new SwerveModuleState(0.0, new Rotation2d(Math.toRadians(getCanCoder().getDegrees() - angleOffset)));
+            setDesiredAngle(state);
+        }
     }
 
     private void configAngleEncoder() {

@@ -6,6 +6,8 @@ package frc.robot.lib.math;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,5 +69,20 @@ public class ConversionsTest {
     }
 
     // TODO write the rest of the unit tests for the other methods
+    @Test
+    public void testRPMToFalconAndFalconToRPM() {
+        double[] rpms = new double[] {-6301, -6300, -3150, -1000, -100, 0, 100, 1000, 3150, 6300, 6301};
+        double[] gearRatios = new double[] { 10 / 1, 12 / 1, 8 / 1 };
+        double resultInRPM = 0;
+        double resultInFalcon = 0;
+        for (int rpmCounter = 0; rpmCounter < rpms.length; rpmCounter++) {
+            for (int gearRatiosCounter = 0; gearRatiosCounter < gearRatios.length; gearRatiosCounter++) {
+                resultInFalcon = Conversions.RPMToFalcon(rpms[rpmCounter], gearRatios[gearRatiosCounter]);
+                resultInRPM = Conversions.falconToRPM(resultInFalcon, gearRatios[gearRatiosCounter]);
+                assertTrue(Math.abs(resultInRPM - rpms[rpmCounter]) < 0.0001,
+                        "Conversion from RPM to Falcon to RPM should be within 0.0001 of starting RPM");
+            }
+        }
+    }
 
 }
