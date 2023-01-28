@@ -49,6 +49,7 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("execute");
     swerve.drive(new Translation2d(speed * x, speed * y), 0, true, true);
   }
 
@@ -62,6 +63,7 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println("isFinished");
     if (Math.abs(swerve.getAverageSensorPositions() - originalEncoders) * Constants.Swerve.distanceToTicks <= this.distance) {
       // System.out.println(Math.abs(swerve.getAverageSensorPositions() - originalEncoders) * Constants.Swerve.distanceToTicks);
       return false;

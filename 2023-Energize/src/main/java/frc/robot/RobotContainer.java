@@ -78,7 +78,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new DriveStraight(s_Swerve, 100000000, 0);
+    return new DriveStraight(s_Swerve, 1, 0);
   }
 
   public void resetAngleMotors() {
