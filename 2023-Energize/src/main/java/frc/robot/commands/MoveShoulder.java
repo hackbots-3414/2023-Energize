@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class MoveShoulder extends CommandBase {
-//Calls variables to be used later in code
+
   private Intake intake;
 
   private double rotationTarget;
@@ -21,9 +21,8 @@ public class MoveShoulder extends CommandBase {
 
   @Override
   public void execute() {
-    // setting the currentShoulderposition to equal the current shoulder positon in Intake
     double currentShoulderPosition = intake.getShoulderPosition();
-    // if the currentShoulderPosition is less than the rotationTarget then we will set 
+    
     if (currentShoulderPosition < rotationTarget) {
       intake.spinShoulder(0.20);
     }

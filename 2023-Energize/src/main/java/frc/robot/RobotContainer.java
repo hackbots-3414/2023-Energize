@@ -82,12 +82,11 @@ public class RobotContainer {
     xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
-    testShoulder.whileTrue(new MoveShoulder(4000, m_Intake));
-    testWrist.whileTrue(new MoveWrist(4000, m_Intake));
+    testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Intake));
+    testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
   }
 
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return new DriveStraight(s_Swerve, 100000000, 0);
   }
 
