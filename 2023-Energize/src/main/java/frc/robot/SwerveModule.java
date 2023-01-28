@@ -68,13 +68,13 @@ public class SwerveModule {
     }
 
     public void resetToAbsolute() {
-        if (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
-            resetToAbsolute();
-        } else {
-            double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset,
-                    Constants.Swerve.angleGearRatio);
-            mAngleMotor.setSelectedSensorPosition(absolutePosition);
-        }
+        // if (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
+        //     resetToAbsolute();
+        // } else {
+        //     double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset,
+        //             Constants.Swerve.angleGearRatio);
+        //     mAngleMotor.setSelectedSensorPosition(absolutePosition);
+        // }
     }
 
     private void configAngleEncoder() {
