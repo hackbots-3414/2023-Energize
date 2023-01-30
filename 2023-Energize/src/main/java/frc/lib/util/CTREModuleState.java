@@ -5,6 +5,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class CTREModuleState {
 
+public static void main(String[] args) {
+    Rotation2d currentAngle = new Rotation2d(0.0);
+    Rotation2d desiredAngle = new Rotation2d(10.0);
+    SwerveModuleState state = new SwerveModuleState(4.5 , currentAngle);
+    System.out.println(optimize(state, desiredAngle));
+}
+
   /**
    * Minimize the change in heading the desired swerve module state would require by potentially
    * reversing the direction the wheel spins. Customized from WPILib's version to include placing
@@ -54,9 +61,3 @@ public class CTREModuleState {
       return newAngle;
   }
 }
-
-// public static void main(String[] args) {
-//     SwerveModuleState state = null;
-//     Rotation2d angle = null;
-//     System.out.println(optimize(state, angle));
-// }

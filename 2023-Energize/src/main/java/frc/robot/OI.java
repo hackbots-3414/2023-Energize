@@ -2,8 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class OI {
+    final static Logger logger = LoggerFactory.getLogger(OI.class);
 
     private static Joystick joystick = new Joystick(0);
 
