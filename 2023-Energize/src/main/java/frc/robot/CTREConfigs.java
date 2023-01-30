@@ -6,8 +6,11 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.sensors.SensorTimeBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class CTREConfigs {
+    final static Logger logger = LoggerFactory.getLogger(CTREConfigs.class);
     public TalonFXConfiguration swerveAngleFXConfig;
     public TalonFXConfiguration swerveDriveFXConfig;
     public CANCoderConfiguration swerveCanCoderConfig;

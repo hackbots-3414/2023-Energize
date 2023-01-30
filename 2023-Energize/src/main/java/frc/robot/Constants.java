@@ -7,8 +7,12 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.SwerveModuleConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public final class Constants {
+    final static Logger logger = LoggerFactory.getLogger(Constants.class);
     public static final double stickDeadband = 0.15;
 
     public static final class Swerve {

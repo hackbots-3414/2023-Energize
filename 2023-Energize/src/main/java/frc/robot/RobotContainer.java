@@ -19,8 +19,13 @@ import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Swerve;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class RobotContainer {
+
+  final static Logger logger = LoggerFactory.getLogger(RobotContainer.class);
 
   /* Controllers */
   private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);

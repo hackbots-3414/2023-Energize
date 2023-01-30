@@ -3,8 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Intake;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import edu.wpi.first.wpilibj.DataLogManager;
+
+
 
 public class LedCommand extends CommandBase {
+  final static Logger logger = LoggerFactory.getLogger(LedCommand.class);
+
 
   private LedSubsystem m_LedSubsystem;
   final Intake m_Intake; 
@@ -17,7 +24,9 @@ public class LedCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    DataLogManager.start();
+  }
 
   @Override
   public void execute() {

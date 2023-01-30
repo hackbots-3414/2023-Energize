@@ -3,8 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import edu.wpi.first.wpilibj.DataLogManager;
+
+
 
 public class IntakeCommand extends CommandBase {
+  final static Logger logger = LoggerFactory.getLogger(IntakeCommand.class);
 
   final Intake m_Intake;
 
@@ -14,6 +20,7 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    DataLogManager.start();
     m_Intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent);
   }
 

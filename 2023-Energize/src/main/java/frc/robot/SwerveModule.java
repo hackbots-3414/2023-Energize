@@ -14,8 +14,12 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class SwerveModule {
+    final static Logger logger = LoggerFactory.getLogger(SwerveModule.class);
     public int moduleNumber;
     private double angleOffset;
     private TalonFX mAngleMotor;

@@ -7,9 +7,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class Intake extends SubsystemBase {
-
+  final static Logger logger = LoggerFactory.getLogger(Intake.class);
   CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
   WPI_TalonFX wrist = new WPI_TalonFX(Constants.IntakeConstants.wristMotorID);
   WPI_TalonFX shoulder = new WPI_TalonFX(Constants.IntakeConstants.shoulderMotorID);
