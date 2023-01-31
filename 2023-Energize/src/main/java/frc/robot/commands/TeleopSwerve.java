@@ -49,7 +49,7 @@ public class TeleopSwerve extends CommandBase {
         //System.out.println(translation);
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
-        logger.trace("rotation is {}. logging works", rotation);
+        // logger.trace("rotation is {}. logging works", rotation);
 
         //Rotation in omega radians
         //
