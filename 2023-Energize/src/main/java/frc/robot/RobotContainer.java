@@ -93,8 +93,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    // return AutonomousFactory.getInstance(s_Swerve).testAuto();
-    return new DriveStraight(s_Swerve, 1, 0);
+    return AutonomousFactory.getInstance(s_Swerve).testAuto();
+    // return new DriveStraight(s_Swerve, 1, 0);
   }
 
   public void resetAngleMotors() {
