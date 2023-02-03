@@ -60,10 +60,10 @@ public final class Constants {
         public static final double angleKF = 0.0;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.14226;
+        public static final double driveKP = 0.0075;
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
-        public static final double driveKF = 0.0;
+        public static final double driveKF = 0.05;
 
         /* Drive Motor Characterization Values */
         public static final double driveKS = (0.10933 / 12); //divide by 12 to convert from volts to percent output for CTRE
@@ -135,9 +135,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+        public static final double kPXController = 0;
+        public static final double kPYController = 0;
+        public static final double kPThetaController = 0;
     
         // Constraint for the motion profilied robot angle controller
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

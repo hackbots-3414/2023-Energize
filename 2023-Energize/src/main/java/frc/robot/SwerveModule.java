@@ -46,6 +46,19 @@ public class SwerveModule {
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
         configDriveMotor();
 
+       
+
+        while (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new IllegalStateException("Interrupted trying to load cancoder in SwerveModule", e);
+            }
+        }
+
+        mAngleMotor.setSelectedSensorPosition(Math.toRadians(getCanCoder().getDegrees() - angleOffset));
+        SwerveModuleState state = new SwerveModuleState(0.0, new Rotation2d(Math.toRadians(getCanCoder().getDegrees() - angleOffset)));
+        setDesiredAngle(state);
         lastAngle = getState().angle.getDegrees();
     }
 
@@ -80,14 +93,6 @@ public class SwerveModule {
         lastAngle = angle;
     }
 
-    public void resetToAbsolute(){
-        while (angleEncoder.getLastError() != ErrorCode.valueOf(0)) {
-            Timer.delay(0.1);
-            SwerveModuleState state = new SwerveModuleState(0.0, new Rotation2d(Math.toRadians(getCanCoder().getDegrees() - angleOffset)));
-            setDesiredAngle(state);
-        }
-    }
-
     private void configAngleEncoder() {
         angleEncoder.configFactoryDefault();
         angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
@@ -98,7 +103,6 @@ public class SwerveModule {
         mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
-        resetToAbsolute();
     }
 
     private void configDriveMotor() {

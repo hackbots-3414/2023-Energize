@@ -24,8 +24,6 @@ public class Robot extends TimedRobot {
 
     DataLogManager.start();
 
-    m_robotContainer.resetAngleMotors();
-
   }
 
   @Override
@@ -37,12 +35,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-    count++;
-    if (count % 50 == 0) {
-      m_robotContainer.resetAngleMotors();
-    }
-  }
+  public void disabledPeriodic() {}
 
   @Override
   public void autonomousInit() {
@@ -61,9 +54,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
-    m_robotContainer.resetAngleMotors();
-    
   }
 
   @Override

@@ -142,10 +142,4 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] states = {new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4))};
         setModuleStates(states);
     }
-
-    public void resetAll() {
-        for (SwerveModule mod : mSwerveMods) {
-            mod.resetToAbsolute();
-        }
-    }
 }
