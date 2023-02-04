@@ -156,6 +156,19 @@ public final class Constants {
         public static final int wristMotorID = 7;
         public static final int shoulderMotorID = 6;
 
+
+        public static final double highArmAngle = 3.0;
+        public static final double defaultArmAngle = 0.0; 
+        public static final double lowArmangle = 1.0; 
+        public static final double mediumArmAngle = 2.0;
+        // public static final double shelfArmAngle = 4.0; 
+        public static final double highWristAngle = 3.0;
+        public static final double defaultWristAngle = 0.0; 
+        public static final double lowWristAngle = 1.0; 
+        public static final double mediumWristAngle = 2.0;
+        // public static final double shelfWristAngle = 4.0;
+
+
         public static final int wristCanCoderID = 0;
         public static final int ShoulderCanCoderID = 0;
 

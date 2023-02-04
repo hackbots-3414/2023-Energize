@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
@@ -70,10 +71,19 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    JoystickButton aButton = new JoystickButton(driver, 1);
-    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    JoystickButton xButton = new JoystickButton(driver, 3);
-    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // JoystickButton aButton = new JoystickButton(driver, 1);
+    // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // JoystickButton xButton = new JoystickButton(driver, 3);
+    // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+
+    JoystickButton tempA = new JoystickButton(driver, 1);
+    tempA.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.defaultArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.defaultWristAngle))));
+    JoystickButton tempB = new JoystickButton(driver, 2);
+    tempB.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.mediumArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.mediumWristAngle))));
+    JoystickButton tempX = new JoystickButton(driver, 3);
+    tempX.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.lowArmangle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.lowWristAngle))));
+    JoystickButton tempY = new JoystickButton(driver, 4);    
+    tempY.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.highArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.highWristAngle))));
 
 
     // Configure the button bindings

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
@@ -21,6 +22,12 @@ public class Shoulder extends SubsystemBase {
   WPI_TalonFX shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
   CANCoder ShoulderCanCoder = new CANCoder(IntakeConstants.ShoulderCanCoderID, Swerve.canbusString);
 
+
+  public void moveShoulder(double angle) {
+    
+    shoulder.set(ControlMode.MotionMagic, angle);
+
+  }
 
   public Shoulder() {
     configMotor();
