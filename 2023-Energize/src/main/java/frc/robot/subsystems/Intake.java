@@ -14,10 +14,6 @@ import org.slf4j.LoggerFactory;
 public class Intake extends SubsystemBase {
   final static Logger logger = LoggerFactory.getLogger(Intake.class);
   CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
-  WPI_TalonFX wrist = new WPI_TalonFX(Constants.IntakeConstants.wristMotorID);
-  WPI_TalonFX shoulder = new WPI_TalonFX(Constants.IntakeConstants.shoulderMotorID);
-  // CANCoder wristCanCoder = new CANCoder(Constants.IntakeConstants.wristCanCoderID, Constants.Swerve.canbusString);
-  // CANCoder ShoulderCanCoder = new CANCoder(Constants.IntakeConstants.ShoulderCanCoderID, Constants.Swerve.canbusString);
 
   DigitalInput irInput = new DigitalInput(9);
 
@@ -29,52 +25,17 @@ public class Intake extends SubsystemBase {
   // private final Color coneTarget = new Color( .235, .221, .011); 
   
   public Intake() {
-    configWristMotor();
-    configShoulderMotor();
-  }
 
-  public void spinAll(double speed) {
-    hand.set(speed);
-    wrist.set(speed);
-    shoulder.set(speed);
-  }
-
-  public void stopAll() {
-    hand.set(0);
-    wrist.set(0);
-    shoulder.set(0);
-  }
-
-  public void spinWrist(double speed) {
-    wrist.set(speed);
   }
 
   public void spinHand(double speed) {
     hand.set(speed);
   }
 
-  public void spinShoulder(double speed) {
-    shoulder.set(speed);
-  }
 
-  public void stopWrist() {
-    wrist.set(0.0);
-  }
 
   public void stopHand() {
     hand.set(0.0);
-  }
-
-  public void stopShoulder() {
-    shoulder.set(0.0);
-  }
-
-  private void configWristMotor(){        
-    wrist.configFactoryDefault();
-  }
-
-  private void configShoulderMotor() {
-    shoulder.configFactoryDefault();
   }
 
   public boolean getIRInput() {
@@ -103,17 +64,5 @@ public class Intake extends SubsystemBase {
   // m_colorMatcher.addColorMatch(cubeTarget);
   // m_colorMatcher.addColorMatch(coneTarget);
   // }
-  public double getShoulderPosition() {
-    // FIXME USE CAN CODER
-
-    return shoulder.getSelectedSensorPosition();
-
-  }
-  
-  public double getWristPosition(){
-    // FIX ME USE CAN CODER
-
-    return wrist.getSelectedSensorPosition();
-  }
 
 }
