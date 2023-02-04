@@ -38,11 +38,12 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public void initialize() {
-    swerve.resetOdometry(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
-
-    this.translatedPose = swerve.getPose().transformBy(new Transform2d(new Translation2d(Math.cos(direction) * distance, Math.sin(direction) * distance), new Rotation2d(0)));
-    this.x = Math.cos(direction) * distance;
-    this.y = Math.sin(direction) * distance;
+    swerve.resetOdometry(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))); // broken reset odometry, would reset to itself
+          System.out.println(swerve.getPose().toString());
+    this.x = Math.cos(direction); // speed multiplier, so removed distance multiplication
+    this.y = Math.sin(direction);
+    this.translatedPose = swerve.getPose().transformBy(new Transform2d(new Translation2d(x * distance, y * distance), new Rotation2d(0)));
+          System.out.println(translatedPose.toString());
     this.speed = Math.copySign(this.speed, this.distance);
   }
 
@@ -59,9 +60,6 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    SmartDashboard.putNumber("New Pose: ", translatedPose.getTranslation().getNorm());
-    SmartDashboard.putNumber("Current Pose: ", swerve.getPose().getTranslation().getNorm());
-    SmartDashboard.putNumber("Difference: ", translatedPose.getTranslation().getDistance(swerve.getPose().getTranslation()));
     return translatedPose.getTranslation().getDistance(swerve.getPose().getTranslation()) > 0 ? false : true;
   }
 
