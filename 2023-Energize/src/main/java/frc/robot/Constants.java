@@ -164,6 +164,8 @@ public final class Constants {
 
         public static final double wristRotationTarget = 4000;
         public static final double shoulderRotationTarget = 4000;
+
+        public static final int canPause = 100;
     }
 
 }

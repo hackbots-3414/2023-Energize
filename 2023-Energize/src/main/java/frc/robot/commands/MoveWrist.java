@@ -1,9 +1,16 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Wrist;
 
 public class MoveWrist extends CommandBase {
+
+  WPI_TalonFX wrist = new WPI_TalonFX(Constants.IntakeConstants.wristMotorID);
+
   private Intake intake;
 
   private double rotationTarget;
@@ -23,24 +30,24 @@ public class MoveWrist extends CommandBase {
 
   @Override
   public void execute() {
-    double currentWristPosition = intake.getWristPosition();
+    double currentWristPosition = wrist.getSelectedSensorPosition();
     if (currentWristPosition < rotationTarget) {
-      intake.spinWrist(0.20);
+      wrist.set(0.20);
     }
     else if (currentWristPosition > rotationTarget) {
-      intake.spinWrist(-0.20);
+      wrist.set(-0.20);
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    intake.spinWrist(0);
+    wrist.set(0.0);
     
   }
 
   @Override
   public boolean isFinished() {
-    double currentWristPosition = intake.getWristPosition();
+    double currentWristPosition = wrist.getSelectedSensorPosition();
     if (Math.abs(currentWristPosition - rotationTarget) < 50) {
       return true;
     }
