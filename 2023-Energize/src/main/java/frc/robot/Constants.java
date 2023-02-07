@@ -169,14 +169,27 @@ public final class Constants {
         // public static final double shelfWristAngle = 4.0;
 
 
+        
+
         public static final int wristCanCoderID = 0;
         public static final int ShoulderCanCoderID = 0;
 
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
 
-        public static final double wristRotationTarget = 4000;
-        public static final double shoulderRotationTarget = 4000;
+        public static final int wristRotationTarget = 4000;
+        public static final int shoulderRotationTarget = 4000;
+        public static final int shoulderUpperLimit = 1000;
+        public static final int shoulderLowerLimit = 1000;
+        public static final int wristUpperLimit = 1000;
+        public static final int wristLowerLimit = 1000;
+
+        // IshowSpeeds 
+
+        public static final double speed = 0.2;
+
+
+
 
         public static final int canPause = 100;
     }
