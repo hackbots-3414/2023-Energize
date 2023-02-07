@@ -64,6 +64,8 @@ public class RobotContainer {
   // Wrist movement
   private final JoystickButton testWrist = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
+  private boolean openLoop = false;
+
   public RobotContainer() {
 
     s_Swerve.setDefaultCommand(
@@ -111,6 +113,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    
+    // return AutonomousFactory.getInstance(s_Swerve).testAuto();
     return new DriveStraight(s_Swerve, 1, 0);
   }
 }
