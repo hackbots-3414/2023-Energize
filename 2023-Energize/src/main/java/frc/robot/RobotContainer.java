@@ -1,12 +1,14 @@
 package frc.robot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.DriveStraight;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
@@ -18,9 +20,9 @@ import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
+import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import frc.robot.subsystems.Wrist;
 
 
 public class RobotContainer {
@@ -31,10 +33,17 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
   private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
+  /* Drive Controls */
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
+
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton balance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
 
   /* Operator Buttons */
   public final JoystickButton aButton = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -46,6 +55,8 @@ public class RobotContainer {
   private final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
   private final Intake m_Intake = new Intake();
+  private final Shoulder m_Shoulder = new Shoulder();
+  private final Wrist m_Wrist = new Wrist();
 
   // Shoulder Movement
   private final JoystickButton testShoulder = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
@@ -56,9 +67,17 @@ public class RobotContainer {
   private boolean openLoop = false;
 
   public RobotContainer() {
-    boolean fieldRelative = true;
 
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, fieldRelative, true));
+    s_Swerve.setDefaultCommand(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> -driver.getRawAxis(translationAxis), 
+                () -> -driver.getRawAxis(strafeAxis), 
+                () -> -driver.getRawAxis(rotationAxis), 
+                () -> robotCentric.getAsBoolean()
+            )
+        );
+
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
 
@@ -86,7 +105,7 @@ public class RobotContainer {
     /* Operator Buttons */
     aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    intakeButton.whileTrue(new IntakeCommand(m_Intake));
+    intakeButton.whileTrue(new IntakeCommand(m_Intake, m_Shoulder, m_Wrist));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
     testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Intake));
     testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
