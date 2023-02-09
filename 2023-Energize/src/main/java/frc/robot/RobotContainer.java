@@ -35,10 +35,6 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
   private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
-  /* Drive Controls */
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -66,18 +62,21 @@ public class RobotContainer {
   // Wrist movement
   private final JoystickButton testWrist = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
+
   private boolean openLoop = false;
+
 
   public RobotContainer() {
 
     s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
+                () -> -OI.getLeftVertical(), 
+                () -> -OI.getLeftLateral(), 
+                () -> -OI.getRightLateral(), 
                 () -> robotCentric.getAsBoolean()
             )
+
         );
 
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
