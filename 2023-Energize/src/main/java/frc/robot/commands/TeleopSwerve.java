@@ -1,8 +1,13 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
+import frc.robot.OI;
+import frc.robot.subsystems.Swerve;
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +21,8 @@ import frc.robot.subsystems.Swerve;
 
 public class TeleopSwerve extends CommandBase {
     final static Logger logger = LoggerFactory.getLogger(TeleopSwerve.class);
+    final static SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
 
     private Swerve s_Swerve;    
     private DoubleSupplier translationSup;
