@@ -3,6 +3,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.Swerve;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import edu.wpi.first.wpilibj.DataLogManager;
 
 public class TeleopSwerve extends CommandBase {
     final static Logger logger = LoggerFactory.getLogger(TeleopSwerve.class);
+    final static SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
 
     private double rotation;
     private Translation2d translation;
@@ -48,8 +51,10 @@ public class TeleopSwerve extends CommandBase {
 
         //System.out.println(translation);
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
+        rotation = filter.calculate(rotation);
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
         logger.trace("rotation is {}. logging works", rotation);
+
 
         //Rotation in omega radians
         //
