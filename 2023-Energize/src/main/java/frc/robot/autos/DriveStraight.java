@@ -17,7 +17,8 @@ public class DriveStraight extends CommandBase {
   private double direction;
   private double x;
   private double y;
-  private Pose2d translatedPose;
+  private Pose2d endPose;
+  private Pose2d startPose;
   private final Swerve swerve;
   
 
@@ -42,8 +43,8 @@ public class DriveStraight extends CommandBase {
           System.out.println(swerve.getPose().toString());
     this.x = Math.cos(direction); // speed multiplier, so removed distance multiplication
     this.y = Math.sin(direction);
-    this.translatedPose = swerve.getPose().transformBy(new Transform2d(new Translation2d(x * distance, y * distance), new Rotation2d(0)));
-          System.out.println(translatedPose.toString());
+    this.endPose = swerve.getPose().transformBy(new Transform2d(new Translation2d(x * distance, y * distance), new Rotation2d(0)));
+    this.startPose = swerve.getPose();
     this.speed = Math.copySign(this.speed, this.distance);
   }
 
@@ -60,7 +61,8 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return translatedPose.getTranslation().getDistance(swerve.getPose().getTranslation()) > 0 ? false : true;
+    // SmartDashboard.putNumber("Change: ", startPose.getTranslation().getDistance(swerve.getPose().getTranslation()));
+    return startPose.getTranslation().getDistance(swerve.translation2d) < distance ? false : true;
   }
 
   @Override
