@@ -15,16 +15,12 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private int count = 0;
-
   @Override
   public void robotInit() {
     ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
 
     DataLogManager.start();
-
-    m_robotContainer.resetAngleMotors();
 
   }
 
@@ -37,17 +33,13 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-    count++;
-    if (count % 50 == 0) {
-      m_robotContainer.resetAngleMotors();
-    }
-  }
+  public void disabledPeriodic() {}
 
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -61,9 +53,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
-    m_robotContainer.resetAngleMotors();
-    
   }
 
   @Override
