@@ -93,7 +93,7 @@ public final class Constants {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 7;
-            public static final double angleOffset = 94.57;
+            public static final double angleOffset = 273.42;
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -103,7 +103,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 0;
             public static final int canCoderID = 2;
-            public static final double angleOffset = 252.94;
+            public static final double angleOffset = 73.74;
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -113,7 +113,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
-            public static final double angleOffset = 134.29;
+            public static final double angleOffset = 315.26;
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -123,7 +123,7 @@ public final class Constants {
             public static final int driveMotorID = 18;
             public static final int angleMotorID = 19;
             public static final int canCoderID = 17;
-            public static final double angleOffset = 250.22;
+            public static final double angleOffset = 69.96;
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -152,12 +152,12 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int handMotorID = 10;
+        public static final int handMotorID = 4;
         public static final int wristMotorID = 7;
         public static final int shoulderMotorID = 6;
 
-        public static final int wristCanCoderID = 0;
-        public static final int ShoulderCanCoderID = 0;
+        public static final int wristCanCoderID = 9;
+        public static final int ShoulderCanCoderID = 8;
 
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
