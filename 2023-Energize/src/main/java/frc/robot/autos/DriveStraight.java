@@ -22,9 +22,8 @@ public class DriveStraight extends CommandBase {
   
 
   public DriveStraight(Swerve subsystem, double distance, double direction) {
-    System.out.println("CONSTRUCTOR");
     this.distance = distance;
-    this.speed = 1;
+    this.speed = 0.6;
     this.direction = direction;
     swerve = subsystem;
   }
@@ -33,6 +32,7 @@ public class DriveStraight extends CommandBase {
     this.distance = distance;
     this.speed = speed;
     this.direction = direction;
+
     swerve = subsystem;
   }
 

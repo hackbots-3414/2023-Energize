@@ -161,14 +161,40 @@ public final class Constants {
         public static final int wristMotorID = 7;
         public static final int shoulderMotorID = 6;
 
+
+        public static final double highArmAngle = 3.0;
+        public static final double defaultArmAngle = 0.0; 
+        public static final double lowArmangle = 1.0; 
+        public static final double mediumArmAngle = 2.0;
+        // public static final double shelfArmAngle = 4.0; 
+        public static final double highWristAngle = 3.0;
+        public static final double defaultWristAngle = 0.0; 
+        public static final double lowWristAngle = 1.0; 
+        public static final double mediumWristAngle = 2.0;
+        // public static final double shelfWristAngle = 4.0;
+
+
+        
+
         public static final int wristCanCoderID = 0;
         public static final int ShoulderCanCoderID = 0;
 
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
 
-        public static final double wristRotationTarget = 4000;
-        public static final double shoulderRotationTarget = 4000;
+        public static final int wristRotationTarget = 4000;
+        public static final int shoulderRotationTarget = 4000;
+        public static final int shoulderUpperLimit = 1000;
+        public static final int shoulderLowerLimit = 1000;
+        public static final int wristUpperLimit = 1000;
+        public static final int wristLowerLimit = 1000;
+
+        // IshowSpeeds 
+
+        public static final double speed = 0.2;
+
+
+
 
         public static final int canPause = 100;
     }

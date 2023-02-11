@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
@@ -20,6 +21,12 @@ public class Wrist extends SubsystemBase {
   WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
   CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID, Swerve.canbusString);
 
+
+  public void moveWrist(double angle) {
+    
+    wrist.set(ControlMode.MotionMagic, angle);
+
+  }
   public Wrist() {
     configMotor();
   }

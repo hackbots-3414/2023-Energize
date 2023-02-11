@@ -10,6 +10,8 @@ public class OI {
     final static Logger logger = LoggerFactory.getLogger(OI.class);
 
     private static Joystick joystick = new Joystick(0);
+    private static Joystick xbox = new Joystick(1);
+
 
     static double left_x_offset = -0.13379;
     static double left_x_max = 0.81982;
@@ -20,6 +22,9 @@ public class OI {
     static double right_y_offset = 0.03418;
     static double right_y_max = 0.85005;
     static double r_knob_offset = 0.03371;
+
+
+    
 
     // ConfigureReverseControls normalDriveButton = new ConfigureReverseControls(drivetrainSubsystem);
 
@@ -113,18 +118,116 @@ public class OI {
         return joystick.getRawAxis(6);
     }
 
-    public static boolean getButtonA() {
-        updateController();
-        return joystick.getRawButton(1);
-    }
+
 
     public static boolean getButtonH() {
         updateController();
         return joystick.getRawButton(12);
     }
 
-    public static int getButtonB() {
+    public static boolean getButtonB() {
         updateController();
-        return 0;
+        return xbox.getRawButton(2);
     }
+
+    public static boolean getButtonA() {
+        updateController();
+        return xbox.getRawButton(1);
+    }
+
+    public static boolean getButtonY(){
+        updateController();
+        return xbox.getRawButton(4);
+    }
+
+    public static boolean getButtonX(){
+        updateController();
+        return xbox.getRawButton(3);
+    }
+
+    public static double getButtonLeftTrigger(){
+        updateController();
+        return xbox.getRawAxis(2);
+    }
+
+    public static double getButtonRightTrigger(){
+        updateController();
+        return xbox.getRawAxis(3);
+    }
+
+    public static boolean getButtonLeftBumper(){
+        updateController();
+        return xbox.getRawButton(5);
+    }
+
+    public static boolean getButtonRightBumper(){
+        updateController();
+        return xbox.getRawButton(6);
+    }
+
+    public static double getLeftAxisY(){
+        updateController();
+        return xbox.getRawAxis(1);
+    }
+
+    public static double getLeftAxisX(){
+        updateController();
+        return xbox.getRawAxis(0);
+    }
+
+    public static double getRightAxisX(){
+        updateController();
+        return xbox.getRawAxis(4);
+    }
+
+    public static double getRightAxisY(){
+        updateController();
+        return xbox.getRawAxis(5);
+    }
+
+    public static boolean getRightJoystick(){
+        updateController();
+        return xbox.getRawButton(10);
+    }
+
+    public static boolean getLeftJoystick(){
+        updateController();
+        return xbox.getRawButton(9);
+    }
+
+    public static int getPOVUp(){
+        updateController();
+        return xbox.getPOV(0);
+    }
+
+    public static int getPOVDown(){
+        updateController();
+        return xbox.getPOV(180);
+    }
+
+    public static int getPOVRight(){
+        updateController();
+        return xbox.getPOV(90);
+    }
+
+    public static int getPOVLeft(){
+        updateController();
+        return xbox.getPOV(270);
+    }
+
+    public static boolean getEndButton(){
+        updateController();
+        return xbox.getRawButton(7);
+    }
+
+    public static boolean getStartButton(){
+        updateController();
+        return xbox.getRawButton(8);
+    }
+
+
+
+
+
+
 }
