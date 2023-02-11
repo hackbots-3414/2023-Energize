@@ -13,10 +13,10 @@ public class MoveShoulder extends CommandBase {
 
   private double rotationTarget;
 
-  public MoveShoulder(double rotationTarget, Intake intake) {
+  public MoveShoulder(double rotationTarget, Shoulder shoulder) {
     this.rotationTarget = rotationTarget;
 
-    addRequirements(intake);
+    addRequirements(shoulder);
   }
 
   @Override
