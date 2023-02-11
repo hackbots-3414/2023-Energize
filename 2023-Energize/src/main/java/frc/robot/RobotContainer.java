@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.exampleAuto;
+import frc.robot.autos.ManualPathweaver;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.TeleopSwerve;
@@ -65,9 +65,9 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -OI.getLeftVertical(), 
-                () -> -OI.getLeftLateral(), 
-                () -> -OI.getRightLateral(), 
+                () -> -driver.getRawAxis(1), 
+                () -> -driver.getRawAxis(0), 
+                () -> -driver.getRawAxis(4), 
                 () -> robotCentric.getAsBoolean()
             )
 
@@ -85,22 +85,22 @@ public class RobotContainer {
     // JoystickButton xButton = new JoystickButton(driver, 3);
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
 
-    JoystickButton tempA = new JoystickButton(driver, 1);
-    tempA.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.defaultArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.defaultWristAngle))));
-    JoystickButton tempB = new JoystickButton(driver, 2);
-    tempB.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.mediumArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.mediumWristAngle))));
-    JoystickButton tempX = new JoystickButton(driver, 3);
-    tempX.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.lowArmangle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.lowWristAngle))));
-    JoystickButton tempY = new JoystickButton(driver, 4);    
-    tempY.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.highArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.highWristAngle))));
+    // JoystickButton tempA = new JoystickButton(driver, 1);
+    // tempA.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.defaultArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.defaultWristAngle))));
+    // JoystickButton tempB = new JoystickButton(driver, 2);
+    // tempB.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.mediumArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.mediumWristAngle))));
+    // JoystickButton tempX = new JoystickButton(driver, 3);
+    // tempX.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.lowArmangle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.lowWristAngle))));
+    // JoystickButton tempY = new JoystickButton(driver, 4);    
+    // tempY.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.highArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.highWristAngle))));
 
-    JoystickButton rightBumper = new JoystickButton(driver, 6);
-    rightBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(-Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
+    // JoystickButton rightBumper = new JoystickButton(driver, 6);
+    // rightBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(-Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
 
     
 
-    JoystickButton leftBumper = new JoystickButton(driver, 5);
-    leftBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
+    // JoystickButton leftBumper = new JoystickButton(driver, 5);
+    // leftBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -126,6 +126,6 @@ public class RobotContainer {
     
     // return AutonomousFactory.getInstance(s_Swerve).testAuto();
     // return new DriveStraight(s_Swerve, 1, 0);
-    return new exampleAuto(s_Swerve);
+    return new ManualPathweaver(s_Swerve, 1, 0, 1);
   }
 }
