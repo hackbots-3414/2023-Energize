@@ -54,9 +54,9 @@ public class RobotContainer {
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
-  private final Intake m_Intake = new Intake();
-  private final Shoulder m_Shoulder = new Shoulder();
-  private final Wrist m_Wrist = new Wrist();
+  // private final Intake m_Intake = new Intake();
+  // private final Shoulder m_Shoulder = new Shoulder();
+  // private final Wrist m_Wrist = new Wrist();
 
   // Shoulder Movement
   private final JoystickButton testShoulder = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
@@ -85,10 +85,10 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    JoystickButton aButton = new JoystickButton(driver, 1);
-    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    JoystickButton xButton = new JoystickButton(driver, 3);
-    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // JoystickButton aButton = new JoystickButton(driver, 1);
+    // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // JoystickButton xButton = new JoystickButton(driver, 3);
+    // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
 
 
     // Configure the button bindings
@@ -103,12 +103,12 @@ public class RobotContainer {
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
 
     /* Operator Buttons */
-    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    intakeButton.whileTrue(new IntakeCommand(m_Intake, m_Shoulder, m_Wrist));
-    ejectButton.whileTrue(new ejectCommand(m_Intake));
-    testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Intake));
-    testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
+    // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // intakeButton.whileTrue(new IntakeCommand(m_Intake, m_Shoulder, m_Wrist));
+    // ejectButton.whileTrue(new ejectCommand(m_Intake));
+    // testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Intake));
+    // testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
   }
 
   public Command getAutonomousCommand() {

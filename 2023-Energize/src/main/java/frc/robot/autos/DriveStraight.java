@@ -1,14 +1,13 @@
 package frc.robot.autos;
 
-import javax.sound.sampled.SourceDataLine;
+import com.fasterxml.jackson.core.TreeNode;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 public class DriveStraight extends CommandBase {
@@ -17,8 +16,8 @@ public class DriveStraight extends CommandBase {
   private double direction;
   private double x;
   private double y;
-  private Pose2d endPose;
   private Pose2d startPose;
+  private Translation2d translation2d;
   private final Swerve swerve;
   
 
@@ -43,25 +42,26 @@ public class DriveStraight extends CommandBase {
           System.out.println(swerve.getPose().toString());
     this.x = Math.cos(direction); // speed multiplier, so removed distance multiplication
     this.y = Math.sin(direction);
-    this.endPose = swerve.getPose().transformBy(new Transform2d(new Translation2d(x * distance, y * distance), new Rotation2d(0)));
     this.startPose = swerve.getPose();
     this.speed = Math.copySign(this.speed, this.distance);
+    translation2d = new Translation2d(speed * x, speed * y);
   }
 
   @Override
   public void execute() {
-    swerve.drive(new Translation2d(speed * x, speed * y), 0, true, true);
+    swerve.drive(translation2d, 0, true, true);
+    // Timer.delay(0.1);
   }
 
   @Override
   public void end(boolean interrupted) {
-    swerve.drive(new Translation2d(0, 0), 0, true, true);
+    //swerve.drive(new Translation2d(0, 0), 0, true, true);
     swerve.zeroGyro();
   }
 
   @Override
   public boolean isFinished() {
-    // SmartDashboard.putNumber("Change: ", startPose.getTranslation().getDistance(swerve.getPose().getTranslation()));
+    //System.out.println("Current Distance: " + startPose.getTranslation().getDistance(swerve.translation2d));
     return startPose.getTranslation().getDistance(swerve.translation2d) < distance ? false : true;
   }
 
