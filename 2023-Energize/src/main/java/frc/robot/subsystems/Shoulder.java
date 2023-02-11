@@ -5,11 +5,16 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.math.Conversions;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.Swerve;
 
@@ -22,9 +27,23 @@ public class Shoulder extends SubsystemBase {
 
   
   final static Logger logger = LoggerFactory.getLogger(Shoulder.class);
-  WPI_TalonFX shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
-  CANCoder ShoulderCanCoder = new CANCoder(IntakeConstants.ShoulderCanCoderID, Swerve.canbusString);
+  WPI_TalonFX shoulder;
+  CANCoder shoulderCanCoder;
+ 
+  public Shoulder() {
 
+    shoulderCanCoder = new CANCoder(IntakeConstants.ShoulderCanCoderID);
+    configShoulderEncoder();
+
+    shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
+    configMotor();
+    
+  }
+ 
+  private void configShoulderEncoder() {
+    shoulderCanCoder.configFactoryDefault(Constants.IntakeConstants.canPause);
+    shoulderCanCoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+}
 
   public void moveShoulder(double angle) {
     
@@ -32,9 +51,7 @@ public class Shoulder extends SubsystemBase {
 
   }
 
-  public Shoulder() {
-    configMotor();
-  }
+
 
   public void spin(double speed) {
     shoulder.set(speed);
@@ -63,12 +80,13 @@ public class Shoulder extends SubsystemBase {
 
   private void configMotor() {
     shoulder.configFactoryDefault(IntakeConstants.canPause);
-    shoulder.configRemoteFeedbackFilter(ShoulderCanCoder, 0, IntakeConstants.canPause);
+    shoulder.configRemoteFeedbackFilter(shoulderCanCoder, 0, IntakeConstants.canPause);
     shoulder.setSafetyEnabled(true);
     shoulder.configForwardSoftLimitThreshold(Constants.IntakeConstants.shoulderLowerLimit, 0);
     shoulder.configReverseSoftLimitThreshold(Constants.IntakeConstants.shoulderUpperLimit, 0);
-    shoulder.configForwardSoftLimitEnable(true, 0);
-    shoulder.configReverseSoftLimitEnable(true, 0);
+    shoulder.configForwardSoftLimitEnable(false, 0);
+    shoulder.configReverseSoftLimitEnable(false, 0);
+    shoulder.setNeutralMode(NeutralMode.Brake);
   }
 
   public double getPosition() {
@@ -76,9 +94,15 @@ public class Shoulder extends SubsystemBase {
     return shoulder.getSelectedSensorPosition();
   }
 
+  public double getCanCoder() {
+    return shoulderCanCoder.getAbsolutePosition();
+}
+
   @Override
   public void periodic() {
     shoulder.feed();
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Shoulder pos", getPosition());
+    SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
   }
 }

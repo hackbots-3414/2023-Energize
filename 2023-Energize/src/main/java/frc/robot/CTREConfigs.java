@@ -6,6 +6,10 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.sensors.SensorTimeBase;
+
+import ch.qos.logback.core.util.CachingDateFormatter;
+import frc.robot.subsystems.Shoulder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,12 +18,16 @@ public final class CTREConfigs {
     public TalonFXConfiguration swerveAngleFXConfig;
     public TalonFXConfiguration swerveDriveFXConfig;
     public CANCoderConfiguration swerveCanCoderConfig;
+    public CANCoderConfiguration shoulderCanCoderConfig;
+    public CANCoderConfiguration wristCanCoderConfig;
 
 
     public CTREConfigs(){
         swerveAngleFXConfig = new TalonFXConfiguration();
         swerveDriveFXConfig = new TalonFXConfiguration();
         swerveCanCoderConfig = new CANCoderConfiguration();
+        shoulderCanCoderConfig = new CANCoderConfiguration();
+        wristCanCoderConfig = new CANCoderConfiguration();
 
         /* Swerve Angle Motor Configurations */
         SupplyCurrentLimitConfiguration angleSupplyLimit = new SupplyCurrentLimitConfiguration(
@@ -59,7 +67,17 @@ public final class CTREConfigs {
         swerveCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
         swerveCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
 
-        
+        // Shoulder CANCoder Configuration
+        shoulderCanCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
+        shoulderCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
+        shoulderCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
+        shoulderCanCoderConfig.sensorDirection = Constants.IntakeConstants.shoulderCanCoderInvert;
+
+        // Wrist CANCoder Configuration
+        wristCanCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
+        wristCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
+        wristCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
+        wristCanCoderConfig.sensorDirection = Constants.IntakeConstants.wristCanCoderInvert;
 
     }
 

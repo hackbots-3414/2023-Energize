@@ -57,10 +57,10 @@ public class RobotContainer {
   private final Wrist m_Wrist = new Wrist();
 
   // Shoulder Movement
-  private final JoystickButton testShoulder = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton testShoulder = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
   // Wrist movement
-  private final JoystickButton testWrist = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton testWrist = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
 
   private boolean openLoop = false;
@@ -123,7 +123,7 @@ public class RobotContainer {
     xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake, m_Shoulder, m_Wrist));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
-    testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Intake));
+    testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Shoulder));
     testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
   }
 
