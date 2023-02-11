@@ -23,16 +23,8 @@ public class MoveShoulder extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {
-    double currentShoulderPosition = shoulder.getSelectedSensorPosition();
+  public void execute() {}
     
-    if (currentShoulderPosition < rotationTarget) {
-      shoulder.set(0.20);
-    }
-    else if (currentShoulderPosition > rotationTarget) {
-      shoulder.set(-0.20);
-    }
-  }
 
   @Override
   public void end(boolean interrupted) {
