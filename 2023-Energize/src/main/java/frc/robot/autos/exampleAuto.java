@@ -33,12 +33,9 @@ public class exampleAuto extends SequentialCommandGroup {
         
         Trajectory exampleTrajectory =
             TrajectoryGenerator.generateTrajectory(
-                // Start at the origin facing the +X direction
                 new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(0.2, 0.2), new Translation2d(0.4, -0.2)),
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(0.6, 0, new Rotation2d(0)),
+                List.of(new Translation2d(0.5, 0)),
+                new Pose2d(0.5, 0, new Rotation2d(0)),
                 config);
 
         var thetaController =
@@ -61,17 +58,6 @@ public class exampleAuto extends SequentialCommandGroup {
 
 
         addCommands(
-            // new InstantCommand(() -> swerve.resetOdometry(traj.getInitialPose())),
-            // new PPSwerveControllerCommand(
-            // exampleTrajectory, 
-            // swerve::getPose, // Pose supplier
-            // Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-            // new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-            // new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
-            // new PIDController(Constants.AutoConstants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-            // swerve::setModuleStates, // Module states consumer
-            // true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-            // swerve) // Requires this drive subsystem
             swerveControllerCommand
         );
     }

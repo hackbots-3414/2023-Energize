@@ -50,7 +50,7 @@ public class DriveStraight extends CommandBase {
   @Override
   public void execute() {
     swerve.drive(translation2d, 0, true, true);
-    // Timer.delay(0.1);
+    Timer.delay(0.1);
   }
 
   @Override

@@ -9,20 +9,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.DriveStraight;
+import frc.robot.autos.exampleAuto;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LedCommand;
-import frc.robot.commands.MoveShoulder;
-import frc.robot.commands.MoveWrist;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.ejectCommand;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
-import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.Wrist;
 
 
 public class RobotContainer {
@@ -36,7 +28,7 @@ public class RobotContainer {
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  private final int rotationAxis = XboxController.Axis.kRightTrigger.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -72,7 +64,7 @@ public class RobotContainer {
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
+                () -> driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
@@ -115,6 +107,7 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     
     // return AutonomousFactory.getInstance(s_Swerve).testAuto();
-    return new DriveStraight(s_Swerve, 1, 0);
+    // return new DriveStraight(s_Swerve, 1, 0);
+    return new exampleAuto(s_Swerve);
   }
 }
