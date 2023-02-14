@@ -174,7 +174,7 @@ public final class Constants {
         public static final int wristCanCoderID = 9;
         public static final int ShoulderCanCoderID = 8;
 
-        public static final boolean shoulderCanCoderInvert = false;
+        public static final boolean shoulderCanCoderInvert = true;
         public static final boolean wristCanCoderInvert = false;
 
         public static final double highArmAngle = 3.0;
@@ -191,11 +191,14 @@ public final class Constants {
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
 
+        public static final double shoulderCanCoderOffset = 13.79;
+        public static final double wristCanCoderOffset = 0.0;
+
         public static final int wristRotationTarget = 4000;
         public static final int shoulderRotationTarget = 4000;
 
-        public static final int shoulderUpperLimit = 1000;
-        public static final int shoulderLowerLimit = 1000;
+        public static final int shoulderUpperLimit = 10;
+        public static final int shoulderLowerLimit = -86;
 
         public static final int wristUpperLimit = 1000;
         public static final int wristLowerLimit = 1000;

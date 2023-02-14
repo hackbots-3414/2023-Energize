@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,9 +14,7 @@ public class MoveShoulder extends CommandBase {
 
   private double rotationTarget;
 
-  public MoveShoulder(double rotationTarget, Shoulder shoulder) {
-    this.rotationTarget = rotationTarget;
-
+  public MoveShoulder(Shoulder shoulder) {
     addRequirements(shoulder);
   }
 
@@ -23,7 +22,9 @@ public class MoveShoulder extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {}
+  public void execute() {
+    shoulder.set(5);
+  }
     
 
   @Override
@@ -33,10 +34,6 @@ public class MoveShoulder extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    double currentShoulderPosition = shoulder.getSelectedSensorPosition();
-    if (Math.abs(currentShoulderPosition - rotationTarget) < 50) {
-      return true;
-    }
     return false;
   }
 

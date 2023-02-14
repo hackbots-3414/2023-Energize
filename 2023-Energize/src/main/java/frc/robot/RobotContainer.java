@@ -123,7 +123,7 @@ SmartDashboard.putData(new PIDBalance(s_Swerve));
     xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake, m_Shoulder, m_Wrist));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
-    testShoulder.whileTrue(new MoveShoulder(Constants.IntakeConstants.shoulderRotationTarget, m_Shoulder));
+    testShoulder.whileTrue(new MoveShoulder(m_Shoulder));
     testWrist.whileTrue(new MoveWrist(Constants.IntakeConstants.wristRotationTarget, m_Intake));
   }
 
