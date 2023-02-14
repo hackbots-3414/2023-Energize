@@ -13,18 +13,10 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
@@ -34,17 +26,13 @@ public class AutonomousFactory {
 
     private static Swerve swerve;
 
-    private AutonomousFactory() {
-    }
+    private AutonomousFactory() {}
 
     public static AutonomousFactory getInstance(Swerve m_swerve) {
         swerve = m_swerve;
         return me;
     }
 
-    // CREATING COMMANDS
-
-    
     private Command followTrajectoryCommand(String pathName, boolean isFirstPath) {
         PathPlannerTrajectory traj = PathPlanner.loadPath(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
         return new SequentialCommandGroup(
@@ -72,37 +60,5 @@ public class AutonomousFactory {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("testPath", true)));
         return group;
-    }
-
-    public SequentialCommandGroup move1CM() {
-        SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("move1CM", true)));
-        return group;
-    }
-
-    public class RamseteCommandProxy extends RamseteCommand {
-        private Trajectory trajectory;
-
-        public RamseteCommandProxy(Trajectory trajectory, Supplier<Pose2d> pose, RamseteController controller, SimpleMotorFeedforward feedforward, DifferentialDriveKinematics kinematics, Supplier<DifferentialDriveWheelSpeeds> wheelSpeeds, PIDController leftController, PIDController rightController, BiConsumer<Double, Double> outputVolts, Subsystem... requirements) {
-            super(trajectory, pose, controller, feedforward, kinematics, wheelSpeeds, leftController, rightController, outputVolts, requirements);
-            this.trajectory = trajectory;
-        }
-
-        @Override
-        public void initialize() {
-            swerve.resetOdometry(trajectory.getInitialPose());
-            super.initialize();
-        }
-
-        @Override
-        public void execute() {
-            super.execute();
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            swerve.drive(new Translation2d(0, 0), 0, true, true);
-            super.end(interrupted);
-        }
     }
 }

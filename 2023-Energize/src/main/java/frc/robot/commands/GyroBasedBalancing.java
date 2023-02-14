@@ -4,7 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.autos.DriveStraight;
+import frc.robot.autos.ManualPathweaver;
 import frc.robot.subsystems.Swerve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public class GyroBasedBalancing extends CommandBase {
     SmartDashboard.putNumber("Roll", roll.getDegrees());
     current = Math.sqrt(Math.pow(pitch.getDegrees(), 2) + Math.pow(roll.getDegrees(), 2));
     SmartDashboard.putNumber("Combined", current);
-    new InstantCommand(() -> new DriveStraight(swerve, 1, 0));
+    new InstantCommand(() -> new ManualPathweaver(swerve, 1, 0, 0));
     if (current > prev) {
       multiplier = -1;
     }
