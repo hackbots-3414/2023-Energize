@@ -37,7 +37,7 @@ public class Wrist extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
-    wrist.set(speed);
+    wrist.set(ControlMode.PercentOutput, speed);
   }
 
   private void configMotor() {
