@@ -1,14 +1,14 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class Intake extends SubsystemBase {
@@ -24,17 +24,13 @@ public class Intake extends SubsystemBase {
   // private final Color cubeTarget = new Color(.168, .023, .178);
   // private final Color coneTarget = new Color( .235, .221, .011); 
   
-  public Intake() {
+  public Intake() {}
 
-  }
-
-  public void spinHand(double speed) {
+  public void set(double speed) {
     hand.set(speed);
   }
 
-
-
-  public void stopHand() {
+  public void stop() {
     hand.set(0.0);
   }
 

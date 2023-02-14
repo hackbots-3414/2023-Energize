@@ -167,19 +167,24 @@ public final class Constants {
         public static final boolean shoulderCanCoderInvert = true;
         public static final boolean wristCanCoderInvert = false;
 
-        public static final double highArmAngle = 3.0;
-        public static final double defaultArmAngle = 0.0; 
-        public static final double lowArmangle = 1.0; 
-        public static final double mediumArmAngle = 2.0;
-        // public static final double shelfArmAngle = 4.0; 
-        public static final double highWristAngle = 3.0;
-        public static final double defaultWristAngle = 0.0; 
-        public static final double lowWristAngle = 1.0; 
-        public static final double mediumWristAngle = 2.0;
+        // public static final double highArmAngle = 3.0;
+        // public static final double defaultArmAngle = 0.0; 
+        // public static final double lowArmangle = 1.0; 
+        // public static final double mediumArmAngle = 2.0;
+        // public static final double shelfArmAngle = 4.0;
+        // public static final double highWristAngle = 3.0;
+        // public static final double defaultWristAngle = 0.0; 
+        // public static final double lowWristAngle = 1.0; 
+        // public static final double mediumWristAngle = 2.0;
         // public static final double shelfWristAngle = 4.0;
 
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
+
+        public static final double wristMoveSpeedPercentage = 0.1;
+        public static final double shoulderMoveSpeedPercentage = 0.1;
+
+        
 
         public static final double shoulderCanCoderOffset = 13.79;
         public static final double wristCanCoderOffset = 0.0;

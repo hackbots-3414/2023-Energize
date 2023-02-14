@@ -4,25 +4,21 @@
 
 package frc.robot.subsystems;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-import com.ctre.phoenix.sensors.SensorTimeBase;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.math.Conversions;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.Swerve;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import frc.robot.Robot;
 
 
 public class Shoulder extends SubsystemBase {
@@ -42,6 +38,14 @@ public class Shoulder extends SubsystemBase {
     configMotor();
     
   }
+
+  public void set(double speed) {
+    shoulder.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void stop() {
+    shoulder.set(0.0);
+  }
  
   private void configShoulderEncoder() {
     shoulderCanCoder.configFactoryDefault(Constants.IntakeConstants.canPause);
@@ -51,39 +55,6 @@ public class Shoulder extends SubsystemBase {
     shoulderCanCoder.configMagnetOffset(Constants.IntakeConstants.shoulderCanCoderOffset, IntakeConstants.canPause);
     shoulderCanCoder.configSensorDirection(Constants.IntakeConstants.shoulderCanCoderInvert, IntakeConstants.canPause);
 }
-
-  public void moveShoulder(double angle) {
-    
-    shoulder.set(ControlMode.MotionMagic, angle);
-
-  }
-
-
-
-  public void spin(double speed) {
-    shoulder.set(speed);
-  }
-
-  public void moveShoulderUp(double speed, int upperLimit) {
-
-    double position = shoulder.getSelectedSensorPosition();
-    while (position < upperLimit) {
-      spin(speed);
-    }
-
-  }
-
-  public void moveShoulderDown(double speed, int lowerLimit){
-    double position = shoulder.getSelectedSensorPosition();
-
-    while (position > lowerLimit) {
-      spin(speed);
-    }
-  }
-
-  public void stop() {
-    shoulder.set(0.0);
-  }
 
   private void configMotor() {
     shoulder.configFactoryDefault(IntakeConstants.canPause);
