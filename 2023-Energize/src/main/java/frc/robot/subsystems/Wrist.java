@@ -4,19 +4,20 @@
 
 package frc.robot.subsystems;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.Swerve;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import frc.robot.Robot;
 
 public class Wrist extends SubsystemBase {
   final static Logger logger = LoggerFactory.getLogger(Wrist.class);
@@ -24,27 +25,22 @@ public class Wrist extends SubsystemBase {
   WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
   CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID);
 
-  private void configShoulderEncoder() {
-    wristCanCoder.configFactoryDefault();
-    wristCanCoder.configAllSettings(Robot.ctreConfigs.wristCanCoderConfig);
-}
-
-  public void moveWrist(double angle) {
-    
-    wrist.set(ControlMode.MotionMagic, angle);
-
-  }
-
   public Wrist() {
     configMotor();
-    configShoulderEncoder();
+    configWristEncoder();
+  }
+
+  public void moveWrist(double angle) {
+
+    wrist.set(ControlMode.MotionMagic, angle);
+
   }
 
   public void setSpeed(double speed) {
     wrist.set(speed);
   }
 
-  private void configMotor(){        
+  private void configMotor() {
     wrist.configFactoryDefault(IntakeConstants.canPause);
     wrist.configRemoteFeedbackFilter(wristCanCoder, 0, IntakeConstants.canPause);
     wrist.setSafetyEnabled(true);
@@ -55,12 +51,22 @@ public class Wrist extends SubsystemBase {
     wrist.setNeutralMode(NeutralMode.Brake);
   }
 
-  public double getPosition(){
-    // FIX ME USE CAN CODER
-   return wrist.getSelectedSensorPosition();
+  private void configWristEncoder() {
+    wristCanCoder.configFactoryDefault();
+    wristCanCoder.configAllSettings(Robot.ctreConfigs.wristCanCoderConfig);
+    wristCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180, IntakeConstants.canPause);
+    wristCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition,
+        IntakeConstants.canPause);
+    wristCanCoder.configMagnetOffset(Constants.IntakeConstants.wristCanCoderOffset, IntakeConstants.canPause);
+    wristCanCoder.configSensorDirection(Constants.IntakeConstants.wristCanCoderInvert, IntakeConstants.canPause);
   }
 
-  public void stopWrist(){
+  public double getPosition() {
+    // FIX ME USE CAN CODER
+    return wrist.getSelectedSensorPosition();
+  }
+
+  public void stopWrist() {
     wrist.set(0.0);
   }
 

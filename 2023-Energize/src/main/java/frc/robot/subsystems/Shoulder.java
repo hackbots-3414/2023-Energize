@@ -7,7 +7,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+import com.ctre.phoenix.sensors.SensorTimeBase;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,7 +45,11 @@ public class Shoulder extends SubsystemBase {
  
   private void configShoulderEncoder() {
     shoulderCanCoder.configFactoryDefault(Constants.IntakeConstants.canPause);
-    shoulderCanCoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+    shoulderCanCoder.configAllSettings(Robot.ctreConfigs.wristCanCoderConfig, IntakeConstants.canPause);
+    shoulderCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180, IntakeConstants.canPause);
+    shoulderCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition, IntakeConstants.canPause);
+    shoulderCanCoder.configMagnetOffset(Constants.IntakeConstants.shoulderCanCoderOffset, IntakeConstants.canPause);
+    shoulderCanCoder.configSensorDirection(Constants.IntakeConstants.shoulderCanCoderInvert, IntakeConstants.canPause);
 }
 
   public void moveShoulder(double angle) {
@@ -82,10 +89,10 @@ public class Shoulder extends SubsystemBase {
     shoulder.configFactoryDefault(IntakeConstants.canPause);
     shoulder.configRemoteFeedbackFilter(shoulderCanCoder, 0, IntakeConstants.canPause);
     shoulder.setSafetyEnabled(true);
-    shoulder.configForwardSoftLimitThreshold(Constants.IntakeConstants.shoulderLowerLimit, 0);
-    shoulder.configReverseSoftLimitThreshold(Constants.IntakeConstants.shoulderUpperLimit, 0);
-    shoulder.configForwardSoftLimitEnable(false, 0);
-    shoulder.configReverseSoftLimitEnable(false, 0);
+    shoulder.configForwardSoftLimitThreshold(Constants.IntakeConstants.shoulderLowerLimit, 100);
+    shoulder.configReverseSoftLimitThreshold(Constants.IntakeConstants.shoulderUpperLimit, 100);
+    shoulder.configForwardSoftLimitEnable(true, 100);
+    shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setNeutralMode(NeutralMode.Brake);
   }
 

@@ -68,16 +68,10 @@ public final class CTREConfigs {
         swerveCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
 
         // Shoulder CANCoder Configuration
-        shoulderCanCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-        shoulderCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
         shoulderCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
-        shoulderCanCoderConfig.sensorDirection = Constants.IntakeConstants.shoulderCanCoderInvert;
 
         // Wrist CANCoder Configuration
-        wristCanCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-        wristCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
         wristCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
-        wristCanCoderConfig.sensorDirection = Constants.IntakeConstants.wristCanCoderInvert;
 
     }
 
