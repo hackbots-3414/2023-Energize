@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -35,8 +36,7 @@ public class Shoulder extends SubsystemBase {
     configShoulderEncoder();
 
     shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
-    configMotor();
-    
+    configMotor();    
   }
 
   public void set(double speed) {
@@ -58,12 +58,14 @@ public class Shoulder extends SubsystemBase {
 
   private void configMotor() {
     shoulder.configFactoryDefault(IntakeConstants.canPause);
+    shoulder.setSelectedSensorPosition(getCanCoder() * IntakeConstants.degreesToCancoder, 0, 100);
     shoulder.configRemoteFeedbackFilter(shoulderCanCoder, 0, IntakeConstants.canPause);
     shoulder.setSafetyEnabled(true);
-    shoulder.configForwardSoftLimitThreshold(Constants.IntakeConstants.shoulderLowerLimit, 100);
-    shoulder.configReverseSoftLimitThreshold(Constants.IntakeConstants.shoulderUpperLimit, 100);
+    shoulder.configForwardSoftLimitThreshold(Constants.IntakeConstants.shoulderLowerLimit * IntakeConstants.degreesToCancoder, 100);
+    shoulder.configReverseSoftLimitThreshold(Constants.IntakeConstants.shoulderUpperLimit * IntakeConstants.degreesToCancoder, 100);
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
+    shoulder.setInverted(TalonFXInvertType.CounterClockwise);
     shoulder.setNeutralMode(NeutralMode.Brake);
   }
 
