@@ -4,17 +4,17 @@
 
 package frc.robot.autos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
@@ -43,13 +43,18 @@ public class AutonomousFactory {
         TrajectoryConfig config = new TrajectoryConfig(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.Swerve.swerveKinematics);        
 
         PathPlannerTrajectory traj = PathPlanner.loadPath(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-
         
+        List<EventMarker> markers = traj.getMarkers();
+        ArrayList<Translation2d> waypoints = new ArrayList<>();
+
+        for (EventMarker marker : markers) {
+            waypoints.add(marker.positionMeters);
+        }
 
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 traj.getInitialHolonomicPose(),
-                List.of(new Translation2d(x/2, y/2)),
-                traj.getEndState(),
+                waypoints,
+                traj.getEndState().poseMeters,
                 config);
 
         var thetaController = new ProfiledPIDController(Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
