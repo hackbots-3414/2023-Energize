@@ -157,6 +157,12 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
+
+        public static final class shoulder {
+            public static final double maxGravFF = 0.0;
+            
+        }
+
         public static final double degreesToCancoder = 4096.0 / 360.0;
 
         public static final double shoulderGearRatio = 308.33;
