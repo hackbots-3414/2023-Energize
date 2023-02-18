@@ -5,48 +5,63 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Wrist;
 import frc.robot.Constants.IntakeAngles;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Wrist;;
 
-public class IntakeAuto extends CommandBase {
-  /** Creates a new IntakeAuto. */
-  private Intake intake;
+public class ArmCommand extends CommandBase {
+  /** Creates a new ArmCommand. */
   private Wrist wrist;
   private Shoulder shoulder;
   private int selector;
-
-  public IntakeAuto(Wrist wrist, Shoulder shoulder, int selector) {
-    this.wrist = wrist;
+  
+  public ArmCommand(Shoulder shoulder, Wrist wrist, int selector) {
     this.shoulder = shoulder;
+    this.wrist = wrist;
     this.selector = selector;
 
-    addRequirements(wrist);
     addRequirements(shoulder);
-
+    addRequirements(wrist);
   }
 
+ 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     switch (selector) {
+
+      // stowed
       case 0:
+        wrist.motionMagic(IntakeAngles.stowedWristAngle);
+        shoulder.motionMagic(IntakeAngles.stowedShoulderAngle);
+        break;
+
+      // pick up
+      case 1:
+        wrist.motionMagic(IntakeAngles.pickUpWristAngle);
+        shoulder.motionMagic(IntakeAngles.pickUpShoulderAngle);
+        break;
+
+      // low
+      case 2:
         wrist.motionMagic(IntakeAngles.lowWristAngle);
         shoulder.motionMagic(IntakeAngles.lowShoulderAngle);
         break;
 
-      case 1:
+      // mid
+      case 3:
         wrist.motionMagic(IntakeAngles.midWristAngle);
         shoulder.motionMagic(IntakeAngles.midShoulderAngle);
         break;
 
-      case 2:
+      // high
+      case 4:
         wrist.motionMagic(IntakeAngles.highWristAngle);
         shoulder.motionMagic(IntakeAngles.highShoulderAngle);
         break;
       
-      case 3:
+      // shelf
+      case 5:
         wrist.motionMagic(IntakeAngles.shelfWristAngle);
         shoulder.motionMagic(IntakeAngles.shelfShoulderAngle);
         break;
@@ -68,5 +83,4 @@ public class IntakeAuto extends CommandBase {
   public boolean isFinished() {
     return true;
   }
-
 }
