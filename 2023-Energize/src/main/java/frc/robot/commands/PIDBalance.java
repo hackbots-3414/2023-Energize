@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,7 +19,7 @@ public class PIDBalance extends PIDCommand {
   public PIDBalance(Swerve swerve) {
     super(
         // The controller that the command will use
-        new PIDController(.016, 0, 0),
+        new PIDController(Constants.BalanceConstants.KP, Constants.BalanceConstants.KI, Constants.BalanceConstants.KD),
         // This should return the measurement
         () -> {return swerve.getPitch().getDegrees();},
         // This should return the setpoint (can also be a constant)
