@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -13,6 +14,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.ManualPathweaver;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
+import frc.robot.commands.PIDBalance;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
@@ -66,8 +68,8 @@ public class RobotContainer {
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(1), 
-                () -> -driver.getRawAxis(0), 
-                () -> -driver.getRawAxis(4), 
+                () -> driver.getRawAxis(0), 
+                () -> driver.getRawAxis(3), 
                 () -> robotCentric.getAsBoolean()
             )
 
@@ -75,7 +77,7 @@ public class RobotContainer {
 
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
-
+SmartDashboard.putData(new PIDBalance(s_Swerve));
     configureBindings();
   }
 
