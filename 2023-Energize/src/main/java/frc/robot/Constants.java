@@ -169,7 +169,7 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final double degreesToCancoder = 4096.0 / 360.0;
 
-        public static final double shoulderGearRatio = 200.0;
+        public static final double shoulderGearRatio = 308.33;
         public static final double wristGearRatio = 200.;
 
 
