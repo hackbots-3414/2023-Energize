@@ -6,6 +6,8 @@ package frc.robot.autos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -15,13 +17,17 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
@@ -60,7 +66,7 @@ public class AutonomousFactory {
         var thetaController = new ProfiledPIDController(Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-        SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+        SwerveControllerCommandProxy swerveControllerCommand = new SwerveControllerCommandProxy(
                 trajectory, swerve::getPose, Constants.Swerve.swerveKinematics,
                 new PIDController(Constants.AutoConstants.kPXController, 0, 0),
                 new PIDController(Constants.AutoConstants.kPYController, 0, 0),
@@ -102,5 +108,40 @@ public class AutonomousFactory {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("DriveStraight", true)));
         return group;
+    }
+    
+    public class SwerveControllerCommandProxy extends SwerveControllerCommand{
+
+        public SwerveControllerCommandProxy(Trajectory trajectory,
+        Supplier<Pose2d> pose,
+        SwerveDriveKinematics kinematics,
+        PIDController xController,
+        PIDController yController,
+        ProfiledPIDController thetaController,
+        Consumer<SwerveModuleState[]> outputModuleStates,
+        Subsystem... requirements) {
+            super(trajectory, pose, kinematics, xController, yController, thetaController, outputModuleStates, requirements);
+        }
+
+        @Override
+        public void initialize() {
+            super.initialize();
+        }
+
+        @Override
+        public void execute() {
+            swerve.updateOdometry();
+            super.execute();
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            super.end(interrupted);
+        }
+        
+        @Override
+        public boolean isFinished() {
+            return super.isFinished();
+        }
     }
 }

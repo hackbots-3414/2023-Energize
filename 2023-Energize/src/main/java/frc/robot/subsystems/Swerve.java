@@ -1,22 +1,35 @@
 package frc.robot.subsystems;
 
-import frc.robot.SwerveModule;
-import frc.robot.Constants;
+import java.io.IOException;
+import java.util.Optional;
 
+import org.photonvision.EstimatedRobotPose;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+
+import com.ctre.phoenix.sensors.Pigeon2;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-
-import com.ctre.phoenix.sensors.Pigeon2;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.SwerveModule;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -24,6 +37,11 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Translation2d translation2d;
+
+    public PhotonPoseEstimator photonPoseEstimator;
+    public SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getPitch()), getModulePositions(), new Pose2d());
+    public PhotonCamera camera = new PhotonCamera("Front_Camera");
+    public Field2d fieldSim = new Field2d();
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -44,6 +62,12 @@ public class Swerve extends SubsystemBase {
         resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+    
+        try {
+            photonPoseEstimator = new PhotonPoseEstimator(AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -135,6 +159,7 @@ public class Swerve extends SubsystemBase {
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  
         translation2d = getPose().getTranslation();
+        SmartDashboard.putNumber("gyro", getPitch().getDegrees());
 
         // for(SwerveModule mod : mSwerveMods){
         //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
@@ -146,5 +171,29 @@ public class Swerve extends SubsystemBase {
     public void setX() {
         SwerveModuleState[] states = {new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4))};
         setModuleStates(states);
+    }
+
+    public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevPose) {
+        photonPoseEstimator.setReferencePose(prevPose);
+        return photonPoseEstimator.update();
+    }
+    
+    public void updateOdometry() {
+        poseEstimator.update(getPitch(), getModulePositions());
+
+        Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+
+        if (result.isPresent()) {
+            EstimatedRobotPose camPose = result.get();
+            poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+            fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+        } else {
+            fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+        }
+
+        fieldSim.getObject("Actual Pos").setPose(getPose());
+        fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
+
+        resetOdometry(poseEstimator.getEstimatedPosition());
     }
 }
