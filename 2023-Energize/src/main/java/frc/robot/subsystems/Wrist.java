@@ -57,6 +57,11 @@ public class Wrist extends SubsystemBase {
     wrist.configReverseSoftLimitEnable(true, 100);
     wrist.setInverted(TalonFXInvertType.CounterClockwise);
     wrist.setNeutralMode(NeutralMode.Brake);
+    wrist.config_kP(0, Constants.IntakeConstants.wristkP, IntakeConstants.canPause);
+    wrist.config_kI(0, Constants.IntakeConstants.wristkP, IntakeConstants.canPause);
+    wrist.config_kD(0, Constants.IntakeConstants.wristkD, IntakeConstants.canPause);
+    wrist.configMotionAcceleration(Conversions.degreesToFalcon(IntakeConstants.wristmaxAccel / 100, IntakeConstants.wristGearRatio), IntakeConstants.canPause);
+    wrist.configMotionCruiseVelocity(Conversions.degreesToFalcon(Constants.IntakeConstants.wristmaxVelo / 10, Constants.IntakeConstants.wristGearRatio), Constants.IntakeConstants.canPause);
   }
 
   private void configWristEncoder() {
