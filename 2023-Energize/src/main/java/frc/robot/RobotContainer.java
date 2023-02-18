@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.DriveStraight;
+import frc.robot.autos.ManualPathweaver;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.IntakeCommand;
@@ -67,9 +67,9 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -OI.getLeftVertical(), 
-                () -> -OI.getLeftLateral(), 
-                () -> -OI.getRightLateral(), 
+                () -> -driver.getRawAxis(1), 
+                () -> -driver.getRawAxis(0), 
+                () -> -driver.getRawAxis(4), 
                 () -> robotCentric.getAsBoolean()
             )
 
@@ -110,6 +110,7 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     
     // return AutonomousFactory.getInstance(s_Swerve).testAuto();
-    return new DriveStraight(s_Swerve, 1, 0);
+    // return new DriveStraight(s_Swerve, 1, 0);
+    return new ManualPathweaver(s_Swerve, 1, 0, 1);
   }
 }
