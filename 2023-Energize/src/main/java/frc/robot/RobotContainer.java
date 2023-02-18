@@ -6,21 +6,20 @@ import org.slf4j.LoggerFactory;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.ManualPathweaver;
+import frc.robot.autos.AutonomousFactory;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
-import frc.robot.commands.PIDBalance;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
@@ -66,6 +65,9 @@ public class RobotContainer {
 
   private boolean openLoop = false;
 
+  SendableChooser<Command> autonChooser = new SendableChooser<>();
+
+
   public RobotContainer() {
 
     s_Swerve.setDefaultCommand(
@@ -80,7 +82,35 @@ public class RobotContainer {
 
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
-    SmartDashboard.putData(new PIDBalance(s_Swerve));
+
+    configureBindings();
+
+    autonChooser.addOption("Test Path", AutonomousFactory.getInstance(s_Swerve).driveStraight());
+  }
+
+  private void configureBindings() {
+    // JoystickButton aButton = new JoystickButton(driver, 1);
+    // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // JoystickButton xButton = new JoystickButton(driver, 3);
+    // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+
+    // JoystickButton tempA = new JoystickButton(driver, 1);
+    // tempA.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.defaultArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.defaultWristAngle))));
+    // JoystickButton tempB = new JoystickButton(driver, 2);
+    // tempB.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.mediumArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.mediumWristAngle))));
+    // JoystickButton tempX = new JoystickButton(driver, 3);
+    // tempX.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.lowArmangle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.lowWristAngle))));
+    // JoystickButton tempY = new JoystickButton(driver, 4);    
+    // tempY.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.highArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.highWristAngle))));
+
+    // JoystickButton rightBumper = new JoystickButton(driver, 6);
+    // rightBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(-Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
+
+    
+
+    // JoystickButton leftBumper = new JoystickButton(driver, 5);
+    // leftBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
+    // Configure the button bindings
     configureButtonBindings();
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
@@ -119,10 +149,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-
-    // return AutonomousFactory.getInstance(s_Swerve).testAuto();
-    // return new DriveStraight(s_Swerve, 1, 0);
-    return new ManualPathweaver(s_Swerve, 1, 0, 1);
+    return autonChooser.getSelected();
   }
 }
