@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeAngles;
 import frc.robot.Constants.IntakeAutoConstants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
@@ -32,23 +33,23 @@ public class IntakeAuto extends CommandBase {
   public void initialize() {
     switch (selector) {
       case 0:
-        wrist.moveWrist(IntakeAutoConstants.lowWristAngle);
-        shoulder.moveShoulder(IntakeAutoConstants.lowShoulderAngle);
+        wrist.motionMagic(IntakeAngles.lowWristAngle);
+        shoulder.motionMagic(IntakeAngles.lowShoulderAngle);
         break;
 
       case 1:
-        wrist.moveWrist(IntakeAutoConstants.midWristAngle);
-        shoulder.moveShoulder(IntakeAutoConstants.midShoulderAngle);
+        wrist.motionMagic(IntakeAngles.midWristAngle);
+        shoulder.motionMagic(IntakeAngles.midShoulderAngle);
         break;
 
       case 2:
-        wrist.moveWrist(IntakeAutoConstants.highWristAngle);
-        shoulder.moveShoulder(IntakeAutoConstants.highShoulderAngle);
+        wrist.motionMagic(IntakeAngles.highWristAngle);
+        shoulder.motionMagic(IntakeAngles.highShoulderAngle);
         break;
       
       case 3:
-        wrist.moveWrist(IntakeAutoConstants.shelfWristAngle);
-        shoulder.moveShoulder(IntakeAutoConstants.shelfShoulderAngle);
+        wrist.motionMagic(IntakeAngles.shelfWristAngle);
+        shoulder.motionMagic(IntakeAngles.shelfShoulderAngle);
         break;
     }
   }

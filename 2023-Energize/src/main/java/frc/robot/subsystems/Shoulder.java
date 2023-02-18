@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import org.opencv.core.Mat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -38,6 +40,10 @@ public class Shoulder extends SubsystemBase {
 
     shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
     configMotor();    
+  }
+
+  public void motionMagic(double angle) {
+    shoulder.set(ControlMode.MotionMagic, angle, DemandType.ArbitraryFeedForward, Constants.IntakeConstants.shoulderMaxGravFF * Math.cos(Math.toRadians(getCanCoder())));
   }
 
   public void set(double speed) {
