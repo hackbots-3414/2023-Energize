@@ -97,4 +97,10 @@ public class AutonomousFactory {
         group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("testPath", true)));
         return group;
     }
+
+    public SequentialCommandGroup driveStraight() {
+        SequentialCommandGroup group = new SequentialCommandGroup();
+        group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("DriveStraight", true)));
+        return group;
+    }
 }
