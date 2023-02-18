@@ -17,6 +17,7 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.math.Conversions;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Robot;
@@ -49,7 +50,7 @@ public class Shoulder extends SubsystemBase {
  
   private void configShoulderEncoder() {
     shoulderCanCoder.configFactoryDefault(Constants.IntakeConstants.canPause);
-    shoulderCanCoder.configAllSettings(Robot.ctreConfigs.wristCanCoderConfig, IntakeConstants.canPause);
+    shoulderCanCoder.configAllSettings(Robot.ctreConfigs.shoulderCanCoderConfig, IntakeConstants.canPause);
     shoulderCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180, IntakeConstants.canPause);
     shoulderCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition, IntakeConstants.canPause);
     shoulderCanCoder.configMagnetOffset(Constants.IntakeConstants.shoulderCanCoderOffset, IntakeConstants.canPause);
@@ -58,11 +59,11 @@ public class Shoulder extends SubsystemBase {
 
   private void configMotor() {
     shoulder.configFactoryDefault(IntakeConstants.canPause);
-    shoulder.setSelectedSensorPosition(getCanCoder() * IntakeConstants.degreesToCancoder, 0, 100);
+    shoulder.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder(), Constants.IntakeConstants.shoulderGearRatio), 0, 100);
     shoulder.configRemoteFeedbackFilter(shoulderCanCoder, 0, IntakeConstants.canPause);
     shoulder.setSafetyEnabled(true);
-    shoulder.configForwardSoftLimitThreshold(Constants.IntakeConstants.shoulderLowerLimit * IntakeConstants.degreesToCancoder, 100);
-    shoulder.configReverseSoftLimitThreshold(Constants.IntakeConstants.shoulderUpperLimit * IntakeConstants.degreesToCancoder, 100);
+    shoulder.configForwardSoftLimitThreshold(Conversions.degreesToFalcon(Constants.IntakeConstants.shoulderUpperLimit, Constants.IntakeConstants.shoulderGearRatio), 100);
+    shoulder.configReverseSoftLimitThreshold(Conversions.degreesToFalcon(Constants.IntakeConstants.shoulderLowerLimit, Constants.IntakeConstants.shoulderGearRatio), 100);
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
@@ -82,7 +83,5 @@ public class Shoulder extends SubsystemBase {
   public void periodic() {
     shoulder.feed();
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Shoulder pos", getPosition());
-    SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
   }
 }

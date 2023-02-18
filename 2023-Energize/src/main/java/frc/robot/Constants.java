@@ -159,6 +159,10 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final double degreesToCancoder = 4096.0 / 360.0;
 
+        public static final double shoulderGearRatio = 200.0;
+        public static final double wristGearRatio = 200.;
+
+
         public static final int handMotorID = 4;
         public static final int wristMotorID = 7;
         public static final int shoulderMotorID = 6;
@@ -183,20 +187,17 @@ public final class Constants {
         public static final double intakeSpeedPercent = 0.1;
         public static final double ejectSpeedPercent = -1;
 
-        public static final double wristMoveSpeedPercentage = 0.1;
+        public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
         public static final double shoulderCanCoderOffset = 13.79;
-        public static final double wristCanCoderOffset = 0.0;
-
-        public static final int wristRotationTarget = 4000;
-        public static final int shoulderRotationTarget = 4000;
+        public static final double wristCanCoderOffset = -5.97;
 
         public static final int shoulderUpperLimit = 10;
         public static final int shoulderLowerLimit = -86;
 
-        public static final int wristUpperLimit = 1000;
-        public static final int wristLowerLimit = 1000;
+        public static final int wristUpperLimit = 136;
+        public static final int wristLowerLimit = -62;
 
         // IshowSpeeds 
 
