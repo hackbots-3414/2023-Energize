@@ -228,4 +228,10 @@ public final class Constants {
         public static final double shelfShoulderAngle = 0.0;
 
     }
+
+    public static final class BalanceConstants {
+        public static final double KI = 0;
+        public static final double KP = .016;
+        public static final double KD = 0;
+    }
 }
