@@ -124,7 +124,7 @@ public class AutonomousFactory {
 
         @Override
         public void execute() {
-            swerve.updateOdometry();
+            //swerve.updateOdometry();
             super.execute();
         }
 
