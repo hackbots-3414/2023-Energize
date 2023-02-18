@@ -52,7 +52,7 @@ public class AutonomousFactory {
         }
 
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-                traj.getInitialHolonomicPose(),
+                traj.getInitialState().poseMeters,
                 waypoints,
                 traj.getEndState().poseMeters,
                 config);
@@ -102,5 +102,40 @@ public class AutonomousFactory {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("DriveStraight", true)));
         return group;
+    }
+    
+    public class SwerveControllerCommandProxy extends SwerveControllerCommand{
+
+        public SwerveControllerCommandProxy(Trajectory trajectory,
+        Supplier<Pose2d> pose,
+        SwerveDriveKinematics kinematics,
+        PIDController xController,
+        PIDController yController,
+        ProfiledPIDController thetaController,
+        Consumer<SwerveModuleState[]> outputModuleStates,
+        Subsystem... requirements) {
+            super(trajectory, pose, kinematics, xController, yController, thetaController, outputModuleStates, requirements);
+        }
+
+        @Override
+        public void initialize() {
+            super.initialize();
+        }
+
+        @Override
+        public void execute() {
+            // swerve.updateOdometry();
+            super.execute();
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            super.end(interrupted);
+        }
+        
+        @Override
+        public boolean isFinished() {
+            return super.isFinished();
+        }
     }
 }
