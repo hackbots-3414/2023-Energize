@@ -168,10 +168,8 @@ public final class Constants {
 
     public static final class IntakeConstants {
 
-        public static final class shoulder {
-            public static final double maxGravFF = 0.0;
-
-        }
+        public static final double shoulderMaxGravFF = 0.0;
+        public static final double wristMaxGravFF = 0.0;
 
         public static final double degreesToCancoder = 4096.0 / 360.0;
 
@@ -222,7 +220,13 @@ public final class Constants {
         public static final int canPause = 100;
     }
 
-    public static final class IntakeAutoConstants {
+    public static final class IntakeAngles {
+
+        public static final double stowedWristAngle = 0.0;
+        public static final double stowedShoulderAngle = 0.0;
+
+        public static final double pickUpWristAngle = 0.0;
+        public static final double pickUpShoulderAngle = 0.0;
 
         public static final double lowWristAngle = 0.0;
         public static final double lowShoulderAngle = 0.0;

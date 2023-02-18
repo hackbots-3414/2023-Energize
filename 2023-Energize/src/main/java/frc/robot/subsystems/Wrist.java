@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -35,6 +36,10 @@ public class Wrist extends SubsystemBase {
     configWristEncoder();
     wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
     configMotor();
+  }
+
+  public void motionMagic(double angle) {
+    wrist.set(ControlMode.MotionMagic, angle, DemandType.ArbitraryFeedForward, Constants.IntakeConstants.wristMaxGravFF * Math.cos(Math.toRadians(getCanCoder())));
   }
 
   public void setSpeed(double speed) {
