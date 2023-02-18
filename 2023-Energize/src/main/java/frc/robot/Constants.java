@@ -160,13 +160,13 @@ public final class Constants {
 
         public static final class shoulder {
             public static final double maxGravFF = 0.0;
-            
+
         }
 
         public static final double degreesToCancoder = 4096.0 / 360.0;
 
         public static final double shoulderGearRatio = 308.33;
-        public static final double wristGearRatio = 200.;
+        public static final double wristGearRatio = 200.0;
 
 
         public static final int handMotorID = 4;
