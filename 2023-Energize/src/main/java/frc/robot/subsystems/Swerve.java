@@ -38,10 +38,10 @@ public class Swerve extends SubsystemBase {
 
     public Translation2d translation2d;
 
-    public PhotonPoseEstimator photonPoseEstimator;
-    public SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getPitch()), getModulePositions(), new Pose2d());
-    public PhotonCamera camera = new PhotonCamera("Front_Camera");
-    public Field2d fieldSim = new Field2d();
+    // public PhotonPoseEstimator photonPoseEstimator;
+    // public SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(), getModulePositions(), new Pose2d());
+    // public PhotonCamera camera = new PhotonCamera("Front_Camera");
+    // public Field2d fieldSim = new Field2d();
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -63,11 +63,11 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     
-        try {
-            photonPoseEstimator = new PhotonPoseEstimator(AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     photonPoseEstimator = new PhotonPoseEstimator(AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -173,27 +173,27 @@ public class Swerve extends SubsystemBase {
         setModuleStates(states);
     }
 
-    public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevPose) {
-        photonPoseEstimator.setReferencePose(prevPose);
-        return photonPoseEstimator.update();
-    }
+    // public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevPose) {
+    //     photonPoseEstimator.setReferencePose(prevPose);
+    //     return photonPoseEstimator.update();
+    // }
     
-    public void updateOdometry() {
-        poseEstimator.update(getPitch(), getModulePositions());
+    // public void updateOdometry() {
+    //     poseEstimator.update(getPitch(), getModulePositions());
 
-        Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+    //     Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
 
-        if (result.isPresent()) {
-            EstimatedRobotPose camPose = result.get();
-            poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
-            fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-        } else {
-            fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
-        }
+    //     if (result.isPresent()) {
+    //         EstimatedRobotPose camPose = result.get();
+    //         poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+    //         fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+    //     } else {
+    //         fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+    //     }
 
-        fieldSim.getObject("Actual Pos").setPose(getPose());
-        fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
+    //     fieldSim.getObject("Actual Pos").setPose(getPose());
+    //     fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
 
-        resetOdometry(poseEstimator.getEstimatedPosition());
-    }
+    //     resetOdometry(poseEstimator.getEstimatedPosition());
+    // }
 }

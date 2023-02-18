@@ -33,8 +33,8 @@ public class RobotContainer {
 
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton balance = new JoystickButton(driver, XboxController.Button.kA.value);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, 13);
+  private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
@@ -79,10 +79,9 @@ public class RobotContainer {
 
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
-SmartDashboard.putData(new PIDBalance(s_Swerve));
     configureBindings();
 
-    autonChooser.addOption("Test Path", AutonomousFactory.getInstance(s_Swerve).driveStraight());
+    autonChooser.setDefaultOption("Test Path", AutonomousFactory.getInstance(s_Swerve).driveStraight());
   }
 
   private void configureBindings() {
@@ -115,8 +114,8 @@ SmartDashboard.putData(new PIDBalance(s_Swerve));
 
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    balance.onTrue(new GyroBasedBalancing(s_Swerve));
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
+    autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
 
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));

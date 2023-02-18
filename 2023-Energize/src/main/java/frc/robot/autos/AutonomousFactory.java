@@ -58,7 +58,7 @@ public class AutonomousFactory {
         }
 
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-                traj.getInitialHolonomicPose(),
+                traj.getInitialState().poseMeters,
                 waypoints,
                 traj.getEndState().poseMeters,
                 config);
@@ -130,7 +130,7 @@ public class AutonomousFactory {
 
         @Override
         public void execute() {
-            swerve.updateOdometry();
+            // swerve.updateOdometry();
             super.execute();
         }
 
