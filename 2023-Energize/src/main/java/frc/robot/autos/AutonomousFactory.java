@@ -5,30 +5,24 @@
 package frc.robot.autos;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.HashMap;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
+import com.pathplanner.lib.PathPoint;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
@@ -38,6 +32,25 @@ public class AutonomousFactory {
 
     private static Swerve swerve;
 
+    private static PathPoint object1 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint object2 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint object3 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint object4 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+
+    private static PathPoint object5 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint object6 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint object7 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint object8 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+
+    private static PathPoint leave = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+
+    private static PathPoint balanceLeft = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint balanceMiddle = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static PathPoint balanceRight = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+
+
+
+
     private AutonomousFactory() {}
 
     public static AutonomousFactory getInstance(Swerve m_swerve) {
@@ -45,34 +58,31 @@ public class AutonomousFactory {
         return me;
     }
 
-    public SwerveControllerCommand followTrajectoryCommand(String pathName){
-        TrajectoryConfig config = new TrajectoryConfig(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.Swerve.swerveKinematics);        
+    public PathPoint resetToVision() {
+        swerve.updateOdometry();
+        Pose2d pose = swerve.getPose();
+        return new PathPoint(pose.getTranslation(), pose.getRotation());
+    }
 
-        PathPlannerTrajectory traj = PathPlanner.loadPath(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-        
-        List<EventMarker> markers = traj.getMarkers();
-        ArrayList<Translation2d> waypoints = new ArrayList<>();
-
-        for (EventMarker marker : markers) {
-            waypoints.add(marker.positionMeters);
+    public Command followTrajectoryOnTheFly(PathPoint... pathPoints){
+        ArrayList<PathPoint> points = new ArrayList<>();
+        for (PathPoint pathPoint : pathPoints) {
+            points.add(pathPoint);
         }
 
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-                traj.getInitialState().poseMeters,
-                waypoints,
-                traj.getEndState().poseMeters,
-                config);
+        PathPlannerTrajectory traj = PathPlanner.generatePath(new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared), points);
 
-        var thetaController = new ProfiledPIDController(Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
-        thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-        SwerveControllerCommandProxy swerveControllerCommand = new SwerveControllerCommandProxy(
-                trajectory, swerve::getPose, Constants.Swerve.swerveKinematics,
-                new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-                thetaController, swerve::setModuleStates, swerve);
-            
-        return swerveControllerCommand;
+        return new PPSwerveControllerCommand(
+            traj, 
+            swerve::getPose, // Pose supplier
+            Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
+            new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+            new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
+            new PIDController(Constants.AutoConstants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+            swerve::setModuleStates, // Module states consumer
+            true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+            swerve // Requires this drive subsystem
+        );
     }
 
     private Command followTrajectoryCommand(String pathName, boolean isFirstPath) {
@@ -95,53 +105,31 @@ public class AutonomousFactory {
                  true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
                  swerve // Requires this drive subsystem
              )
-         );
+        );
     }
 
-    public SequentialCommandGroup testAuto() {
-        SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("testPath", true)));
-        return group;
-    }
-
-    public SequentialCommandGroup driveStraight() {
-        SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(new SequentialCommandGroup(followTrajectoryCommand("DriveStraight", true)));
-        return group;
-    }
-    
-    public class SwerveControllerCommandProxy extends SwerveControllerCommand{
-
-        public SwerveControllerCommandProxy(Trajectory trajectory,
-        Supplier<Pose2d> pose,
-        SwerveDriveKinematics kinematics,
-        PIDController xController,
-        PIDController yController,
-        ProfiledPIDController thetaController,
-        Consumer<SwerveModuleState[]> outputModuleStates,
-        Subsystem... requirements) {
-            super(trajectory, pose, kinematics, xController, yController, thetaController, outputModuleStates, requirements);
-        }
-
-        @Override
-        public void initialize() {
-            super.initialize();
-        }
-
-        @Override
-        public void execute() {
-            // swerve.updateOdometry();
-            super.execute();
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            super.end(interrupted);
-        }
+    private Command followTrajectoryWithEventsCommand(String pathName) {
+        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
         
-        @Override
-        public boolean isFinished() {
-            return super.isFinished();
-        }
+        HashMap<String, Command> eventMap = new HashMap<>();
+        eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+        eventMap.put("intakeDown", new PrintCommand("intakeDown"));
+
+        SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+            swerve::getPose, 
+            swerve::resetOdometry,
+            Constants.Swerve.swerveKinematics,
+            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0), 
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, 0.0),
+            swerve::setModuleStates,
+            eventMap,
+            true,
+            swerve);
+
+        return autoBuilder.fullAuto(pathGroup);
+    }
+
+    public Command driveStraight() {
+        return followTrajectoryCommand("DriveStraight", true);
     }
 }
