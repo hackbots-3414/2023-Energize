@@ -3,6 +3,7 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -79,7 +80,20 @@ public class RobotContainer {
 
 SmartDashboard.putData(new PIDBalance(s_Swerve));
     configureBindings();
+
+SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
+
+if (DriverStation.getMatchTime()<15){
+  SmartDashboard.putString("Game part:", "ENDGAME");
+} else if (DriverStation.getMatchTime()<135){
+  SmartDashboard.putString("Game part","PLAY");
+} else {
+    SmartDashboard.putString("Game part", "AUTO");
   }
+}
+
+  
+
 
   private void configureBindings() {
     // JoystickButton aButton = new JoystickButton(driver, 1);
