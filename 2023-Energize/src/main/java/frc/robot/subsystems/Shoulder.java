@@ -20,6 +20,7 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,18 +43,39 @@ public class Shoulder extends ProfiledPIDSubsystem {
       IntakeConstants.shoulderkV, IntakeConstants.shoulderkA);
 
   public Shoulder() {
+    super(
+      new ProfiledPIDController(
+        IntakeConstants.shoulderkP, 
+        0, 
+        0, 
+        new TrapezoidProfile.Constraints(
+          IntakeConstants.shouldermaxVelo, 
+          IntakeConstants.shouldermaxAccel)), 
+          0);
+
     configShoulderEncoder();
     configMotor();
 
-    super(
-      new ProfiledPIDController(IntakeConstants.shoulderkP, 0, 0, new TrapezoidProfile.Constraints(IntakeConstants.shouldermaxVelo, IntakeConstants.shouldermaxAccel)), 0);
-    )
+    //Set distance per pulse for encoder???
+    setGoal(IntakeConstants.shoulderCanCoderOffset);
+  }
 
+  @Override
+  public void useOutput(double output, TrapezoidProfile.State setpoint) {
+    //calculate feedforward from setpoint
+    double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
+    //add the feedforward to the PID output to get the motor output
+    shoulder.setVoltage(output + feedforward);
+  }
+
+  @Override
+  public double getMeasurement() {
+    return getCanCoder() + IntakeConstants.shoulderCanCoderOffset;
   }
 
   public void motionMagic(double angle) {
-    shoulder.set(ControlMode.MotionMagic, angle, DemandType.ArbitraryFeedForward,
-        Constants.IntakeConstants.shoulderMaxGravFF * Math.cos(Math.toRadians(getCanCoder())));
+    // shoulder.set(ControlMode.MotionMagic, angle, DemandType.ArbitraryFeedForward,
+    //     Constants.IntakeConstants.shoulderMaxGravFF * Math.cos(Math.toRadians(getCanCoder())));
     System.out.println(angle);
   }
 
