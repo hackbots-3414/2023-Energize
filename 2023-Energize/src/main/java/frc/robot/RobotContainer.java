@@ -3,6 +3,7 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -83,13 +84,21 @@ public class RobotContainer {
 
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
+    SmartDashboard.putData(new PIDBalance(s_Swerve));
+        configureBindings();
 
-    configureButtonBindings();
+    SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
+    if (DriverStation.getMatchTime()<15){
+      SmartDashboard.putString("Game part:", "ENDGAME");
+    } else if (DriverStation.getMatchTime()<135){
+      SmartDashboard.putString("Game part","PLAY");
+    } else {
+      SmartDashboard.putString("Game part", "AUTO");
+    }
   }
 
-  private void configureButtonBindings() {
-
+  private void configureBindings() {
     // JoystickButton aButton = new JoystickButton(driver, 1);
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // JoystickButton xButton = new JoystickButton(driver, 3);
