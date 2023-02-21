@@ -201,17 +201,14 @@ public final class Constants {
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
-        public static final double shoulderCanCoderOffset = 13.79;
-        public static final double wristCanCoderOffset = -5.97;
+        public static final double shoulderCanCoderOffset = 4.57;
+        public static final double wristCanCoderOffset = -77.60;
 
         public static final int shoulderUpperLimit = 10;
         public static final int shoulderLowerLimit = -80;
 
         public static final int wristUpperLimit = 115;
         public static final int wristLowerLimit = -62;
-
-        public static final double shoulderMaxGravFF = 0.07;
-        public static final double wristMaxGravFF = 0.0;
 
         public static final double shoulderkP = 0.0;
         public static final double shoulderkI = 0.0;
@@ -226,8 +223,8 @@ public final class Constants {
         
 
         // public static final double shouldermaxAccel = 0.0; // degrees / seconds^2
-        public static final double shouldermaxVelo = Math.toRadians(57.5); // degrees / seconds
-        public static final double shouldermaxAccel = Math.toRadians(shouldermaxVelo); // degrees / seconds^2
+        public static final double shouldermaxVelo = Math.toRadians(10); // degrees / seconds
+        public static final double shouldermaxAccel = Math.toRadians(10); // degrees / seconds^2
 
 
         public static final double wristkP = 0.0;

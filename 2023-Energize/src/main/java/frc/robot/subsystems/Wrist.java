@@ -38,10 +38,6 @@ public class Wrist extends SubsystemBase {
     configMotor();
   }
 
-  public void motionMagic(double angle) {
-    wrist.set(ControlMode.MotionMagic, angle, DemandType.ArbitraryFeedForward, Constants.IntakeConstants.wristMaxGravFF * Math.cos(Math.toRadians(getCanCoder())));
-  }
-
   public void setSpeed(double speed) {
     wrist.set(ControlMode.PercentOutput, speed);
   }
@@ -56,7 +52,7 @@ public class Wrist extends SubsystemBase {
     wrist.configForwardSoftLimitEnable(true, 100);
     wrist.configReverseSoftLimitEnable(true, 100);
     wrist.setInverted(TalonFXInvertType.CounterClockwise);
-    wrist.setNeutralMode(NeutralMode.Brake);
+    wrist.setNeutralMode(NeutralMode.Coast);
     wrist.config_kP(0, Constants.IntakeConstants.wristkP, IntakeConstants.canPause);
     wrist.config_kI(0, Constants.IntakeConstants.wristkP, IntakeConstants.canPause);
     wrist.config_kD(0, Constants.IntakeConstants.wristkD, IntakeConstants.canPause);

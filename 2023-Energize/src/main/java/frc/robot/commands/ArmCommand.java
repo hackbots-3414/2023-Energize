@@ -7,6 +7,7 @@ package frc.robot.commands;
 import ch.qos.logback.classic.Logger;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Wrist;
+import frc.robot.Constants;
 import frc.robot.Constants.IntakeAngles;
 import frc.robot.subsystems.Shoulder;
 
@@ -38,38 +39,33 @@ public class ArmCommand extends CommandBase {
 
       // stowed
       case 0:
-        //wrist.motionMagic(IntakeAngles.stowedWristAngle);
-        shoulder.motionMagic(IntakeAngles.stowedShoulderAngle);
+        
         break;
 
       // pick up
       case 1:
-        //wrist.motionMagic(IntakeAngles.pickUpWristAngle);
-        shoulder.motionMagic(IntakeAngles.pickUpShoulderAngle);
+        
         break;
 
       // low
       case 2:
-        //wrist.motionMagic(IntakeAngles.lowWristAngle);
-        shoulder.motionMagic(IntakeAngles.lowShoulderAngle);
+        
         break;
 
       // mid
       case 3:
-        //wrist.motionMagic(IntakeAngles.midWristAngle);
-        shoulder.motionMagic(IntakeAngles.midShoulderAngle);
+        shoulder.setGoal(Constants.IntakeAngles.midShoulderAngle);
+        shoulder.enable();
         break;
 
       // high
       case 4:
-        //wrist.motionMagic(IntakeAngles.highWristAngle);
-        shoulder.motionMagic(IntakeAngles.highShoulderAngle);
+        
         break;
       
       // shelf
       case 5:
-        //wrist.motionMagic(IntakeAngles.shelfWristAngle);
-        shoulder.motionMagic(IntakeAngles.shelfShoulderAngle);
+        
         break;
     }
   }
