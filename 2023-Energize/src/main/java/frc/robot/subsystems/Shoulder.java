@@ -4,12 +4,10 @@
 
 package frc.robot.subsystems;
 
-import org.opencv.core.Mat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -20,14 +18,11 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.math.Conversions;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.Robot;
 
 public class Shoulder extends ProfiledPIDSubsystem {
@@ -51,13 +46,12 @@ public class Shoulder extends ProfiledPIDSubsystem {
         new TrapezoidProfile.Constraints(
           IntakeConstants.shouldermaxVelo, 
           IntakeConstants.shouldermaxAccel)), 
-          0);
+        0);
 
     configShoulderEncoder();
     configMotor();
 
-    //Set distance per pulse for encoder???
-    setGoal(IntakeConstants.shoulderCanCoderOffset);
+    setGoal(getMeasurement());
   }
 
   @Override
@@ -66,11 +60,12 @@ public class Shoulder extends ProfiledPIDSubsystem {
     double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     //add the feedforward to the PID output to get the motor output
     shoulder.setVoltage(output + feedforward);
+    // System.out.println("FeedForward: " + (output + feedforward));
   }
 
   @Override
   public double getMeasurement() {
-    return getCanCoder() + IntakeConstants.shoulderCanCoderOffset;
+    return Math.toRadians(getCanCoder());
   }
 
   public void motionMagic(double angle) {
@@ -110,7 +105,7 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
-    shoulder.setNeutralMode(NeutralMode.Brake);
+    shoulder.setNeutralMode(NeutralMode.Coast);
   }
 
   public double getPosition() {
@@ -124,6 +119,7 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
   @Override
   public void periodic() {
+    super.periodic();
     shoulder.feed();
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shoulder pos", getPosition());
@@ -132,5 +128,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
         Conversions.degreesToFalcon(IntakeConstants.shouldermaxAccel / 100, IntakeConstants.shoulderGearRatio));
     SmartDashboard.putNumber("Velo", shoulder.getSelectedSensorVelocity());
     SmartDashboard.putNumber("target", Constants.IntakeAngles.midShoulderAngle);
+    System.out.println(super.m_controller.getGoal());
   }
 }

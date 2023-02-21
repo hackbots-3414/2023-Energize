@@ -64,8 +64,6 @@ public class RobotContainer {
 
   private boolean openLoop = false;
 
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-
   public RobotContainer() {
 
     s_Swerve.setDefaultCommand(
@@ -82,15 +80,6 @@ public class RobotContainer {
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
     configureButtonBindings();
-
-    m_chooser.setDefaultOption("Stowed", new ArmCommand(m_Shoulder, m_Wrist, 0));
-    m_chooser.addOption("Pick Up", new ArmCommand(m_Shoulder, m_Wrist, 1));
-    m_chooser.addOption("Low", new ArmCommand(m_Shoulder, m_Wrist, 2));
-    m_chooser.addOption("Mid", new ArmCommand(m_Shoulder, m_Wrist, 3));
-    m_chooser.addOption("High", new ArmCommand(m_Shoulder, m_Wrist, 4));
-    m_chooser.addOption("Shelf", new ArmCommand(m_Shoulder, m_Wrist, 5));
-
-    SmartDashboard.putData("Auton Mode", m_chooser);
 
   }
 
@@ -115,7 +104,7 @@ public class RobotContainer {
     wristDown.whileTrue(new MoveWrist(m_Wrist, -Constants.IntakeConstants.wristMoveSpeedPercentage));
     shoulderUp.whileTrue(new MoveShoulder(m_Shoulder, Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     // shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
-    shoulderDown.whileTrue(new InstantCommand(() -> m_Shoulder.motionMagic(-25.0)));
+    shoulderDown.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
 
   }
 
