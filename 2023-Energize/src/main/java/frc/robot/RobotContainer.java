@@ -3,6 +3,7 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -81,8 +82,23 @@ public class RobotContainer {
 
     configureBindings();
 
+<<<<<<< HEAD
     autonChooser.setDefaultOption("Test Path", AutonomousFactory.getInstance(s_Swerve).driveStraight());
+=======
+SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
+
+if (DriverStation.getMatchTime()<15){
+  SmartDashboard.putString("Game part:", "ENDGAME");
+} else if (DriverStation.getMatchTime()<135){
+  SmartDashboard.putString("Game part","PLAY");
+} else {
+    SmartDashboard.putString("Game part", "AUTO");
+>>>>>>> origin/main
   }
+}
+
+  
+
 
   private void configureBindings() {
     // JoystickButton aButton = new JoystickButton(driver, 1);
