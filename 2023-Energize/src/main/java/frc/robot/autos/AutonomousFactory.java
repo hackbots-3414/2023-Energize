@@ -17,14 +17,15 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.IntakeAuto;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Wrist;
 
 /** Add your docs here. */
 public class AutonomousFactory {
@@ -32,29 +33,27 @@ public class AutonomousFactory {
 
     private static Swerve swerve;
 
-    private static PathPoint object1 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint object2 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint object3 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint object4 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
+    private static HashMap<String, Command> eventMap = new HashMap<>();
 
-    private static PathPoint object5 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint object6 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint object7 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint object8 = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-
-    private static PathPoint leave = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-
-    private static PathPoint balanceLeft = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint balanceMiddle = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-    private static PathPoint balanceRight = new PathPoint(new Translation2d(), new Rotation2d(), new Rotation2d());
-
-
-
+    private static SwerveAutoBuilder autoBuilder;
 
     private AutonomousFactory() {}
 
-    public static AutonomousFactory getInstance(Swerve m_swerve) {
+    public static AutonomousFactory getInstance(Swerve m_swerve, Intake intake, Wrist wrist, Shoulder shoulder, ArrayList<Boolean> inputs) {
         swerve = m_swerve;
+        eventMap.put("startIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
+        eventMap.put("stopIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
+        autoBuilder = new SwerveAutoBuilder(
+            swerve::getPose, 
+            swerve::resetOdometry,
+            Constants.Swerve.swerveKinematics,
+            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0), 
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, 0.0),
+            swerve::setModuleStates,
+            eventMap,
+            true,
+            swerve);
+
         return me;
     }
 
@@ -110,26 +109,13 @@ public class AutonomousFactory {
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-        
-        HashMap<String, Command> eventMap = new HashMap<>();
-        eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-        eventMap.put("intakeDown", new PrintCommand("intakeDown"));
 
-        SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-            swerve::getPose, 
-            swerve::resetOdometry,
-            Constants.Swerve.swerveKinematics,
-            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0), 
-            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, 0.0),
-            swerve::setModuleStates,
-            eventMap,
-            true,
-            swerve);
+        followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation()));
 
-        return autoBuilder.fullAuto(pathGroup);
+        return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
     }
 
-    public Command driveStraight() {
-        return followTrajectoryCommand("DriveStraight", true);
+    public Command testEvents() {
+        return followTrajectoryWithEventsCommand("DriveStraight");
     }
 }
