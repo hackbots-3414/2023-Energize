@@ -85,6 +85,14 @@ public class RobotContainer {
     configureBindings();
 
     autonChooser.setDefaultOption("Test Path", AutonomousFactory.getInstance(s_Swerve).driveStraight());
+SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
+
+if (DriverStation.getMatchTime()<15){
+  SmartDashboard.putString("Game part:", "ENDGAME");
+} else if (DriverStation.getMatchTime()<135){
+  SmartDashboard.putString("Game part","PLAY");
+} else {
+    SmartDashboard.putString("Game part", "AUTO");
   }
 
   private void configureBindings() {
