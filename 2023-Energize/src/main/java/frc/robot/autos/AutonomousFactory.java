@@ -19,9 +19,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.IntakeAuto;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
@@ -41,8 +41,9 @@ public class AutonomousFactory {
 
     public static AutonomousFactory getInstance(Swerve m_swerve, Intake intake, Wrist wrist, Shoulder shoulder, ArrayList<Boolean> inputs) {
         swerve = m_swerve;
-        eventMap.put("startIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
-        eventMap.put("stopIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
+        // eventMap.put("startIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
+        // eventMap.put("stopIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
+        eventMap.put("startIntake", new PrintCommand("Start Intake Event Worked!!!"));
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
             swerve::resetOdometry,
@@ -107,12 +108,16 @@ public class AutonomousFactory {
         );
     }
 
-    private Command followTrajectoryWithEventsCommand(String pathName) {
+    private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
-        followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation()));
-
         return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
+    }
+
+    private Command followTrajectoryWithEventsCommand(String pathName) {
+        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    
+        return autoBuilder.fullAuto(pathGroup);
     }
 
     public Command testEvents() {

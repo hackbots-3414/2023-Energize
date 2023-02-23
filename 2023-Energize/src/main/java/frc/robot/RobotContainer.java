@@ -161,7 +161,9 @@ public class RobotContainer {
     }
   }
 
-  
+  public Swerve getSwerve() {
+    return s_Swerve;
+  }
 
 
   private void configureBindings() {
