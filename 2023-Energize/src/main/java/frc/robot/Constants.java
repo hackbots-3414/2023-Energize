@@ -242,23 +242,23 @@ public final class Constants {
 
     public static final class IntakeAngles {
 
-        public static final double stowedWristAngle = 35.0;
-        public static final double stowedShoulderAngle = -85.0;
+        public static final double stowedWristAngle = Math.toRadians(35.0);
+        public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double pickUpWristAngle = 0.0;
-        public static final double pickUpShoulderAngle = -77.25;
+        public static final double pickUpWristAngle = Math.toRadians(0.0);
+        public static final double pickUpShoulderAngle = Math.toRadians(-77.25);
 
-        public static final double lowWristAngle = 35.0;
-        public static final double lowShoulderAngle = -85.0;
+        public static final double lowWristAngle = Math.toRadians(35.0);
+        public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = 40.0;
-        public static final double midShoulderAngle = -25.0;
+        public static final double midWristAngle = Math.toRadians(40.0);
+        public static final double midShoulderAngle = Math.toRadians(-25.0);
 
-        public static final double highWristAngle = 40.0;
-        public static final double highShoulderAngle = -7.0;
+        public static final double highWristAngle = Math.toRadians(40.0);
+        public static final double highShoulderAngle = Math.toRadians(-7.0);
 
-        public static final double shelfWristAngle = 0.0;
-        public static final double shelfShoulderAngle = -7.0;
+        public static final double shelfWristAngle = Math.toRadians(0.0);
+        public static final double shelfShoulderAngle = Math.toRadians(-7.0);
 
     }
 
