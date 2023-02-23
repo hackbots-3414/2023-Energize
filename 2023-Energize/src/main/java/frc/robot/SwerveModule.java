@@ -66,13 +66,21 @@ public class SwerveModule {
         }
     }
 
-    private void setAngle(SwerveModuleState desiredState) {
-        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
-                ? lastAngle
-                : desiredState.angle; // Prevent rotating module if speed is less then 1%. Prevents Jittering.
+    // private void setAngle(SwerveModuleState desiredState) {
+    //     Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
+    //             ? lastAngle
+    //             : desiredState.angle; // Prevent rotating module if speed is less then 1%. Prevents Jittering.
 
-        mAngleMotor.set(ControlMode.Position,
-                Conversions.degreesToFalcon(angle.getDegrees(), Constants.Swerve.angleGearRatio));
+    //     mAngleMotor.set(ControlMode.Position,
+    //             Conversions.degreesToFalcon(angle.getDegrees(), Constants.Swerve.angleGearRatio));
+    //     lastAngle = angle;
+    // }
+
+    private void setAngle(SwerveModuleState desiredState){
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+        Rotation2d oldAngle = getAngle();
+        angle = optimizeTurn(oldAngle, angle);  
+        mAngleMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle.getDegrees(), Constants.Swerve.angleGearRatio));
         lastAngle = angle;
     }
 
@@ -92,6 +100,36 @@ public class SwerveModule {
             degrees = degrees + 360;
         }
         return degrees;
+    }
+
+    public double makePositiveDegrees(Rotation2d anAngle){
+        return makePositiveDegrees(anAngle.getDegrees());
+    }
+
+    public Rotation2d optimizeTurn(Rotation2d oldAngle, Rotation2d newAngle){
+        double steerAngle = makePositiveDegrees(newAngle);
+        steerAngle %= (360);
+        if (steerAngle < 0.0) {
+            steerAngle += 360;
+        }
+
+        double difference = steerAngle - oldAngle.getDegrees();
+        // Change the target angle so the difference is in the range [-360, 360) instead of [0, 360)
+        if (difference >= 360) {
+            steerAngle -= 360;
+        } else if (difference < -360) {
+            steerAngle += 360;
+        }
+        difference = steerAngle - oldAngle.getDegrees(); // Recalculate difference
+
+        // If the difference is greater than 90 deg or less than -90 deg the drive can be inverted so the total
+        // movement of the module is less than 90 deg
+        if (difference >90 || difference < -90) {
+            // Only need to add 180 deg here because the target angle will be put back into the range [0, 2pi)
+            steerAngle += 180;
+        }
+
+        return Rotation2d.fromDegrees(makePositiveDegrees(steerAngle));
     }
 
     public void resetToAbsolute() {
