@@ -2,38 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.2137614106177494,
-        "y": 2.929217093804799
+        "x": 2.2,
+        "y": 0.958687108213911
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.21376141061775,
-        "y": 2.929217093804799
-      },
-      "holonomicAngle": -178.5436413656603,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 2.255458451098957,
-        "y": 0.8860621102256505
-      },
-      "prevControl": {
-        "x": 1.8134502957052252,
-        "y": 1.2352485529866983
-      },
-      "nextControl": {
-        "x": 3.2978844631291344,
-        "y": 0.06254556072181054
+        "x": 3.2,
+        "y": 0.958687108213911
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -49,15 +24,40 @@
     },
     {
       "anchorPoint": {
-        "x": 6.498132320061779,
-        "y": 4.451159071368858
+        "x": 6.0,
+        "y": 0.75
       },
       "prevControl": {
-        "x": 6.518980840302384,
-        "y": 0.5212130060150879
+        "x": 5.0,
+        "y": 0.75
+      },
+      "nextControl": {
+        "x": 5.0,
+        "y": 0.75
+      },
+      "holonomicAngle": 0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.4,
+        "y": 0.75
+      },
+      "prevControl": {
+        "x": 4.415557046381268,
+        "y": 0.75
       },
       "nextControl": null,
-      "holonomicAngle": 17.650124219930028,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -70,18 +70,5 @@
       }
     }
   ],
-  "markers": [
-    {
-      "position": 0.6787878787878942,
-      "names": [
-        "marker1"
-      ]
-    },
-    {
-      "position": 2.0,
-      "names": [
-        "intakeDown"
-      ]
-    }
-  ]
+  "markers": []
 }
