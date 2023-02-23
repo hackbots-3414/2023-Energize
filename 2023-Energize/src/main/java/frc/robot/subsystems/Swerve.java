@@ -40,8 +40,8 @@ public class Swerve extends SubsystemBase {
 
     public PhotonPoseEstimator photonPoseEstimator;
     public SwerveDrivePoseEstimator poseEstimator;
-    public PhotonCamera camera = new PhotonCamera("Front_Camera");
-    public Field2d fieldSim = new Field2d();
+    public PhotonCamera camera;
+    public Field2d fieldSim;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -62,9 +62,11 @@ public class Swerve extends SubsystemBase {
         resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
-        
-        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(), getModulePositions(), new Pose2d());
-        
+
+        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getPitch()), getModulePositions(), new Pose2d());
+        camera = new PhotonCamera("Front_Camera");
+        fieldSim = new Field2d();
+    
         try {
             photonPoseEstimator = new PhotonPoseEstimator(AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
         } catch (IOException e) {
