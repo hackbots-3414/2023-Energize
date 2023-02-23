@@ -7,6 +7,7 @@ package frc.robot.autos;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -29,6 +30,35 @@ import frc.robot.subsystems.Wrist;
 
 /** Add your docs here. */
 public class AutonomousFactory {
+
+    public int choice;
+
+    enum AutonChoice {
+        BottomObjectOne,
+        BottomObjectTwo,
+        BottomObjectThree,
+        BottomObjectFour,
+        BottomObjectFive,
+        BottomObjectSix,
+        BottomObjectSeven,
+        BottomObjectEight,
+        TopObjectOne,
+        TopObjectTwo,
+        TopObjectThree,
+        TopObjectFour,
+        TopObjectFive,
+        TopObjectSix,
+        TopObjectSeven,
+        TopObjectEight,
+        AutoBalance, 
+        TopStart, 
+        MidStartTop,
+        MidStartLow,
+        LowStart,
+        DriveOutTop,
+        DriveOutLow;
+    }
+
     private static final AutonomousFactory me = new AutonomousFactory();
 
     private static Swerve swerve;
@@ -120,7 +150,54 @@ public class AutonomousFactory {
         return autoBuilder.fullAuto(pathGroup);
     }
 
-    public Command testEvents() {
-        return followTrajectoryWithEventsCommand("DriveStraight");
+    public Command eventChooser(AutonChoice choice) {
+        return followTrajectoryWithEventsCommand("Drive Out Bottom");
+        // switch (choice) {
+        //     case BottomObjectOne:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectTwo:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectThree:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectFour:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectFive:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectSix:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectSeven:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case BottomObjectEight:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectOne:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectTwo:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectThree:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectFour:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectFive:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectSix:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectSeven:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopObjectEight:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case AutoBalance:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case TopStart:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case MidStartTop:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case MidStartLow:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case LowStart:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case DriveOutTop:
+        //         return followTrajectoryWithEventsCommand("");
+        //     case DriveOutLow:
+        // }
     }
 }
