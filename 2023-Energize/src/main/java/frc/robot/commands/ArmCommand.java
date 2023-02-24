@@ -16,7 +16,7 @@ public class ArmCommand extends CommandBase {
   private Wrist wrist;
   private Shoulder shoulder;
   private int selector;
-  
+
   public ArmCommand(Shoulder shoulder, Wrist wrist, int selector) {
     this.shoulder = shoulder;
     this.wrist = wrist;
@@ -26,7 +26,6 @@ public class ArmCommand extends CommandBase {
     addRequirements(wrist);
   }
 
- 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -39,35 +38,42 @@ public class ArmCommand extends CommandBase {
 
       // stowed
       case 0:
-        
+        shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
+        wrist.setGoal(Constants.IntakeAngles.stowedWristAngle);
         break;
 
       // pick up
       case 1:
-        
+        shoulder.setGoal(Constants.IntakeAngles.pickUpShoulderAngle);
+        wrist.setGoal(Constants.IntakeAngles.pickUpWristAngle);
         break;
 
       // low
       case 2:
-        
+        shoulder.setGoal(Constants.IntakeAngles.lowShoulderAngle);
+        wrist.setGoal(Constants.IntakeAngles.lowWristAngle);
         break;
 
       // mid
       case 3:
         shoulder.setGoal(Constants.IntakeAngles.midShoulderAngle);
-        shoulder.enable();
+        wrist.setGoal(Constants.IntakeAngles.midWristAngle);
         break;
 
       // high
       case 4:
-        
+        shoulder.setGoal(Constants.IntakeAngles.highShoulderAngle);
+        wrist.setGoal(Constants.IntakeAngles.highWristAngle);
         break;
-      
+
       // shelf
       case 5:
-        
+        shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
+        wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
         break;
     }
+    shoulder.enable();
+    wrist.enable();
   }
 
   // Called once the command ends or is interrupted.
@@ -78,6 +84,6 @@ public class ArmCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

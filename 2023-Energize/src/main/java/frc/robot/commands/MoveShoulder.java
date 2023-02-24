@@ -15,7 +15,9 @@ public class MoveShoulder extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shoulder.disable();
+  }
 
   @Override
   public void execute() {
