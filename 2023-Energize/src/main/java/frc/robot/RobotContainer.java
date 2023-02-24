@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
+import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.PIDBalance;
@@ -70,6 +71,8 @@ public class RobotContainer {
 
   SendableChooser<Command> autonChooser = new SendableChooser<>();
 
+  private AutonomousFactory autons;
+
 
   public RobotContainer() {
 
@@ -88,68 +91,9 @@ public class RobotContainer {
 
     configureBindings();
 
-    ShuffleboardTab tab = Shuffleboard.getTab("AutonChoosers");
-    ArrayList<NetworkTableEntry> networkTables = new ArrayList<>();
+    autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
-    SmartDashboard.putBoolean("Top 1", false);
-    SmartDashboard.putBoolean("Top 2", false);
-    SmartDashboard.putBoolean("Top 3", false);
-    SmartDashboard.putBoolean("Top 4", false);
-    SmartDashboard.putBoolean("Top 5", false);
-    SmartDashboard.putBoolean("Top 6", false);
-    SmartDashboard.putBoolean("Top 7", false);
-    SmartDashboard.putBoolean("Top 8", false);
-    SmartDashboard.putBoolean("Top 9", false);
-    SmartDashboard.putBoolean("Mid 1", false);
-    SmartDashboard.putBoolean("Mid 2", false);
-    SmartDashboard.putBoolean("Mid 3", false);
-    SmartDashboard.putBoolean("Mid 4", false);
-    SmartDashboard.putBoolean("Mid 5", false);
-    SmartDashboard.putBoolean("Mid 6", false);
-    SmartDashboard.putBoolean("Mid 7", false);
-    SmartDashboard.putBoolean("Mid 8", false);
-    SmartDashboard.putBoolean("Mid 9", false);
-    SmartDashboard.putBoolean("Low 1", false);
-    SmartDashboard.putBoolean("Low 2", false);
-    SmartDashboard.putBoolean("Low 3", false);
-    SmartDashboard.putBoolean("Low 4", false);
-    SmartDashboard.putBoolean("Low 5", false);
-    SmartDashboard.putBoolean("Low 6", false);
-    SmartDashboard.putBoolean("Low 7", false);
-    SmartDashboard.putBoolean("Low 8", false);
-    SmartDashboard.putBoolean("Low 9", false);
-
-    ArrayList<Boolean> inputs = new ArrayList<>();
-    
-    inputs.add(SmartDashboard.getBoolean("Top 1", false));
-    inputs.add(SmartDashboard.getBoolean("Top 2", false));
-    inputs.add(SmartDashboard.getBoolean("Top 3", false));
-    inputs.add(SmartDashboard.getBoolean("Top 4", false));
-    inputs.add(SmartDashboard.getBoolean("Top 5", false));
-    inputs.add(SmartDashboard.getBoolean("Top 6", false));
-    inputs.add(SmartDashboard.getBoolean("Top 7", false));
-    inputs.add(SmartDashboard.getBoolean("Top 8", false));
-    inputs.add(SmartDashboard.getBoolean("Top 9", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 1", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 2", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 3", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 4", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 5", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 6", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 7", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 8", false));
-    inputs.add(SmartDashboard.getBoolean("Mid 9", false));
-    inputs.add(SmartDashboard.getBoolean("Low 1", false));
-    inputs.add(SmartDashboard.getBoolean("Low 2", false));
-    inputs.add(SmartDashboard.getBoolean("Low 3", false));
-    inputs.add(SmartDashboard.getBoolean("Low 4", false));
-    inputs.add(SmartDashboard.getBoolean("Low 5", false));
-    inputs.add(SmartDashboard.getBoolean("Low 6", false));
-    inputs.add(SmartDashboard.getBoolean("Low 7", false));
-    inputs.add(SmartDashboard.getBoolean("Low 8", false));
-    inputs.add(SmartDashboard.getBoolean("Low 9", false));
-
-    autonChooser.setDefaultOption("Test Path", AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder, inputs).testEvents());
+    autonChooser.setDefaultOption("Test Path", autons.eventChooser(AutonChoice.AutoBalance));
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
     if (DriverStation.getMatchTime() < 15){
@@ -159,6 +103,7 @@ public class RobotContainer {
     } else {
       SmartDashboard.putString("Game part", "AUTO");
     }
+
   }
 
   public Swerve getSwerve() {
