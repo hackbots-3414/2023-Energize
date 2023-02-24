@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
@@ -18,6 +19,7 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.lib.math.Conversions;
@@ -49,7 +51,10 @@ public class Shoulder extends ProfiledPIDSubsystem {
         0);
 
     configShoulderEncoder();
+    Timer.delay(0.1);
     configMotor();
+
+    m_controller.reset(getMeasurement(), getCanCoderVelo());
 
     setGoal(getMeasurement());
   }
@@ -66,12 +71,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
   @Override
   public double getMeasurement() {
     return Math.toRadians(getCanCoder());
-  }
-
-  public void motionMagic(double angle) {
-    // shoulder.set(ControlMode.MotionMagic, angle, DemandType.ArbitraryFeedForward,
-    //     Constants.IntakeConstants.shoulderMaxGravFF * Math.cos(Math.toRadians(getCanCoder())));
-    System.out.println(angle);
   }
 
   public void set(double speed) {
@@ -96,7 +95,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configFactoryDefault(IntakeConstants.canPause);
     shoulder.setSelectedSensorPosition(
         Conversions.degreesToFalcon(getCanCoder(), Constants.IntakeConstants.shoulderGearRatio), 0, 100);
-    shoulder.configRemoteFeedbackFilter(shoulderCanCoder, 0, IntakeConstants.canPause);
     shoulder.setSafetyEnabled(true);
     shoulder.configForwardSoftLimitThreshold(Conversions.degreesToFalcon(Constants.IntakeConstants.shoulderUpperLimit,
         Constants.IntakeConstants.shoulderGearRatio), 100);
@@ -105,7 +103,8 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
-    shoulder.setNeutralMode(NeutralMode.Coast);
+    shoulder.setNeutralMode(NeutralMode.Brake);
+    shoulder.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 0), IntakeConstants.canPause);
   }
 
   public double getPosition() {
@@ -117,6 +116,10 @@ public class Shoulder extends ProfiledPIDSubsystem {
     return shoulderCanCoder.getAbsolutePosition();
   }
 
+  public double getCanCoderVelo() {
+    return Math.toRadians(shoulderCanCoder.getVelocity());
+  }
+
   @Override
   public void periodic() {
     super.periodic();
@@ -124,10 +127,5 @@ public class Shoulder extends ProfiledPIDSubsystem {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shoulder pos", getPosition());
     SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
-    SmartDashboard.putNumber("Accel",
-        Conversions.degreesToFalcon(IntakeConstants.shouldermaxAccel / 100, IntakeConstants.shoulderGearRatio));
-    SmartDashboard.putNumber("Velo", shoulder.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("target", Constants.IntakeAngles.midShoulderAngle);
-    System.out.println(super.m_controller.getGoal());
   }
 }

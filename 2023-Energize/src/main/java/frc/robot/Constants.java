@@ -204,36 +204,37 @@ public final class Constants {
         public static final double shoulderCanCoderOffset = 4.57;
         public static final double wristCanCoderOffset = -77.60;
 
-        public static final int shoulderUpperLimit = 10;
-        public static final int shoulderLowerLimit = -80;
+        public static final int shoulderUpperLimit = 0;
+        public static final int shoulderLowerLimit = -85;
 
         public static final int wristUpperLimit = 115;
         public static final int wristLowerLimit = -62;
 
-        public static final double shoulderkP = 0.0;
+        public static final double shoulderkP = 0.2;
         public static final double shoulderkI = 0.0;
         public static final double shoulderkD = 0.0;
 
+        public static final double wristkP = 0.1;
+        public static final double wristkI = 0.0;
+        public static final double wristkD = 0.0;
+
         //Volts
-        public static final double shoulderkS = 0.0;
-        public static final double shoulderkG = 0.43;
+        public static final double shoulderkS = 0.1;
+        public static final double shoulderkG = 0.73;
         public static final double shoulderkV = 5.54;
         public static final double shoulderkA = 0.6;
 
-        
+        public static final double wristkS = 0.0;
+        public static final double wristkG = 0.07;
+        public static final double wristkV = 4.50;
+        public static final double wristkA = 0.01;
 
         // public static final double shouldermaxAccel = 0.0; // degrees / seconds^2
-        public static final double shouldermaxVelo = Math.toRadians(10); // degrees / seconds
-        public static final double shouldermaxAccel = Math.toRadians(10); // degrees / seconds^2
+        public static final double shouldermaxVelo = Math.toRadians(80); // degrees / seconds
+        public static final double shouldermaxAccel = Math.toRadians(120); // degrees / seconds^2
 
-
-        public static final double wristkP = 0.0;
-        public static final double wristkI = 0.0;
-        public static final double wristkD = 0.0;
-        public static final double wristmaxAccel = 0.0; // degrees / seconds^2
-        public static final double wristmaxVelo = 0.0; // degrees / seconds
-
-        // IshowSpeeds
+        public static final double wristmaxAccel = Math.toRadians(90); // degrees / seconds^2
+        public static final double wristmaxVelo = Math.toRadians(130); // degrees / seconds
 
         public static final double speed = 0.2;
 

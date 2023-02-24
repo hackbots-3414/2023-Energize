@@ -20,7 +20,9 @@ public class MoveWrist extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    wrist.disable();
+  }
 
   @Override
   public void execute() {

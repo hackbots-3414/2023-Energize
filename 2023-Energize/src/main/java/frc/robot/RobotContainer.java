@@ -47,9 +47,12 @@ public class RobotContainer {
 
 
   /* Operator Buttons */
-  public final JoystickButton aButton = new JoystickButton(operator, XboxController.Button.kA.value);
-  public final JoystickButton xButton = new JoystickButton(operator, XboxController.Button.kX.value);
-  private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kB.value);
+  private final JoystickButton aButton = new JoystickButton(operator, XboxController.Button.kA.value);
+  private final JoystickButton xButton = new JoystickButton(operator, XboxController.Button.kX.value);
+  private final JoystickButton bButton = new JoystickButton(operator, XboxController.Button.kB.value);
+  private final JoystickButton yButton = new JoystickButton(operator, XboxController.Button.kY.value);
+  
+  // private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kB.value);
   private final JoystickButton ejectButton = new JoystickButton(operator, XboxController.Button.kStart.value);
   private final JoystickButton shoulderUp = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
   private final JoystickButton shoulderDown = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
@@ -98,15 +101,19 @@ public class RobotContainer {
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
 
     /* Operator Buttons */
-    aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    intakeButton.whileTrue(new IntakeCommand(m_Intake));
+    // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    // intakeButton.whileTrue(new IntakeCommand(m_Intake));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
     wristUp.whileTrue(new MoveWrist(m_Wrist, Constants.IntakeConstants.wristMoveSpeedPercentage));
     wristDown.whileTrue(new MoveWrist(m_Wrist, -Constants.IntakeConstants.wristMoveSpeedPercentage));
     shoulderUp.whileTrue(new MoveShoulder(m_Shoulder, Constants.IntakeConstants.shoulderMoveSpeedPercentage));
-    // shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
-    shoulderDown.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
+    shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
+
+    yButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
+    xButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 2));
+    aButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
+    bButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
 
   }
 
