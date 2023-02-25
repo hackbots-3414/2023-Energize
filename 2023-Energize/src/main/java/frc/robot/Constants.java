@@ -15,6 +15,7 @@ public final class Constants {
 
     public static final class Swerve {
         public static final int pigeonID = 25;
+        public static final int pdhID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
         public static final String canbusString = "CANivore";
 
@@ -183,19 +184,9 @@ public final class Constants {
 
         public static final boolean shoulderCanCoderInvert = true;
         public static final boolean wristCanCoderInvert = false;
+        public static final boolean handMotorInvert = true;
 
-        // public static final double highArmAngle = 3.0;
-        // public static final double defaultArmAngle = 0.0; 
-        // public static final double lowArmangle = 1.0; 
-        // public static final double mediumArmAngle = 2.0;
-        // public static final double shelfArmAngle = 4.0;
-        // public static final double highWristAngle = 3.0;
-        // public static final double defaultWristAngle = 0.0; 
-        // public static final double lowWristAngle = 1.0; 
-        // public static final double mediumWristAngle = 2.0;
-        // public static final double shelfWristAngle = 4.0;
-
-        public static final double intakeSpeedPercent = 0.1;
+        public static final double intakeSpeedPercent = 1;
         public static final double ejectSpeedPercent = -1;
 
         public static final double wristMoveSpeedPercentage = 0.25;
@@ -203,6 +194,9 @@ public final class Constants {
 
         public static final double shoulderCanCoderOffset = 4.57;
         public static final double wristCanCoderOffset = -77.60;
+
+        public static final int handCurrentLimit = 20;
+        public static final double handCurrentThreshold = 18;
 
         public static final int shoulderUpperLimit = 0;
         public static final int shoulderLowerLimit = -85;
@@ -233,8 +227,8 @@ public final class Constants {
         public static final double shouldermaxVelo = Math.toRadians(80); // degrees / seconds
         public static final double shouldermaxAccel = Math.toRadians(120); // degrees / seconds^2
 
-        public static final double wristmaxAccel = Math.toRadians(90); // degrees / seconds^2
-        public static final double wristmaxVelo = Math.toRadians(130); // degrees / seconds
+        public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
+        public static final double wristmaxVelo = Math.toRadians(190); // degrees / seconds
 
         public static final double speed = 0.2;
 
