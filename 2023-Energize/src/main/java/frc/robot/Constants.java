@@ -191,11 +191,18 @@ public final class Constants {
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
+        //main bot
         public static final double shoulderCanCoderOffset = 4.57;
         public static final double wristCanCoderOffset = -77.60;
 
-        public static final int handCurrentLimit = 20;
-        public static final double handCurrentThreshold = 18;
+        //woody
+        // public static final double shoulderCanCoderOffset = -54.84;
+        // public static final double wristCanCoderOffset = 151.87;
+
+        //MAIN BOT
+        public static final int handCurrentLimit = 80;
+        public static final int secondHandCurrentLimit = 8;
+        public static final double handCurrentThreshold = 20;
 
         public static final int shoulderUpperLimit = 0;
         public static final int shoulderLowerLimit = -85;
