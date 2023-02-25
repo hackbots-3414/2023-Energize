@@ -25,8 +25,10 @@ import frc.robot.autos.AutonomousFactory.Heights;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.GyroBasedBalancing;
 import frc.robot.commands.PIDBalance;
+import frc.robot.commands.Rotate;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
@@ -78,6 +80,8 @@ public class RobotContainer {
 
 
   private AutonomousFactory autons;
+
+
 
 
   public RobotContainer() {
@@ -156,6 +160,7 @@ public class RobotContainer {
 
 
   private void configureBindings() {
+
     // JoystickButton aButton = new JoystickButton(driver, 1);
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // JoystickButton xButton = new JoystickButton(driver, 3);
@@ -187,7 +192,7 @@ public class RobotContainer {
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
     autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
-
+    SmartDashboard.putData(new Rotate(s_Swerve));
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
