@@ -15,9 +15,12 @@ import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
+import ch.qos.logback.core.joran.conditional.ThenAction;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -105,6 +108,12 @@ public class AutonomousFactory {
         // eventMap.put("startIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
         // eventMap.put("stopIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
         eventMap.put("startIntake", new PrintCommand("Start Intake Event Worked!!!"));
+
+        PIDController thetaPID = new PIDController(Constants.AutoConstants.kPThetaController, 0, 0);
+
+        thetaPID.enableContinuousInput(-180, 180);
+        SmartDashboard.putData("Theta PID", thetaPID);
+
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
             swerve::resetOdometry,
@@ -148,6 +157,7 @@ public class AutonomousFactory {
 
     private Command followTrajectoryCommand(String pathName, boolean isFirstPath) {
         PathPlannerTrajectory traj = PathPlanner.loadPath(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+        
         return new SequentialCommandGroup(
              new InstantCommand(() -> {
                // Reset odometry for the first path you run during auto
@@ -170,32 +180,33 @@ public class AutonomousFactory {
     }
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
-        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-    
+        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));        
+
         return autoBuilder.fullAuto(pathGroup);
     }
 
     private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
+        swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
+        
         return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
     }
 
-    private Command placeCommand(Heights height) {
-        if (height == Heights.Low) {
-            // code to place object low
-        } else if (height == Heights.Mid) {
-            // code to place object mid
-        } else if (height == Heights.High) {
-            // code to place objects high
-        }
-        return null;
-    }
+    // private Command placeCommand(Heights height) {
+    //     if (height == Heights.Low) {
+    //         // code to place object low
+    //     } else if (height == Heights.Mid) {
+    //         // code to place object mid
+    //     } else if (height == Heights.High) {
+    //         // code to place objects high
+    //     }
+    //     return null;
+    // }
 
-    public Command eventChooser(AutonChoice choice, Bays bay, Heights height) { // probably should implement a boolean field about whether balance, and add a command
-        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(choice.value), followTrajectoryWithEventsCommand(bay.value), placeCommand(height));
-        // return followTrajectoryWithEventsCommand(choice.value);
-        // ^^ testing purposes
+    public Command eventChooser(AutonChoice choice/*, Bays bay, Heights height*/) { // probably should implement a boolean field about whether balance, and add a command
+        // return new SequentialCommandGroup(followTrajectoryWithEventsCommand(choice.value), followTrajectoryWithEventsCommand(bay.value), placeCommand(height));
+        return followTrajectoryWithEventsCommand(choice.value);
     }
 
     public Command autobalance() {
