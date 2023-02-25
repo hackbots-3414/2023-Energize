@@ -9,13 +9,10 @@ import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
-
-
 public class IntakeCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(IntakeCommand.class);
 
   final Intake intake;
-  private static boolean finished = false;
 
   public IntakeCommand(Intake intake) {
     this.intake = intake;
@@ -24,25 +21,32 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    intake.setCurrentLimitOne();
     DataLogManager.start();
-    intake.set(Constants.IntakeConstants.intakeSpeedPercent);
   }
 
   @Override
   public void execute() {
-    // if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
-    //   finished = true;
-    //   System.err.println(123234);
-    // }
+    if (!intake.getObjectState()) {
+      intake.set(Constants.IntakeConstants.intakeSpeedPercent);
+      if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
+        intake.set(IntakeConstants.intakeSpeedPercent / 5);
+        intake.setCurrentLimitTwo();
+        intake.setObjectStateTrue();
+      }
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
-    intake.set(0.0);
+    if (!intake.getObjectState()) {
+      intake.set(0.0);
+    }
+    intake.setCurrentLimitOne();
   }
 
   @Override
   public boolean isFinished() {
-    return finished;
+    return false;
   }
 }

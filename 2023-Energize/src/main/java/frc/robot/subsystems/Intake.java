@@ -19,6 +19,7 @@ public class Intake extends SubsystemBase {
   final static Logger logger = LoggerFactory.getLogger(Intake.class);
   CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
   PowerDistribution powerDistribution = new PowerDistribution(Swerve.pdhID, ModuleType.kRev);
+  private boolean hasObject = false;
   
   
   public Intake() {
@@ -35,6 +36,30 @@ public class Intake extends SubsystemBase {
     hand.burnFlash();
   }
 
+  public boolean getObjectState() {
+    return hasObject;
+  }
+
+  public void setObjectStateTrue() {
+    hasObject = true;
+  }
+
+  public void setObjectStateFalse() {
+    hasObject = false;
+  }
+
+  public void setCurrentLimitOne() {
+    hand.clearFaults();
+    hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
+    hand.burnFlash();
+  }
+
+  public void setCurrentLimitTwo() {
+    hand.clearFaults();
+    hand.setSmartCurrentLimit(Constants.IntakeConstants.secondHandCurrentLimit);
+    hand.burnFlash();
+  }
+
   public void set(double speed) {
     hand.set(speed);
   }
@@ -44,12 +69,14 @@ public class Intake extends SubsystemBase {
   }
 
   public double getCurrent() {
-    return powerDistribution.getCurrent(4);
+    // return powerDistribution.getCurrent(13);
+    return hand.getOutputCurrent();
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Hand Motor Current", getCurrent());
+    SmartDashboard.putBoolean("Has Object", hasObject);
   }
 
 }
