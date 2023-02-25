@@ -15,6 +15,7 @@ public final class Constants {
 
     public static final class Swerve {
         public static final int pigeonID = 25;
+        public static final int pdhID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
         public static final String canbusString = "CANivore";
 
@@ -105,43 +106,43 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 { // TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 1;
-            public static final int angleMotorID = 0;
-            public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(309.81);
-            public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-                    canCoderID, angleOffset);
+        public static final class Mod0 { //TODO: This must be tuned to specific robot
+            public static final int driveMotorID = 8;
+            public static final int angleMotorID = 9;
+            public static final int canCoderID = 7;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(274.69);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 { // TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 40;
-            public static final int angleMotorID = 3;
-            public static final int canCoderID = 10;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(198.89);
-            public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-                    canCoderID, angleOffset);
+        public static final class Mod1 { //TODO: This must be tuned to specific robot
+            public static final int driveMotorID = 1;
+            public static final int angleMotorID = 0;
+            public static final int canCoderID = 2;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(73.56);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { // TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 16;
-            public static final int angleMotorID = 17;
-            public static final int canCoderID = 8;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(331.78);
-            public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-                    canCoderID, angleOffset);
+        public static final class Mod2 { //TODO: This must be tuned to specific robot
+            public static final int driveMotorID = 11;
+            public static final int angleMotorID = 10;
+            public static final int canCoderID = 12;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.56);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { // TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 19;
-            public static final int angleMotorID = 18;
-            public static final int canCoderID = 9;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(248.73);
-            public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-                    canCoderID, angleOffset);
+        public static final class Mod3 { //TODO: This must be tuned to specific robot
+            public static final int driveMotorID = 18;
+            public static final int angleMotorID = 19;
+            public static final int canCoderID = 17;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.04);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
     }
 
@@ -167,43 +168,90 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int handMotorID = 10;
+
+        public static final double degreesToCancoder = 4096.0 / 360.0;
+
+        public static final double shoulderGearRatio = 308.33;
+        public static final double wristGearRatio = 200.0;
+
+        public static final int handMotorID = 4;
         public static final int wristMotorID = 7;
         public static final int shoulderMotorID = 6;
 
-        public static final int wristCanCoderID = 0;
-        public static final int ShoulderCanCoderID = 0;
+        public static final int wristCanCoderID = 9;
+        public static final int ShoulderCanCoderID = 8;
 
-        public static final double intakeSpeedPercent = 0.1;
+        public static final boolean shoulderCanCoderInvert = true;
+        public static final boolean wristCanCoderInvert = false;
+        public static final boolean handMotorInvert = true;
+
+        public static final double intakeSpeedPercent = 1;
         public static final double ejectSpeedPercent = -1;
 
-        public static final int wristRotationTarget = 4000;
-        public static final int shoulderRotationTarget = 4000;
-        public static final int shoulderUpperLimit = 1000;
-        public static final int shoulderLowerLimit = 1000;
-        public static final int wristUpperLimit = 1000;
-        public static final int wristLowerLimit = 1000;
+        public static final double wristMoveSpeedPercentage = 0.25;
+        public static final double shoulderMoveSpeedPercentage = 0.15;
 
-        // IshowSpeeds
+        public static final double shoulderCanCoderOffset = 4.57;
+        public static final double wristCanCoderOffset = -77.60;
+
+        public static final int handCurrentLimit = 20;
+        public static final double handCurrentThreshold = 18;
+
+        public static final int shoulderUpperLimit = 0;
+        public static final int shoulderLowerLimit = -85;
+
+        public static final int wristUpperLimit = 115;
+        public static final int wristLowerLimit = -62;
+
+        public static final double shoulderkP = 0.2;
+        public static final double shoulderkI = 0.0;
+        public static final double shoulderkD = 0.0;
+
+        public static final double wristkP = 0.1;
+        public static final double wristkI = 0.0;
+        public static final double wristkD = 0.0;
+
+        //Volts
+        public static final double shoulderkS = 0.1;
+        public static final double shoulderkG = 0.73;
+        public static final double shoulderkV = 5.54;
+        public static final double shoulderkA = 0.6;
+
+        public static final double wristkS = 0.0;
+        public static final double wristkG = 0.07;
+        public static final double wristkV = 4.50;
+        public static final double wristkA = 0.01;
+
+        // public static final double shouldermaxAccel = 0.0; // degrees / seconds^2
+        public static final double shouldermaxVelo = Math.toRadians(80); // degrees / seconds
+        public static final double shouldermaxAccel = Math.toRadians(120); // degrees / seconds^2
+
+        public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
+        public static final double wristmaxVelo = Math.toRadians(190); // degrees / seconds
 
         public static final double speed = 0.2;
-
         public static final int canPause = 100;
     }
 
-    public static final class IntakeAutoConstants {
+    public static final class IntakeAngles {
 
-        public static final double lowWristAngle = 0.0;
-        public static final double lowShoulderAngle = 0.0;
+        public static final double stowedWristAngle = Math.toRadians(35.0);
+        public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = 0.0;
-        public static final double midShoulderAngle = 0.0;
+        public static final double pickUpWristAngle = Math.toRadians(0.0);
+        public static final double pickUpShoulderAngle = Math.toRadians(-77.25);
 
-        public static final double highWristAngle = 0.0;
-        public static final double highShoulderAngle = 0.0;
+        public static final double lowWristAngle = Math.toRadians(35.0);
+        public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double shelfWristAngle = 0.0;
-        public static final double shelfShoulderAngle = 0.0;
+        public static final double midWristAngle = Math.toRadians(40.0);
+        public static final double midShoulderAngle = Math.toRadians(-25.0);
+
+        public static final double highWristAngle = Math.toRadians(40.0);
+        public static final double highShoulderAngle = Math.toRadians(-7.0);
+
+        public static final double shelfWristAngle = Math.toRadians(0.0);
+        public static final double shelfShoulderAngle = Math.toRadians(-7.0);
 
     }
 

@@ -4,55 +4,127 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.Swerve;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Wrist extends SubsystemBase {
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.math.Conversions;
+import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Robot;
+
+public class Wrist extends ProfiledPIDSubsystem {
   final static Logger logger = LoggerFactory.getLogger(Wrist.class);
+
   /** Creates a new Wrist. */
-  WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
-  CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID, Swerve.canbusString);
+  private CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID);;
+  private WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
 
+  private final ArmFeedforward m_feedforward = new ArmFeedforward(
+      IntakeConstants.wristkS, IntakeConstants.wristkG,
+      IntakeConstants.wristkV, IntakeConstants.wristkA);
 
-  public void moveWrist(double angle) {
-    
-    wrist.set(ControlMode.MotionMagic, angle);
-
-  }
   public Wrist() {
+    super(
+        new ProfiledPIDController(
+            IntakeConstants.wristkP,
+            0,
+            0,
+            new TrapezoidProfile.Constraints(
+                IntakeConstants.wristmaxVelo,
+                IntakeConstants.wristmaxAccel)),
+        0.0);
+
+    configWristEncoder();
+    Timer.delay(0.1);
     configMotor();
+
+    m_controller.reset(getMeasurement(), getCanCoderVelo());
   }
 
   public void setSpeed(double speed) {
-    wrist.set(speed);
+    wrist.set(ControlMode.PercentOutput, speed);
   }
 
-  private void configMotor(){        
+  private void configMotor() {
     wrist.configFactoryDefault(IntakeConstants.canPause);
-    wrist.configRemoteFeedbackFilter(wristCanCoder, 0, IntakeConstants.canPause);
+    wrist.setSelectedSensorPosition(
+        Conversions.degreesToFalcon(getCanCoder(), Constants.IntakeConstants.wristGearRatio), 0, 100);
     wrist.setSafetyEnabled(true);
+    wrist.configForwardSoftLimitThreshold(Conversions.degreesToFalcon(Constants.IntakeConstants.wristUpperLimit,
+        Constants.IntakeConstants.wristGearRatio), 100);
+    wrist.configReverseSoftLimitThreshold(Conversions.degreesToFalcon(Constants.IntakeConstants.wristLowerLimit,
+        Constants.IntakeConstants.wristGearRatio), 100);
+    wrist.configForwardSoftLimitEnable(true, 100);
+    wrist.configReverseSoftLimitEnable(true, 100);
+    wrist.setInverted(TalonFXInvertType.CounterClockwise);
+    wrist.setNeutralMode(NeutralMode.Brake);
+    wrist.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 0), IntakeConstants.canPause);
   }
 
-  public double getPosition(){
+  @Override
+  public void useOutput(double output, TrapezoidProfile.State setpoint) {
+    // calculate feedforward from setpoint
+    double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
+    // add the feedforward to the PID output to get the motor output
+    wrist.setVoltage(output + feedforward);
+    // System.out.println("FeedForward: " + (output + feedforward));
+  }
+
+  @Override
+  public double getMeasurement() {
+    return Math.toRadians(getCanCoder());
+  }
+
+  public double getCanCoderVelo() {
+    return Math.toRadians(wristCanCoder.getVelocity());
+  }
+
+  private void configWristEncoder() {
+    wristCanCoder.configFactoryDefault(Constants.IntakeConstants.canPause);
+    wristCanCoder.configAllSettings(Robot.ctreConfigs.wristCanCoderConfig, IntakeConstants.canPause);
+    wristCanCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180, IntakeConstants.canPause);
+    wristCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition,
+        IntakeConstants.canPause);
+    wristCanCoder.configMagnetOffset(Constants.IntakeConstants.wristCanCoderOffset, IntakeConstants.canPause);
+    wristCanCoder.configSensorDirection(Constants.IntakeConstants.wristCanCoderInvert, IntakeConstants.canPause);
+  }
+
+  public double getPosition() {
     // FIX ME USE CAN CODER
-   return wrist.getSelectedSensorPosition();
+    return wrist.getSelectedSensorPosition();
   }
 
-  public void stopWrist(){
+  public void stopWrist() {
     wrist.set(0.0);
+  }
+
+  public double getCanCoder() {
+    return wristCanCoder.getAbsolutePosition();
   }
 
   @Override
   public void periodic() {
+    super.periodic();
     wrist.feed();
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Wrist pos", getPosition());
+    SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
   }
 }

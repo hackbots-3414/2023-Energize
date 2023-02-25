@@ -1,27 +1,28 @@
 package frc.robot.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj.DataLogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class ejectCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(ejectCommand.class);
 
 
-  final Intake m_Intake;
+  final Intake intake;
 
   public ejectCommand(Intake intake) {
-    m_Intake = intake;
+    this.intake = intake;
   }
 
   @Override
   public void initialize() {
     DataLogManager.start();
-    m_Intake.spinHand(Constants.IntakeConstants.ejectSpeedPercent);
+    intake.set(Constants.IntakeConstants.ejectSpeedPercent);
   }
 
   @Override
@@ -29,7 +30,7 @@ public class ejectCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_Intake.stopHand();
+    intake.set(0.0);
   }
 
   @Override

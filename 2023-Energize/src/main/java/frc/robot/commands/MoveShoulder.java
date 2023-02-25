@@ -1,29 +1,28 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
 
 public class MoveShoulder extends CommandBase {
 
-  WPI_TalonFX shoulder = new WPI_TalonFX(Constants.IntakeConstants.shoulderMotorID);
+  private Shoulder shoulder;
+  private double speed;
 
-  private double rotationTarget;
-
-  public MoveShoulder(double rotationTarget, Intake intake) {
-    this.rotationTarget = rotationTarget;
-
-    addRequirements(intake);
+  public MoveShoulder(Shoulder shoulder, double speed) {
+    this.shoulder = shoulder;
+    this.speed = speed;
+    addRequirements(shoulder);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shoulder.disable();
+  }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    shoulder.set(speed);
+  }
     
 
   @Override
@@ -33,10 +32,6 @@ public class MoveShoulder extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    double currentShoulderPosition = shoulder.getSelectedSensorPosition();
-    if (Math.abs(currentShoulderPosition - rotationTarget) < 50) {
-      return true;
-    }
     return false;
   }
 
