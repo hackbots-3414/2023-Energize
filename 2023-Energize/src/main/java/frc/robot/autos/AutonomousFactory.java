@@ -34,9 +34,31 @@ public class AutonomousFactory {
     public int choice;
 
     public enum AutonChoice {
-        Balance("Balance"),
-        DriveOutTop("Drive Out Top"), // works
-        DriveOutLow("Drive Out Low"); // works
+        // BottomObjectOne("Bottom Object One"),
+        // BottomObjectTwo("Bottom Object Two"),
+        // BottomObjectThree("Bottom Object Three"),
+        // BottomObjectFour("Bottom Object Four"),
+        // BottomObjectFive("Bottom Object Five"),
+        // BottomObjectSix("Bottom Object Six"),
+        // BottomObjectSeven("Bottom Object Seven"),
+        // BottomObjectEight("Bottom Object Eight"),
+        // TopObjectOne("Top Object One"),
+        // TopObjectTwo("Top Object Two"),
+        // TopObjectThree("Top Object Three"),
+        // TopObjectFour("Top Object Four"),
+        // TopObjectFive("Top Object Five"),
+        // TopObjectSix("Top Object Six"),
+        // TopObjectSeven("Top Object Seven"),
+        // TopObjectEight("Top Object Eight"),
+        // AutoBalance("Balance"), 
+        // TopStart("Top Start"), 
+        // MidStartTop("Mid Start Top"),
+        // MidStartLow("Mid Start Low"),
+        // LowStart("Low Start"),
+        // DriveOutTop("Drive Out Top"),
+        // DriveOutLow("Drive Out Low"),
+        // DriveStraight("DriveStraight"),
+        TestingPath("Testing Path");
 
         public final String value;
 
@@ -160,8 +182,8 @@ public class AutonomousFactory {
         return followTrajectoryWithEventsCommand(choice.value);
     }
 
-    public Command autobalance() {
-        // just so that we can do an auto balance auton if we ever need to
-        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.Balance.value), new PIDBalance(swerve));
-    }
+    // public Command autobalance() {
+    //     // just so that we can do an auto balance auton if we ever need to
+    //     return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.AutoBalance.value), new PIDBalance(swerve));
+    // }
 }
