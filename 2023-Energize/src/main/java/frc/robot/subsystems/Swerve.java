@@ -24,6 +24,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -164,6 +165,7 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getYaw(), getModulePositions());  
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
+      
 
         // for(SwerveModule mod : mSwerveMods){
         //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
@@ -176,6 +178,7 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] states = {new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4))};
         setModuleStates(states);
     }
+
 
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevPose) {
         photonPoseEstimator.setReferencePose(prevPose);
