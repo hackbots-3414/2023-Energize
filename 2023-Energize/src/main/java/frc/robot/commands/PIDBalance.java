@@ -15,8 +15,10 @@ import frc.robot.subsystems.Swerve;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PIDBalance extends PIDCommand {
+  private boolean alwaysRun;
+
   /** Creates a new PIDBalance. */
-  public PIDBalance(Swerve swerve) {
+  public PIDBalance(Swerve swerve, boolean alwaysRun) {
     super(
         // The controller that the command will use
         new PIDController(Constants.BalanceConstants.KP, Constants.BalanceConstants.KI, Constants.BalanceConstants.KD),
@@ -39,11 +41,18 @@ public class PIDBalance extends PIDCommand {
     getController().enableContinuousInput(-180, 180);
     getController().setTolerance(1.8, .1);
     SmartDashboard.putData(getController());
+    this.alwaysRun = alwaysRun;
+    
+    addRequirements(swerve);
+  }
+
+  public PIDBalance(Swerve swerve) {
+    this(swerve, false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return !alwaysRun || getController().atSetpoint();
   }
 }
