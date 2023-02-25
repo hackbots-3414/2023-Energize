@@ -21,6 +21,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LedCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
+import frc.robot.commands.PIDBalance;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
