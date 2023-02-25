@@ -98,7 +98,7 @@ public class RobotContainer {
 
     autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
-    pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.AutoBalance);
+    pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.TestingPath);
     // pathChooser.addOption("Drive Out Top", AutonChoice.DriveOutTop);
     // pathChooser.addOption("Bottom Object One", AutonChoice.BottomObjectOne);
     // pathChooser.addOption("Bottom Object Two", AutonChoice.BottomObjectTwo);
