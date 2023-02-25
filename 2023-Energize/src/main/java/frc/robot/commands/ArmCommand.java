@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import java.sql.Time;
+
 import ch.qos.logback.classic.Logger;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
@@ -36,22 +39,17 @@ public class ArmCommand extends CommandBase {
   public void execute() {
     switch (selector) {
 
-      // stowed
+      // stowed & Low
       case 0:
-        shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
         wrist.setGoal(Constants.IntakeAngles.stowedWristAngle);
+        Timer.delay(0.1);
+        shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
         break;
 
       // pick up
       case 1:
         shoulder.setGoal(Constants.IntakeAngles.pickUpShoulderAngle);
         wrist.setGoal(Constants.IntakeAngles.pickUpWristAngle);
-        break;
-
-      // low
-      case 2:
-        shoulder.setGoal(Constants.IntakeAngles.lowShoulderAngle);
-        wrist.setGoal(Constants.IntakeAngles.lowWristAngle);
         break;
 
       // mid

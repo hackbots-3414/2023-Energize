@@ -32,9 +32,9 @@ public class LedCommand extends CommandBase {
   public void execute() {
     m_LedSubsystem.setColor(0.53);
 
-    if (m_Intake.getIRInput()) {
-      m_LedSubsystem.setColor(0.55);
-    }
+    // if (m_Intake.getIRInput()) {
+    //   m_LedSubsystem.setColor(0.55);
+    // }
   }
 
   @Override
