@@ -73,12 +73,7 @@ public class RobotContainer {
   SendableChooser<Bays> bayChooser = new SendableChooser<>();
   SendableChooser<Heights> heightChooser = new SendableChooser<>();
 
-
-
   private AutonomousFactory autons;
-
-
-
 
   public RobotContainer() {
 
@@ -94,7 +89,7 @@ public class RobotContainer {
 
     m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
 
-    configureBindings();
+    configureButtonBindings();
 
     autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
@@ -136,12 +131,13 @@ public class RobotContainer {
     // heightChooser.addOption("Mid", Heights.Mid);
     // heightChooser.addOption("High", Heights.High);
     
+    SmartDashboard.putData("Auton Mode", pathChooser);
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
-    if (DriverStation.getMatchTime() < 15){
+    if (DriverStation.getMatchTime() < 30){
       SmartDashboard.putString("Game part:", "ENDGAME");
-    } else if (DriverStation.getMatchTime() < 135){
+    } else if (DriverStation.getMatchTime() < 120){
       SmartDashboard.putString("Game part","PLAY");
     } else {
       SmartDashboard.putString("Game part", "AUTO");
@@ -153,51 +149,13 @@ public class RobotContainer {
     return s_Swerve;
   }
 
-
-  private void configureBindings() {
-
-    // JoystickButton aButton = new JoystickButton(driver, 1);
-    // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    // JoystickButton xButton = new JoystickButton(driver, 3);
-    // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-
-    // JoystickButton tempA = new JoystickButton(driver, 1);
-    // tempA.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.defaultArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.defaultWristAngle))));
-    // JoystickButton tempB = new JoystickButton(driver, 2);
-    // tempB.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.mediumArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.mediumWristAngle))));
-    // JoystickButton tempX = new JoystickButton(driver, 3);
-    // tempX.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.lowArmangle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.lowWristAngle))));
-    // JoystickButton tempY = new JoystickButton(driver, 4);    
-    // tempY.whileTrue(new ParallelCommandGroup(new InstantCommand(() -> m_Shoulder.moveShoulder(Constants.IntakeConstants.highArmAngle)), new InstantCommand(() -> m_Wrist.moveWrist(Constants.IntakeConstants.highWristAngle))));
-
-    // JoystickButton rightBumper = new JoystickButton(driver, 6);
-    // rightBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(-Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
-
-    
-
-    // JoystickButton leftBumper = new JoystickButton(driver, 5);
-    // leftBumper.whileTrue(new InstantCommand(() -> m_Shoulder.moveShoulderDown(Constants.IntakeConstants.speed, Constants.IntakeConstants.shoulderLowerLimit)));
-    // Configure the button bindings
-    configureButtonBindings();
-
-    SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
-
-    if (DriverStation.getMatchTime() < 15) {
-      SmartDashboard.putString("Game part:", "ENDGAME");
-    } else if (DriverStation.getMatchTime() < 135) {
-      SmartDashboard.putString("Game part", "PLAY");
-    } else {
-      SmartDashboard.putString("Game part", "AUTO");
-    }
-  }
-
   private void configureButtonBindings() {
 
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
     autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
-    SmartDashboard.putData(new Rotate(s_Swerve));
+    //SmartDashboard.putData(new Rotate(s_Swerve));
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
