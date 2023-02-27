@@ -61,6 +61,11 @@ public class AutonomousFactory {
         // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
         eventMap.put("startIntake", new PrintCommand("Start Intake Event Worked!!!"));
 
+        PIDController thetaPID = new PIDController(Constants.AutoConstants.kPThetaController, 0, 0);
+
+        thetaPID.enableContinuousInput(-180, 180);
+        //SmartDashboard.putData("Theta PID", thetaPID);
+
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
             swerve::resetOdometry,
