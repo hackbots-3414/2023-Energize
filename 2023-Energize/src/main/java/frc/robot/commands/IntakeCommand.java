@@ -22,27 +22,27 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     intake.setCurrentLimitOne();
-    // DataLogManager.start();
+    DataLogManager.start();
     intake.set(Constants.IntakeConstants.intakeSpeedPercent);
   }
 
   @Override
   public void execute() {
-    // if (!intake.getObjectState()) {
-    //   intake.set(Constants.IntakeConstants.intakeSpeedPercent);
-    //   if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
-    //     intake.set(IntakeConstants.intakeSpeedPercent / 5);
-    //     intake.setCurrentLimitTwo();
-    //     intake.setObjectStateTrue();
-    //   }
-    // }
+    if (!intake.getObjectState()) {
+      intake.set(Constants.IntakeConstants.intakeSpeedPercent);
+      if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
+        intake.set(IntakeConstants.intakeSpeedPercent / 5);
+        intake.setCurrentLimitTwo();
+        intake.setObjectStateTrue();
+      }
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
-    // if (!intake.getObjectState()) {
+    if (!intake.getObjectState()) {
       intake.set(0.0);
-    // }
+    }
     intake.setCurrentLimitOne();
   }
 
