@@ -20,8 +20,8 @@ public class PathFactory {
 
     // I made these public because they should be used when using the getPath() method.
     // TODO: Put in values for the positions of the things.
-    public Pose2d p1 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
-    public Pose2d p2 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
+    public Pose2d p1 = new Pose2d(new Translation2d(), new Rotation2d());
+    public Pose2d p2 = new Pose2d(new Translation2d(), new Rotation2d());
     public Pose2d p3 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
     public Pose2d p4 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
     public Pose2d p5 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
@@ -54,7 +54,9 @@ public class PathFactory {
         return me;
     }
 
-    public List<Pose2d> getPath(Pose2d from, Pose2d to) {
+    public List<Pose2d> getPath(Pose2d from, int toInt) {
+
+        Pose2d to = pA_path.get(toInt);
 
         
 
