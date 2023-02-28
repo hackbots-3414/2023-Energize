@@ -229,12 +229,11 @@ public final class Constants {
         public static final double wristkV = 4.50;
         public static final double wristkA = 0.01;
 
-        // public static final double shouldermaxAccel = 0.0; // degrees / seconds^2
-        public static final double shouldermaxVelo = Math.toRadians(80); // degrees / seconds
-        public static final double shouldermaxAccel = Math.toRadians(120); // degrees / seconds^2
+        public static final double shouldermaxVelo = Math.toRadians(180); // degrees / seconds
+        public static final double shouldermaxAccel = Math.toRadians(220); // degrees / seconds^2
 
-        public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
         public static final double wristmaxVelo = Math.toRadians(190); // degrees / seconds
+        public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
 
         public static final double speed = 0.2;
 
