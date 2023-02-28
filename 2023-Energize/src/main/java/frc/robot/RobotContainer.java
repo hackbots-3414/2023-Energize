@@ -40,7 +40,7 @@ public class RobotContainer {
   final static Logger logger = LoggerFactory.getLogger(RobotContainer.class);
 
   /* Controllers */
-  private final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
+  public final Joystick driver = new Joystick(OperatorConstants.kDriverControllerPort);
   private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
 
@@ -87,13 +87,12 @@ public class RobotContainer {
   public RobotContainer() {
 
     s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(1), 
-                () -> driver.getRawAxis(0), 
-                () -> driver.getRawAxis(3), 
-                () -> robotCentric.getAsBoolean()
-            )
+        new TeleopSwerve(
+            s_Swerve,
+            () -> driver.getRawAxis(1),
+            () -> driver.getRawAxis(0),
+            () -> driver.getRawAxis(3),
+            () -> robotCentric.getAsBoolean())
 
         );
 
@@ -103,7 +102,7 @@ public class RobotContainer {
 
     autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
-    pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.AutoBalance);
+    pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.DriveOutLow);
     // pathChooser.addOption("Drive Out Top", AutonChoice.DriveOutTop);
     // pathChooser.addOption("Bottom Object One", AutonChoice.BottomObjectOne);
     // pathChooser.addOption("Bottom Object Two", AutonChoice.BottomObjectTwo);

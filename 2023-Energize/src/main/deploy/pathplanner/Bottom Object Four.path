@@ -7,10 +7,10 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.937221769180381,
-        "y": 0.8795770223119402
+        "x": 5.437738722565329,
+        "y": 0.75
       },
-      "holonomicAngle": -180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,18 +24,18 @@
     },
     {
       "anchorPoint": {
-        "x": 6.9009487141781305,
-        "y": 4.361790302527973
+        "x": 6.834367263040577,
+        "y": 4.050919418564816
       },
       "prevControl": {
-        "x": 5.450026514088116,
-        "y": 3.2282573337076506
+        "x": 6.2447968312306745,
+        "y": 2.662576143657625
       },
       "nextControl": {
-        "x": 5.450026514088116,
-        "y": 3.2282573337076506
+        "x": 6.2447968312306745,
+        "y": 2.662576143657625
       },
-      "holonomicAngle": 49.53777250790701,
+      "holonomicAngle": -116.56505117707799,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
@@ -53,11 +53,11 @@
         "y": 0.7534075218526392
       },
       "prevControl": {
-        "x": 6.946290032930943,
-        "y": 0.8977135498130648
+        "x": 5.4365147876203235,
+        "y": 0.7417176400189098
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -72,15 +72,15 @@
   ],
   "markers": [
     {
-      "position": 1.1818181818181825,
+      "position": 0.5696969696969598,
       "names": [
-        "IntakeEnd"
+        "IntakeStart"
       ]
     },
     {
-      "position": 0.818181818181818,
+      "position": 1.4303030303031163,
       "names": [
-        "IntakeStart"
+        "IntakeStop"
       ]
     }
   ]

@@ -41,26 +41,14 @@ public class AutonomousFactory {
         BottomObjectTwo("Bottom Object Two"),
         BottomObjectThree("Bottom Object Three"),
         BottomObjectFour("Bottom Object Four"),
-        BottomObjectFive("Bottom Object Five"),
-        BottomObjectSix("Bottom Object Six"),
-        BottomObjectSeven("Bottom Object Seven"),
-        BottomObjectEight("Bottom Object Eight"),
         TopObjectOne("Top Object One"),
         TopObjectTwo("Top Object Two"),
         TopObjectThree("Top Object Three"),
         TopObjectFour("Top Object Four"),
-        TopObjectFive("Top Object Five"),
-        TopObjectSix("Top Object Six"),
-        TopObjectSeven("Top Object Seven"),
-        TopObjectEight("Top Object Eight"),
-        AutoBalance("Balance"), 
-        TopStart("Top Start"), 
-        MidStartTop("Mid Start Top"),
-        MidStartLow("Mid Start Low"),
-        LowStart("Low Start"),
-        DriveOutTop("Drive Out Top"),
-        DriveOutLow("Drive Out Low"),
-        DriveStraight("DriveStraight");
+        BalanceLow("Balance Low"),
+        BalanceTop("Balance Top"),
+        DriveOutTop("Drive Out Top"), // works
+        DriveOutLow("Drive Out Low"); // works
 
         public final String value;
 
@@ -211,6 +199,6 @@ public class AutonomousFactory {
 
     public Command autobalance() {
         // just so that we can do an auto balance auton if we ever need to
-        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.AutoBalance.value), new PIDBalance(swerve));
+        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.BalanceLow.value), new PIDBalance(swerve));
     }
 }
