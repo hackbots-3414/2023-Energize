@@ -10,7 +10,7 @@
         "x": 5.437738722565329,
         "y": 0.75
       },
-      "holonomicAngle": -180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -35,7 +35,7 @@
         "x": 7.214912756882812,
         "y": 0.9605458863095327
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -53,11 +53,11 @@
         "y": 0.7534075218526392
       },
       "prevControl": {
-        "x": 6.482169355316154,
-        "y": 0.7534075218526392
+        "x": 5.4365147876203235,
+        "y": 0.7417176400189098
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -74,13 +74,13 @@
     {
       "position": 1.6363636363637,
       "names": [
-        "IntakeEnd"
+        "IntakeStart"
       ]
     },
     {
-      "position": 0.8000000000000002,
+      "position": 0.6181818181818179,
       "names": [
-        "IntakeStart"
+        "IntakeEnd"
       ]
     }
   ]
