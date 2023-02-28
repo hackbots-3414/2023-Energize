@@ -21,7 +21,6 @@ public class Intake extends SubsystemBase {
   PowerDistribution powerDistribution = new PowerDistribution(Swerve.pdhID, ModuleType.kRev);
   private boolean hasObject = false;
   
-  
   public Intake() {
     configMotor();
   }
