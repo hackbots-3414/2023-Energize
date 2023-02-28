@@ -48,11 +48,11 @@ public class RobotContainer {
 
   /* Operator Buttons */
   private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-  private final JoystickButton ejectButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton ejectButton = new JoystickButton(operator, XboxController.Button.kB.value);
   private final JoystickButton stowAndLowButton = new JoystickButton(operator, XboxController.Button.kA.value);
   private final JoystickButton midButton = new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton highButton = new JoystickButton(operator, XboxController.Button.kY.value);
-  private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kB.value);
+  private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
   private final POVButton shoulderUp = new POVButton(operator, 90);
   private final POVButton shoulderDown = new POVButton(operator, 270);
