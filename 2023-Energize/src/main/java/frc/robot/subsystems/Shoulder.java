@@ -126,6 +126,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.feed();
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Shoulder pos", getPosition());
-    // SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
+    SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
   }
 }
