@@ -112,7 +112,7 @@ public class AutonomousFactory {
         PIDController thetaPID = new PIDController(Constants.AutoConstants.kPThetaController, 0, 0);
 
         thetaPID.enableContinuousInput(-180, 180);
-        SmartDashboard.putData("Theta PID", thetaPID);
+        //SmartDashboard.putData("Theta PID", thetaPID);
 
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
