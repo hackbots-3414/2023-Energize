@@ -21,7 +21,6 @@ public class Intake extends SubsystemBase {
   PowerDistribution powerDistribution = new PowerDistribution(Swerve.pdhID, ModuleType.kRev);
   private boolean hasObject = false;
   
-  
   public Intake() {
     configMotor();
   }
@@ -76,7 +75,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Hand Motor Current", getCurrent());
-    SmartDashboard.putBoolean("Has Object", hasObject);
+    //SmartDashboard.putBoolean("Has Object", hasObject);
   }
 
 }
