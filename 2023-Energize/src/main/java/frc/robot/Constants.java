@@ -186,7 +186,7 @@ public final class Constants {
         public static final boolean handMotorInvert = true;
 
         public static final double intakeSpeedPercent = 1;
-        public static final double ejectSpeedPercent = -0.8;
+        public static final double ejectSpeedPercent = -0.6;
 
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
@@ -200,7 +200,7 @@ public final class Constants {
         // public static final double wristCanCoderOffset = 151.87;
 
         //MAIN BOT
-        public static final int handCurrentLimit = 80;
+        public static final int handCurrentLimit = 22;
         public static final int secondHandCurrentLimit = 8;
         public static final double handCurrentThreshold = 20;
 
@@ -250,11 +250,11 @@ public final class Constants {
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(40.0);
-        public static final double midShoulderAngle = Math.toRadians(-25.0);
+        public static final double midWristAngle = Math.toRadians(38.33);
+        public static final double midShoulderAngle = Math.toRadians(-21.0);
 
         public static final double highWristAngle = Math.toRadians(40.0);
-        public static final double highShoulderAngle = Math.toRadians(-7.0);
+        public static final double highShoulderAngle = Math.toRadians(-4.0);
 
         public static final double shelfWristAngle = Math.toRadians(0.0);
         public static final double shelfShoulderAngle = Math.toRadians(-7.0);
