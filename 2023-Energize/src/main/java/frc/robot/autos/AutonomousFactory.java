@@ -14,11 +14,14 @@ import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDBalance;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
@@ -54,8 +57,8 @@ public class AutonomousFactory {
 
     public static AutonomousFactory getInstance(Swerve m_swerve, Intake intake, Wrist wrist, Shoulder shoulder) {
         swerve = m_swerve;
-        // eventMap.put("startIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
-        // eventMap.put("stopIntake", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
+        // eventMap.put("ShootHigh", new SequentialCommandGroup(new IntakeCommand(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
+        // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
         eventMap.put("startIntake", new PrintCommand("Start Intake Event Worked!!!"));
 
         autoBuilder = new SwerveAutoBuilder(

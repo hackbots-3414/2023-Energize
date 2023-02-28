@@ -64,6 +64,8 @@ public class RobotContainer {
   private final Wrist m_Wrist = new Wrist();
 
   SendableChooser<AutonChoice> pathChooser = new SendableChooser<>();
+  SendableChooser<Bays> bayChooser = new SendableChooser<>();
+  SendableChooser<Heights> heightChooser = new SendableChooser<>();
 
   private AutonomousFactory autons;
 
@@ -86,7 +88,6 @@ public class RobotContainer {
     autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
     pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.DriveOutLow);
-    
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
