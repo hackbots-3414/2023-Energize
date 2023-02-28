@@ -74,7 +74,7 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // SmartDashboard.putNumber("Hand Motor Current", getCurrent());
+    SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     //SmartDashboard.putBoolean("Has Object", hasObject);
   }
 
