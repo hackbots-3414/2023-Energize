@@ -2,37 +2,39 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.450625826518558,
-        "y": 4.754600256531473
+        "x": 1.7944909911172147,
+        "y": 1.0460120564369244
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.630380027430097,
-        "y": 4.754600256531473
+        "x": 2.7944909911172164,
+        "y": 1.0460120564369244
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Spit Cube"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 5.0,
-        "y": 4.752640344975347
+        "x": 5.978539216864912,
+        "y": 0.9128832492540427
       },
       "prevControl": {
-        "x": 4.0,
-        "y": 4.752640344975347
+        "x": 1.8135093921433407,
+        "y": 0.8938648482279166
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
