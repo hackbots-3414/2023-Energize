@@ -19,14 +19,20 @@ public class ArmCommand extends CommandBase {
   private Wrist wrist;
   private Shoulder shoulder;
   private int selector;
+  private boolean isTeleop;
 
-  public ArmCommand(Shoulder shoulder, Wrist wrist, int selector) {
+  public ArmCommand(Shoulder shoulder, Wrist wrist, int selector, boolean isTeleop) {
     this.shoulder = shoulder;
     this.wrist = wrist;
     this.selector = selector;
+    this.isTeleop = isTeleop;
 
     addRequirements(shoulder);
     addRequirements(wrist);
+  }
+
+  public ArmCommand(Shoulder shoulder, Wrist wrist, int selector) {
+    this(shoulder, wrist, selector, true);
   }
 
   // Called when the command is initially scheduled.
@@ -77,11 +83,17 @@ public class ArmCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    if (!isTeleop) {
+      Timer.delay(1.0);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (isTeleop) {
+      return false;
+    }
+    return true;
   }
 }
