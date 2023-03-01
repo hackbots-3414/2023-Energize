@@ -87,7 +87,7 @@ public class RobotContainer {
 
     autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
-    pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.DriveOutLow);
+    // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
     
     SmartDashboard.putData("Auton Mode", pathChooser);
 
@@ -132,6 +132,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autons.eventChooser(pathChooser.getSelected()/*, bayChooser.getSelected(), heightChooser.getSelected()*/);
+    // return autons.eventChooser(pathChooser.getSelected()/*, bayChooser.getSelected(), heightChooser.getSelected()*/);
+    return autons.autobalance();
   }
 }

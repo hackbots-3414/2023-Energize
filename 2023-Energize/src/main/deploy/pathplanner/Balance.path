@@ -7,36 +7,38 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4322770717243034,
+        "x": 2.1677229282756967,
         "y": 3.3044108836309283
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Spit Cube"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 5.5411159932640155,
-        "y": 3.3
+        "x": 6.13068642507392,
+        "y": 3.2996925780328428
       },
       "prevControl": {
-        "x": 6.34439300152009,
-        "y": 3.3
+        "x": 5.327409416817845,
+        "y": 3.2996925780328428
       },
       "nextControl": {
-        "x": 4.737838985007941,
-        "y": 3.3
+        "x": 5.327409416817845,
+        "y": 3.2996925780328428
       },
-      "holonomicAngle": 0.0,
-      "isReversal": false,
+      "holonomicAngle": 180.0,
+      "isReversal": true,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
@@ -49,15 +51,15 @@
     },
     {
       "anchorPoint": {
-        "x": 4.095717515278448,
-        "y": 3.3
+        "x": 3.8294599009126853,
+        "y": 3.2901833775197806
       },
       "prevControl": {
-        "x": 4.841893536902484,
-        "y": 3.3
+        "x": 4.575635922536723,
+        "y": 3.2901833775197806
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,

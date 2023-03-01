@@ -15,12 +15,14 @@ import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDBalance;
+import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
@@ -46,6 +48,7 @@ public class AutonomousFactory {
     private static final AutonomousFactory me = new AutonomousFactory();
 
     private static Swerve swerve;
+    private static Intake intake;
 
     private static HashMap<String, Command> eventMap = new HashMap<>();
 
@@ -53,11 +56,12 @@ public class AutonomousFactory {
 
     private AutonomousFactory() {}
 
-    public static AutonomousFactory getInstance(Swerve m_swerve, Intake intake, Wrist wrist, Shoulder shoulder) {
+    public static AutonomousFactory getInstance(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
         swerve = m_swerve;
+        intake = m_intake;
         // eventMap.put("ShootHigh", new SequentialCommandGroup(new IntakeCommand(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
         // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
-        eventMap.put("startIntake", new PrintCommand("Start Intake Event Worked!!!"));
+        eventMap.put("Spit Cube", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
 
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
@@ -154,7 +158,6 @@ public class AutonomousFactory {
     }
 
     public Command autobalance() {
-        // just so that we can do an auto balance auton if we ever need to
-        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.Balance.value), new PIDBalance(swerve));
+        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.Balance.value), new PIDBalance(swerve, true));
     }
 }
