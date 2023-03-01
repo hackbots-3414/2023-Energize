@@ -36,31 +36,9 @@ public class AutonomousFactory {
     public int choice;
 
     public enum AutonChoice {
-        // BottomObjectOne("Bottom Object One"),
-        // BottomObjectTwo("Bottom Object Two"),
-        // BottomObjectThree("Bottom Object Three"),
-        // BottomObjectFour("Bottom Object Four"),
-        // BottomObjectFive("Bottom Object Five"),
-        // BottomObjectSix("Bottom Object Six"),
-        // BottomObjectSeven("Bottom Object Seven"),
-        // BottomObjectEight("Bottom Object Eight"),
-        // TopObjectOne("Top Object One"),
-        // TopObjectTwo("Top Object Two"),
-        // TopObjectThree("Top Object Three"),
-        // TopObjectFour("Top Object Four"),
-        // TopObjectFive("Top Object Five"),
-        // TopObjectSix("Top Object Six"),
-        // TopObjectSeven("Top Object Seven"),
-        // TopObjectEight("Top Object Eight"),
-        // AutoBalance("Balance"), 
-        // TopStart("Top Start"), 
-        // MidStartTop("Mid Start Top"),
-        // MidStartLow("Mid Start Low"),
-        // LowStart("Low Start"),
-        // DriveOutTop("Drive Out Top"),
-        // DriveOutLow("Drive Out Low"),
-        // DriveStraight("DriveStraight"),
-        TestingPath("Testing Path");
+        Balance("Balance"),
+        LeftBalance("Left Balance"), // works
+        RightBalance("Right Balance"); // works
 
         public final String value;
 
