@@ -35,8 +35,9 @@ public class AutonomousFactory {
 
     public enum AutonChoice {
         Balance("Balance"),
-        LeftBalance("Left Balance"), // works
-        RightBalance("Right Balance"); // works
+        Left("Left"),
+        Right("Right"),
+        Nothing("Nothing");
 
         public final String value;
 

@@ -92,9 +92,10 @@ public class RobotContainer {
     SmartDashboard.putData("Auton Mode", pathChooser);
 
     // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
-    pathChooser.setDefaultOption("Mid Balance", autons.autobalance());
-    pathChooser.addOption("Left Balance", autons.eventChooser(AutonChoice.LeftBalance));
-    pathChooser.addOption("Right Balance", autons.eventChooser(AutonChoice.RightBalance));    
+    pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
+    pathChooser.addOption("Left", autons.eventChooser(AutonChoice.Left));
+    pathChooser.addOption("Right", autons.eventChooser(AutonChoice.Right)); 
+    pathChooser.addOption("Balance", autons.autobalance());   
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
@@ -137,6 +138,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autons.autobalance();
+    return pathChooser.getSelected();
   }
 }
