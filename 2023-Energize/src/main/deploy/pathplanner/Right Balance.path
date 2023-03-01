@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.2,
-        "y": 1.0
+        "x": 1.8,
+        "y": 4.421778238574271
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2,
-        "y": 1.0
+        "x": 2.979754200911541,
+        "y": 4.421778238574271
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -16,20 +16,22 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Spit Cube"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 6.206760029178423,
-        "y": 0.9699384523324212
+        "x": 5.626698797881582,
+        "y": 4.697545053453096
       },
       "prevControl": {
-        "x": 5.206760029178423,
-        "y": 0.9699384523324212
+        "x": 1.7564541890649632,
+        "y": 4.697545053453096
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -45,12 +47,5 @@
       }
     }
   ],
-  "markers": [
-    {
-      "position": 0.0,
-      "names": [
-        "IntakeStart"
-      ]
-    }
-  ]
+  "markers": []
 }

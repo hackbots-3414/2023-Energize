@@ -35,8 +35,8 @@ public class AutonomousFactory {
 
     public enum AutonChoice {
         Balance("Balance"),
-        DriveOutTop("Drive Out Top"), // works
-        DriveOutLow("Drive Out Low"); // works
+        LeftBalance("Left Balance"), // works
+        RightBalance("Right Balance"); // works
 
         public final String value;
 
