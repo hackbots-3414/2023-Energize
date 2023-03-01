@@ -3,6 +3,8 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pathplanner.lib.PathConstraints;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -65,7 +67,7 @@ public class RobotContainer {
   private final Shoulder m_Shoulder = new Shoulder();
   private final Wrist m_Wrist = new Wrist();
 
-  SendableChooser<AutonChoice> pathChooser = new SendableChooser<>();
+  SendableChooser<Command> pathChooser = new SendableChooser<>();
 
   private AutonomousFactory autons;
 
@@ -87,9 +89,12 @@ public class RobotContainer {
 
     autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
 
-    // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
-    
     SmartDashboard.putData("Auton Mode", pathChooser);
+
+    // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
+    pathChooser.setDefaultOption("Mid Balance", autons.autobalance());
+    pathChooser.addOption("Left Balance", autons.eventChooser(AutonChoice.LeftBalance));
+    pathChooser.addOption("Right Balance", autons.eventChooser(AutonChoice.RightBalance));    
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
@@ -132,7 +137,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // return autons.eventChooser(pathChooser.getSelected()/*, bayChooser.getSelected(), heightChooser.getSelected()*/);
     return autons.autobalance();
   }
 }
