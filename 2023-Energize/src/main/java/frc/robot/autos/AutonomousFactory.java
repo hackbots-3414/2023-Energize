@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.ArmCommand;
 import frc.robot.commands.PIDBalance;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
@@ -62,7 +63,10 @@ public class AutonomousFactory {
         intake = m_intake;
         // eventMap.put("ShootHigh", new SequentialCommandGroup(new IntakeCommand(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
         // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
-        eventMap.put("Spit Cube", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
+        eventMap.put("Eject", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
+        eventMap.put("Mid", new InstantCommand(() -> new ArmCommand(m_shoulder, m_wrist, 3, false)));
+        eventMap.put("High", new InstantCommand(() -> new ArmCommand(m_shoulder, m_wrist, 4, false)));
+        eventMap.put("Stow", new InstantCommand(() -> new ArmCommand(m_shoulder, m_wrist, 0, false)));
 
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
