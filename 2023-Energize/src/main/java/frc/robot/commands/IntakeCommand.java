@@ -31,7 +31,7 @@ public class IntakeCommand extends CommandBase {
     if (!intake.getObjectState()) {
       intake.set(Constants.IntakeConstants.intakeSpeedPercent);
       if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
-        intake.set(IntakeConstants.intakeSpeedPercent / 5);
+        intake.set(IntakeConstants.objectHoldSpeedPercent);
         intake.setCurrentLimitTwo();
         intake.setObjectStateTrue();
       }
