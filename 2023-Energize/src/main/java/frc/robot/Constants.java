@@ -212,4 +212,29 @@ public final class Constants {
         public static final double KP = .016;
         public static final double KD = 0;
     }
+
+    public static final class PathFactory {
+        // NOTE: All measurements here are in inches. TODO: make it not inches.
+
+        public static final double p1 = 20.19;
+        public static final double p2 = 42.19;
+        public static final double p3 = 64.19;
+        public static final double p4 = 86.19;
+        public static final double p5 = 108.19;
+        public static final double p6 = 130.19;
+        public static final double p7 = 157.19;
+        public static final double p8 = 174.19;
+        public static final double p9 = 196.19;
+
+        public static final class redSide {
+
+            public static final double x = 610.77;
+        
+
+        }
+        public static final class blueSide {
+            public static final double x = 40.45;
+            
+        }
+    }
 }
