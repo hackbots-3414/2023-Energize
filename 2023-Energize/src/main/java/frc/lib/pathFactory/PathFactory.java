@@ -26,6 +26,8 @@ public class PathFactory {
     private boolean isRedSide = true;
     private double x = (isRedSide) ? Constants.PathFactory.redSide.x : Constants.PathFactory.blueSide.x;
 
+    private double abx = (isRedSide) ? Constants.PathFactory.redSide.abx : Constants.PathFactory.blueSide.abx;
+
     public Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), new Rotation2d());
     public Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), new Rotation2d());
     public Pose2d p3 = new Pose2d(new Translation2d(x, Constants.PathFactory.p3), new Rotation2d());
@@ -35,8 +37,9 @@ public class PathFactory {
     public Pose2d p7 = new Pose2d(new Translation2d(x, Constants.PathFactory.p7), new Rotation2d());
     public Pose2d p8 = new Pose2d(new Translation2d(x, Constants.PathFactory.p8), new Rotation2d());
     public Pose2d p9 = new Pose2d(new Translation2d(x, Constants.PathFactory.p9), new Rotation2d());
-    public Pose2d pA = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
-    public Pose2d pB = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
+
+    public Pose2d pA = new Pose2d(new Translation2d(abx, Constants.PathFactory.a), new Rotation2d());
+    public Pose2d pB = new Pose2d(new Translation2d(abx, Constants.PathFactory.b), new Rotation2d());
     public Pose2d pC1 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
     public Pose2d pC2 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
 

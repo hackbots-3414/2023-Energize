@@ -226,14 +226,20 @@ public final class Constants {
         public static final double p8 = 174.19;
         public static final double p9 = 196.19;
 
+        public static final double a = 180.19;
+        public static final double b = 36.19;
+
         public static final class redSide {
 
             public static final double x = 610.77;
-        
+
+            public static final double abx = 372.92;
 
         }
         public static final class blueSide {
             public static final double x = 40.45;
+            
+            public static final double abx = 278.25;
             
         }
     }
