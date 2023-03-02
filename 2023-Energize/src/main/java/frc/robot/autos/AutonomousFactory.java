@@ -82,11 +82,11 @@ public class AutonomousFactory {
         return me;
     }
 
-    public PathPoint resetToVision() {
-        swerve.updateOdometry();
-        Pose2d pose = swerve.getPose();
-        return new PathPoint(pose.getTranslation(), pose.getRotation());
-    }
+    // public PathPoint resetToVision() {
+    //     swerve.updateOdometry();
+    //     Pose2d pose = swerve.getPose();
+    //     return new PathPoint(pose.getTranslation(), pose.getRotation());
+    // }
 
     // private Command followTrajectoryOnTheFly(PathPoint... pathPoints){
     //     ArrayList<PathPoint> points = new ArrayList<>();
