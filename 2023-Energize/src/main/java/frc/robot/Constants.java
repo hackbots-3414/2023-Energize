@@ -99,6 +99,8 @@ public final class Constants {
         public static final double maxSpeed = 4.5; // meters per second (Max for robot is 4.5)
         public static final double maxTeleopSpeed = 7.5; // meters per second (Max for robot is 4.5)
         public static final double maxAngularVelocity = 11.5;
+        public static final double reducedAngVel = 6.0; 
+        public static final double reducedSpeed = 1.0; 
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -191,8 +193,8 @@ public final class Constants {
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
-        public static final double shoulderCanCoderOffset = 4.57;
-        public static final double wristCanCoderOffset = -77.60;
+        public static final double shoulderCanCoderOffset = -53.17;
+        public static final double wristCanCoderOffset = -26.19;
 
         public static final int handCurrentLimit = 20;
         public static final double handCurrentThreshold = 18;
@@ -200,8 +202,8 @@ public final class Constants {
         public static final int shoulderUpperLimit = 0;
         public static final int shoulderLowerLimit = -85;
 
-        public static final int wristUpperLimit = 115;
-        public static final int wristLowerLimit = -62;
+        public static final int wristUpperLimit = 78;
+        public static final int wristLowerLimit = -140;
 
         public static final double shoulderkP = 0.2;
         public static final double shoulderkI = 0.0;

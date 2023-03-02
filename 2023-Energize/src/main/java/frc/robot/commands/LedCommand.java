@@ -15,10 +15,12 @@ public class LedCommand extends CommandBase {
 
   private LedSubsystem m_LedSubsystem;
   final Intake m_Intake; 
+  double ledColor;
 
-  public LedCommand(LedSubsystem m_LedSubsystem, Intake m_Intake) {
+  public LedCommand(LedSubsystem m_LedSubsystem, Intake m_Intake, double ledColor) {
     this.m_LedSubsystem = m_LedSubsystem;
     this.m_Intake = m_Intake;
+    this.ledColor = ledColor;
     
     addRequirements(m_LedSubsystem);
   }
@@ -30,7 +32,7 @@ public class LedCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_LedSubsystem.setColor(0.53);
+    m_LedSubsystem.setColor(ledColor);
 
     // if (m_Intake.getIRInput()) {
     //   m_LedSubsystem.setColor(0.55);
