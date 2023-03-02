@@ -24,6 +24,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -181,6 +182,7 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
         SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
         mod.getCanCoder().getDegrees());
+        SmartDashboard.putNumber("Time remaininf", DriverStation.getMatchTime());
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated",
         // mod.getPosition().angle.getDegrees());
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity",

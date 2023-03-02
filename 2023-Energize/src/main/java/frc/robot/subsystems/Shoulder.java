@@ -103,7 +103,8 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
-    shoulder.setNeutralMode(NeutralMode.Brake);
+   shoulder.setNeutralMode(NeutralMode.Brake);
+    // shoulder.setNeutralMode(NeutralMode.Coast);
     shoulder.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 0), IntakeConstants.canPause);
   }
 
