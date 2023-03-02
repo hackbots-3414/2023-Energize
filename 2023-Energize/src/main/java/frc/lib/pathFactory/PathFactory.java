@@ -45,10 +45,10 @@ public class PathFactory {
 
     private List<Pose2d> poses = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC1, pC2);
 
-    private List<Pose2d> pA_path = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
-    private List<Pose2d> pB_path = Arrays.asList(p9, p8, p7, p6, p5, p4, p3, p2, p1);
-    private List<Pose2d> pC1_path = Arrays.asList(pA, p1, p2, p3, p4, p5, p6, p7, p8, p9);
-    private List<Pose2d> pC2_path = Arrays.asList(pB, p9, p8, p7, p6, p5, p4, p3, p2, p1);
+    private List<Pose2d> pA_path = Arrays.asList(pC2, p9, p8, p7, p6, p5, p4, p3, p2, p1);
+    private List<Pose2d> pB_path = Arrays.asList(pC1, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    private List<Pose2d> pC1_path = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    private List<Pose2d> pC2_path = Arrays.asList(p9, p8, p7, p6, p5, p4, p3, p2, p1);
 
     private TreeMap<Pose2d, List<Pose2d>> paths = new TreeMap<Pose2d, List<Pose2d>>();
 
@@ -64,7 +64,13 @@ public class PathFactory {
     }
 
     private double getDistance(Pose2d a, Pose2d b) {
-        return 0.0;
+        Pose2d relative = a.relativeTo(b);
+        double distance = Math.sqrt(
+            Math.pow(relative.getX(), 2)
+            +
+            Math.pow(relative.getY(), 2)
+        );
+        return distance;
     }
 
     public List<Pose2d> getPath(Pose2d from, int toInt) {

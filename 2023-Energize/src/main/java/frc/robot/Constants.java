@@ -238,7 +238,7 @@ public final class Constants {
 
             public static final double abx = 372.92;
 
-            public static final double cx = 478.52;
+            public static final double cx = 438.07;
 
         }
         public static final class blueSide {
