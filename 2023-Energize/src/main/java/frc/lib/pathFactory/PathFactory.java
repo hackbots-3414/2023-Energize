@@ -63,9 +63,13 @@ public class PathFactory {
         return me;
     }
 
+    private double getDistance(Pose2d a, Pose2d b) {
+        return 0.0;
+    }
+
     public List<Pose2d> getPath(Pose2d from, int toInt) {
 
-        Pose2d to = pA_path.get(toInt);
+        Pose2d to = pA_path.get(toInt); // figure out which scoring point to go to
 
         
 
@@ -79,11 +83,25 @@ public class PathFactory {
 
         Pose2d best_start_pose = poses.get(0); // It has to be initialized with something
 
-        for (int i = 1; i < poses.size();i++) {
-            Pose2d pose = poses.get(i);
-            if ((Math.pow(pose.getX(), 2) + Math.pow(pose.getY(), 2)) < (Math.pow(best_start_pose.getX(), 2) + Math.pow(best_start_pose.getY(), 2))) {
-                best_start_pose = pose;
+        double currentDistanceToTarget = getDistance(from, to);
+
+        double currentBestDistanceToNextWaypoint = getDistance(from, best_start_pose);
+        
+        for (int i = 0;i < poses.size();i ++) {
+            /*
+             * Find the point that is closest to the robot currently and DOES NOT take us farther away (using currentDistance)
+             */
+
+            Pose2d thisPose = poses.get(i);
+
+            if (getDistance(from, thisPose) < currentBestDistanceToNextWaypoint) {
+                if (getDistance(thisPose, to) < currentDistanceToTarget) {
+                    best_start_pose = thisPose;
+                    currentBestDistanceToNextWaypoint = getDistance(from, thisPose);
+                }
             }
+
+            
         }
 
         boolean outside = false;
@@ -108,6 +126,7 @@ public class PathFactory {
                 break;
             }
         }
+
         results.add(to);
 
         return results;

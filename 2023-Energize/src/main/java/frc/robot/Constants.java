@@ -229,6 +229,9 @@ public final class Constants {
         public static final double a = 180.19;
         public static final double b = 36.19;
 
+        private static final double c1 = 0;
+        private static final double c2 = 0;
+
         public static final class redSide {
 
             public static final double x = 610.77;
