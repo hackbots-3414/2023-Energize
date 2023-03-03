@@ -206,12 +206,12 @@ public final class Constants {
         public static final double handCurrentThreshold = 25;
 
         public static final int shoulderUpperLimit = 0;
-        public static final int shoulderLowerLimit = -85;
+        public static final int shoulderLowerLimit = -86;
 
         public static final int wristUpperLimit = 115;
         public static final int wristLowerLimit = -62;
 
-        public static final double shoulderkP = 0.2;
+        public static final double shoulderkP = 0.3;
         public static final double shoulderkI = 0.0;
         public static final double shoulderkD = 0.0;
 
@@ -220,7 +220,7 @@ public final class Constants {
         public static final double wristkD = 0.0;
 
         //Volts
-        public static final double shoulderkS = 0.1;
+        public static final double shoulderkS = 0.05;
         public static final double shoulderkG = 0.73;
         public static final double shoulderkV = 5.54;
         public static final double shoulderkA = 0.6;
@@ -246,7 +246,7 @@ public final class Constants {
         public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
         public static final double pickUpWristAngle = Math.toRadians(0.0);
-        public static final double pickUpShoulderAngle = Math.toRadians(-64.25);
+        public static final double pickUpShoulderAngle = Math.toRadians(-70.25);
 
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);

@@ -55,7 +55,8 @@ public class Shoulder extends ProfiledPIDSubsystem {
     configMotor();
 
     m_controller.reset(getMeasurement(), getCanCoderVelo());
-
+    m_controller.enableContinuousInput(IntakeConstants.shoulderLowerLimit, IntakeConstants.shoulderUpperLimit);
+    SmartDashboard.putData(m_controller);
     setGoal(getMeasurement());
   }
 
