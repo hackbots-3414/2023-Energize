@@ -69,6 +69,7 @@ public class AutonomousFactory {
         eventMap.put("Mid", new InstantCommand(() -> new ArmCommand(m_shoulder, m_wrist, 3, false)));
         eventMap.put("High", new InstantCommand(() -> new ArmCommand(m_shoulder, m_wrist, 4, false)));
         eventMap.put("Stow", new InstantCommand(() -> new ArmCommand(m_shoulder, m_wrist, 0, false)));
+        eventMap.put("Balance", new PIDBalance(swerve, true));
 
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
@@ -162,9 +163,5 @@ public class AutonomousFactory {
 
     public Command eventChooser(AutonChoice choice) {
         return followTrajectoryWithEventsCommand(choice.value);
-    }
-
-    public Command autobalance() {
-        return new SequentialCommandGroup(followTrajectoryWithEventsCommand(AutonChoice.Balance.value), new PIDBalance(swerve, true));
     }
 }

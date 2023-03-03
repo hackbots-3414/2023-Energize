@@ -75,8 +75,8 @@ public class Wrist extends ProfiledPIDSubsystem {
     wrist.configReverseSoftLimitEnable(true, 100);
     wrist.setInverted(TalonFXInvertType.CounterClockwise);
     wrist.setNeutralMode(NeutralMode.Brake);
-    // wrist.setNeutralMode(NeutralMode.Coast);
-    wrist.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 0), IntakeConstants.canPause);
+    //  wrist.setNeutralMode(NeutralMode.Coast);
+    wrist.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
   }
 
   @Override

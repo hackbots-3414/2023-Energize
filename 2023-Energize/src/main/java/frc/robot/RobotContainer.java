@@ -97,7 +97,7 @@ public class RobotContainer {
     pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
     pathChooser.addOption("Left", autons.eventChooser(AutonChoice.Left));
     pathChooser.addOption("Right", autons.eventChooser(AutonChoice.Right)); 
-    pathChooser.addOption("Balance", autons.autobalance());   
+    pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance));   
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
