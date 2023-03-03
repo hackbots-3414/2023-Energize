@@ -53,6 +53,7 @@ public class RobotContainer {
   private final JoystickButton midButton = new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton highButton = new JoystickButton(operator, XboxController.Button.kY.value);
   private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton shelfButton = new JoystickButton(operator, XboxController.Button.kStart.value);
 
   private final POVButton shoulderUp = new POVButton(operator, 90);
   private final POVButton shoulderDown = new POVButton(operator, 270);
@@ -129,6 +130,7 @@ public class RobotContainer {
     midButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
     pickUpButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
+    shelfButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 5));
 
     shoulderUp.whileTrue(new MoveShoulder(m_Shoulder, Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
