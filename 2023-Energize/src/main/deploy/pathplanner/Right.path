@@ -17,7 +17,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Spit Cube"
+          "Eject"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
