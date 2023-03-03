@@ -76,6 +76,8 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     SmartDashboard.putBoolean("Has Object", hasObject);
+    SmartDashboard.putNumber("Hand Motor Temp", hand.getMotorTemperature());
+
   }
 
 }

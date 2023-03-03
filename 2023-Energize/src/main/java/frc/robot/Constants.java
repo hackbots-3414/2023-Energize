@@ -248,7 +248,7 @@ public final class Constants {
         public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
         public static final double pickUpWristAngle = Math.toRadians(0.0);
-        public static final double pickUpShoulderAngle = Math.toRadians(-70.25);
+        public static final double pickUpShoulderAngle = Math.toRadians(-68.25);
 
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);
