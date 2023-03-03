@@ -37,7 +37,7 @@ public class AutonomousFactory {
     public int choice;
 
     public enum AutonChoice {
-        Balance("Balance"),
+        Balance("Mid Balance"),
         Left("Left"),
         Right("Right"),
         Nothing("Nothing");
