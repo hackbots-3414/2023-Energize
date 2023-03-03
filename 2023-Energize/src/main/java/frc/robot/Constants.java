@@ -203,7 +203,7 @@ public final class Constants {
 
         //MAIN BOT
         public static final int handCurrentLimit = 50; // 50
-        public static final int secondHandCurrentLimit = 10;
+        public static final int secondHandCurrentLimit = 15;
         public static final double handCurrentThreshold = 25;
 
         public static final int shoulderUpperLimit = 0;
@@ -259,8 +259,8 @@ public final class Constants {
         public static final double highWristAngle = Math.toRadians(40.0);
         public static final double highShoulderAngle = Math.toRadians(-4.0);
 
-        public static final double shelfWristAngle = Math.toRadians(0.0);
-        public static final double shelfShoulderAngle = Math.toRadians(-7.0);
+        public static final double shelfWristAngle = Math.toRadians(-5.0);
+        public static final double shelfShoulderAngle = Math.toRadians(-3.0);
 
     }
 
