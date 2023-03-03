@@ -132,6 +132,5 @@ public class Shoulder extends ProfiledPIDSubsystem {
     SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
     // SmartDashboard.putNumber("Shoulder Velo", Math.toDegrees(getCanCoderVelo()));
     SmartDashboard.putNumber("Shoulder Current", shoulder.getSupplyCurrent());
-
   }
 }
