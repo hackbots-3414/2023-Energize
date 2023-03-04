@@ -187,7 +187,7 @@ public final class Constants {
         public static final double intakeSpeedPercent = 1;
         public static final double ejectSpeedPercent = -0.2;
         public static final double ejectSpeedAutonPercent = -0.1;
-        public static final double objectHoldSpeedPercent = 0.5;
+        public static final double objectHoldSpeedPercent = 0.2;
 
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;

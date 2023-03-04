@@ -1,5 +1,4 @@
-package frc.robot.commands; 
-
+package frc.robot.commands;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
 
-
 public class DefaultLedCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(DefaultLedCommand.class);
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final LedSubsystem m_subsystem;
   private double m_color;
 
@@ -37,25 +35,26 @@ public class DefaultLedCommand extends CommandBase {
 
   @Override
   public void execute() {
-    
 
-    if (DriverStation.isAutonomous()){
-      m_subsystem.setColor(.91);
+    if (DriverStation.isAutonomous()) {
+      m_subsystem.setColor(.91); //purple
     } else if (intake.getObjectState()) {
-      m_subsystem.setColor(.71);
-    } else if (DriverStation.getMatchTime()<15){
-      m_subsystem.setColor(.65);
-    } else if (DriverStation.getMatchTime()<=30){
-      m_subsystem.setColor(-.25);
+      logger.trace("object found!");
+      m_subsystem.setColor(.75); // dark green
+    } else if (DriverStation.getMatchTime() < 15) {
+      m_subsystem.setColor(-0.05); // Strobe white
+    } else if (DriverStation.getMatchTime() <= 30) {
+      m_subsystem.setColor(-.25); //heart beat red
+    } else {
+      m_subsystem.setColor(m_color);
     }
-    
-    m_subsystem.setColor(m_color);
-
     done = true;
+
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
