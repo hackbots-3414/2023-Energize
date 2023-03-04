@@ -13,7 +13,7 @@ public class LedSubsystem extends SubsystemBase {
   Spark ledcontroller;
 
   public LedSubsystem() {
-    ledcontroller = new Spark(9);
+    ledcontroller = new Spark(0);
     ledcontroller.set(0.4);
   }
 
