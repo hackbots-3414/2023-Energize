@@ -62,7 +62,6 @@ public class RobotContainer {
   private final POVButton wristUp = new POVButton(operator, 0);
   private final POVButton wristDown = new POVButton(operator, 180);
 
-
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
@@ -86,7 +85,7 @@ public class RobotContainer {
 
     );
 
-    m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41));
+    m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41, m_Intake));
 
     configureButtonBindings();
 

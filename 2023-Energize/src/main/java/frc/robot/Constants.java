@@ -188,7 +188,7 @@ public final class Constants {
         public static final double intakeSpeedPercent = 1;
         public static final double ejectSpeedPercent = -0.2;
         public static final double ejectSpeedAutonPercent = -0.1;
-        public static final double objectHoldSpeedPercent = 0.3;
+        public static final double objectHoldSpeedPercent = 0.5;
 
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
@@ -203,7 +203,7 @@ public final class Constants {
 
         //MAIN BOT
         public static final int handCurrentLimit = 50; // 50
-        public static final int secondHandCurrentLimit = 15;
+        public static final int secondHandCurrentLimit = 20; // 15
         public static final double handCurrentThreshold = 25;
 
         public static final int shoulderUpperLimit = 0;
@@ -248,7 +248,7 @@ public final class Constants {
         public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
         public static final double pickUpWristAngle = Math.toRadians(0.0);
-        public static final double pickUpShoulderAngle = Math.toRadians(-68.25);
+        public static final double pickUpShoulderAngle = Math.toRadians(-70); // -68.25
 
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);
