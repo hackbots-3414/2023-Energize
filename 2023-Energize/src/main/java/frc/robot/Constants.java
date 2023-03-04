@@ -194,8 +194,8 @@ public final class Constants {
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
         //main bot
-        public static final double shoulderCanCoderOffset = 9.31; 
-        public static final double wristCanCoderOffset = -50.18; 
+        public static final double shoulderCanCoderOffset = 10; //9.31
+        public static final double wristCanCoderOffset = -82.0;  //-53.78
 
         //woody
         // public static final double shoulderCanCoderOffset = -54.84;
@@ -207,9 +207,9 @@ public final class Constants {
         public static final double handCurrentThreshold = 25;
 
         public static final int shoulderUpperLimit = 0;
-        public static final int shoulderLowerLimit = -86;
+        public static final int shoulderLowerLimit = -84;
 
-        public static final int wristUpperLimit = 115;
+        public static final int wristUpperLimit = 51;
         public static final int wristLowerLimit = -62;
 
         public static final double shoulderkP = 0.3;
@@ -247,8 +247,8 @@ public final class Constants {
         public static final double stowedWristAngle = Math.toRadians(35.0);
         public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double pickUpWristAngle = Math.toRadians(0.0);
-        public static final double pickUpShoulderAngle = Math.toRadians(-70); // -68.25
+        public static final double pickUpWristAngle = Math.toRadians(3.0);
+        public static final double pickUpShoulderAngle = Math.toRadians(-67.0); // -68.25
 
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);
@@ -260,7 +260,7 @@ public final class Constants {
         public static final double highShoulderAngle = Math.toRadians(-4.0);
 
         public static final double shelfWristAngle = Math.toRadians(-5.0);
-        public static final double shelfShoulderAngle = Math.toRadians(-3.0);
+        public static final double shelfShoulderAngle = Math.toRadians(0.0);
 
     }
 

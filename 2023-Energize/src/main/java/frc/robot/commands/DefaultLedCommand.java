@@ -39,7 +39,6 @@ public class DefaultLedCommand extends CommandBase {
     if (DriverStation.isAutonomous()) {
       m_subsystem.setColor(.91); //purple
     } else if (intake.getObjectState()) {
-      logger.trace("object found!");
       m_subsystem.setColor(.75); // dark green
     } else if (DriverStation.getMatchTime() < 15) {
       m_subsystem.setColor(-0.05); // Strobe white
