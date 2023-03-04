@@ -31,6 +31,7 @@ public class IntakeCommand extends CommandBase {
     intake.set(Constants.IntakeConstants.intakeSpeedPercent);
     bounces = 0;
 
+
   }
 
   @Override
@@ -41,6 +42,7 @@ public class IntakeCommand extends CommandBase {
 
     if (!intake.getObjectState()) {
       intake.set(Constants.IntakeConstants.intakeSpeedPercent);
+      
       if (bounces >= 9) {
         intake.setCurrentLimitTwo();
         intake.setObjectStateTrue();
