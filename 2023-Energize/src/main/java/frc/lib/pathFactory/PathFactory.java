@@ -9,16 +9,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
+//import javax.swing.text.Position;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 import frc.robot.Constants;
+import frc.robot.SwerveModule;
+//import frc.robot.Constants.Swerve;
+import frc.robot.subsystems.Swerve;;
 
 /** Add your docs here. */
 public class PathFactory {
     private static PathFactory me = new PathFactory();
-
+    private Pose2d pose = new Pose2d();
+    private Translation2d translation = new Translation2d();
 
     // I made these public because they should be used when using the getPath() method.
     // TODO: Put in values for the positions of the things. Also ensure that you switch the side depending on the side of the field we're on.
@@ -27,6 +32,7 @@ public class PathFactory {
     private double x = (isRedSide) ? Constants.PathFactory.redSide.x : Constants.PathFactory.blueSide.x;
 
     private double abx = (isRedSide) ? Constants.PathFactory.redSide.abx : Constants.PathFactory.blueSide.abx;
+    private double cx = (isRedSide) ? Constants.PathFactory.redSide.cx : Constants.PathFactory.blueSide.cx;
 
     public Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), new Rotation2d());
     public Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), new Rotation2d());
@@ -40,8 +46,8 @@ public class PathFactory {
 
     public Pose2d pA = new Pose2d(new Translation2d(abx, Constants.PathFactory.a), new Rotation2d());
     public Pose2d pB = new Pose2d(new Translation2d(abx, Constants.PathFactory.b), new Rotation2d());
-    public Pose2d pC1 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
-    public Pose2d pC2 = new Pose2d(new Translation2d(/*PUT VALUES HERE */), new Rotation2d());
+    public Pose2d pC1 = new Pose2d(new Translation2d(/*PUT VALUES HERE*/cx, Constants.PathFactory.c1), new Rotation2d());
+    public Pose2d pC2 = new Pose2d(new Translation2d(/*PUT VALUES HERE*/cx, Constants.PathFactory.c2), new Rotation2d());
 
     private List<Pose2d> poses = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC1, pC2);
 
@@ -64,13 +70,14 @@ public class PathFactory {
     }
 
     private double getDistance(Pose2d a, Pose2d b) {
-        Pose2d relative = a.relativeTo(b);
-        double distance = Math.sqrt(
-            Math.pow(relative.getX(), 2)
-            +
-            Math.pow(relative.getY(), 2)
-        );
-        return distance;
+        return a.getTranslation().getDistance(b.getTranslation());
+        // Pose2d relative = a.relativeTo(b);
+        // double distance = Math.sqrt(
+        //     Math.pow(relative.getX(), 2)
+        //     +
+        //     Math.pow(relative.getY(), 2)
+        // );
+        // return distance;
     }
 
     public List<Pose2d> getPath(Pose2d from, int toInt) {
