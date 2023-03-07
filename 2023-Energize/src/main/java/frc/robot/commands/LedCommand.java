@@ -15,12 +15,12 @@ public class LedCommand extends CommandBase {
 
   private LedSubsystem m_LedSubsystem;
   final Intake m_Intake; 
-  double ledColor;
+  double m_ledColor;
 
   public LedCommand(LedSubsystem m_LedSubsystem, Intake m_Intake, double ledColor) {
     this.m_LedSubsystem = m_LedSubsystem;
     this.m_Intake = m_Intake;
-    this.ledColor = ledColor;
+    this.m_ledColor = ledColor;
     
     addRequirements(m_LedSubsystem);
   }
@@ -28,11 +28,13 @@ public class LedCommand extends CommandBase {
   @Override
   public void initialize() {
     DataLogManager.start();
+   logger.debug("it works");
   }
 
   @Override
   public void execute() {
-    m_LedSubsystem.setColor(ledColor);
+    m_LedSubsystem.setColor(m_ledColor);
+    logger.trace("tracking the command");
 
     // if (m_Intake.getIRInput()) {
     //   m_LedSubsystem.setColor(0.55);

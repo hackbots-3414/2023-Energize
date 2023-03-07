@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
@@ -47,6 +48,8 @@ public class RobotContainer {
   private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
+  private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
 
   /* Operator Buttons */
   private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -55,9 +58,7 @@ public class RobotContainer {
   private final JoystickButton midButton = new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton highButton = new JoystickButton(operator, XboxController.Button.kY.value);
   private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kB.value);
-  private final JoystickButton ledConeButton = new JoystickButton(operator, XboxController.Button.kStart.value);
-  private final JoystickButton ledCubeButton = new JoystickButton(operator, XboxController.Button.kBack.value);
-
+  
   private final POVButton shoulderUp = new POVButton(operator, 90);
   private final POVButton shoulderDown = new POVButton(operator, 270);
   private final POVButton wristUp = new POVButton(operator, 0);
@@ -147,6 +148,8 @@ public class RobotContainer {
     setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
     autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
     SmartDashboard.putData(new Rotate(s_Swerve));
+    ledConeButton.whileTrue(new RepeatCommand(new LedCommand(m_ledSubsystem, m_Intake, 0.69)));
+    ledCubeButton.whileTrue(new RepeatCommand(new LedCommand(m_ledSubsystem, m_Intake, 0.91)));
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
@@ -162,8 +165,7 @@ public class RobotContainer {
     wristUp.whileTrue(new MoveWrist(m_Wrist, Constants.IntakeConstants.wristMoveSpeedPercentage));
     wristDown.whileTrue(new MoveWrist(m_Wrist, -Constants.IntakeConstants.wristMoveSpeedPercentage));
 
-    ledConeButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake, 0.69));
-    ledCubeButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake, 0.91));
+    
 
     reducedSpeed.whileTrue(new InstantCommand(() -> s_Swerve.setDefaultCommand(
         new TeleopSwerve(
