@@ -4,15 +4,11 @@
 
 package frc.robot.commands;
 
-import java.sql.Time;
-
-import ch.qos.logback.classic.Logger;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
-import frc.robot.Constants.IntakeAngles;
 import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Wrist;
 
 public class ArmCommand extends CommandBase {
   /** Creates a new ArmCommand. */

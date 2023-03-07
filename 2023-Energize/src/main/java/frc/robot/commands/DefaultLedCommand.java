@@ -15,7 +15,7 @@ public class DefaultLedCommand extends CommandBase {
   private final LedSubsystem m_subsystem;
   private double m_color;
 
-  private boolean done;
+  // private boolean done;
 
   public DefaultLedCommand(LedSubsystem subsystem, double color) {
     m_subsystem = subsystem;
@@ -27,7 +27,7 @@ public class DefaultLedCommand extends CommandBase {
   public void initialize() {
     logger.info("logging");
     DataLogManager.start();
-    done = false;
+    // done = false;
   }
 
   @Override
@@ -40,7 +40,7 @@ public class DefaultLedCommand extends CommandBase {
       m_subsystem.setColor(-.25);
     }
     m_subsystem.setColor(m_color);
-    done = true;
+    // done = true;
   }
 
   @Override
