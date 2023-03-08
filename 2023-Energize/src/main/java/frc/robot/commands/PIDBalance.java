@@ -28,19 +28,19 @@ public class PIDBalance extends PIDCommand {
         () -> 0,
         // This uses the output
         output -> {if (output > .5){
-          output = .5;
+          output = .2;
         } else if (output < -.5){
-          output = -.5;
+          output = -.2;
         }
-        SmartDashboard.putNumber("output", output);
-        swerve.drive(new Translation2d(-output, 0.0), 0, false, true);
+        //SmartDashboard.putNumber("output", output);
+        swerve.drive(new Translation2d(output, 0.0), 0, false, true);
           // Use the output here
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().enableContinuousInput(-180, 180);
     getController().setTolerance(1.8, .1);
-    SmartDashboard.putData(getController());
+    //SmartDashboard.putData(getController());
     this.alwaysRun = alwaysRun;
     
     addRequirements(swerve);

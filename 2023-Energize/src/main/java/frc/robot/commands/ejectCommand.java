@@ -31,6 +31,7 @@ public class ejectCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intake.set(0.0);
+    intake.setObjectStateFalse();
   }
 
   @Override

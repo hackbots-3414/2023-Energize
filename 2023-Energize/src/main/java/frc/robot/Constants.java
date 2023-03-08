@@ -11,7 +11,7 @@ import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
-    public static final double stickDeadband = 0.1;
+    public static final double stickDeadband = 0.06;
 
     public static final class Swerve {
         public static final int pigeonID = 25;
@@ -97,7 +97,6 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4.5; // meters per second (Max for robot is 4.5)
-        public static final double maxTeleopSpeed = 7.5; // meters per second (Max for robot is 4.5)
         public static final double maxAngularVelocity = 11.5;
         public static final double reducedAngVel = 6.0; 
         public static final double reducedSpeed = 1.0; 
@@ -155,9 +154,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-        public static final double kPXController = 2;
-        public static final double kPYController = 2;
-        public static final double  kPThetaController = 0.0;
+        public static final double kPXController = 2.0;
+        public static final double kPYController = 2.0;
+        public static final double  kPThetaController = 1.0;
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
@@ -188,24 +187,33 @@ public final class Constants {
         public static final boolean handMotorInvert = true;
 
         public static final double intakeSpeedPercent = 1;
-        public static final double ejectSpeedPercent = -1;
+        public static final double ejectSpeedPercent = -0.2;
+        public static final double ejectSpeedAutonPercent = -0.1;
+        public static final double objectHoldSpeedPercent = 0.2;
 
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
-        public static final double shoulderCanCoderOffset = -53.17;
-        public static final double wristCanCoderOffset = -26.19;
+        //main bot
+        public static final double shoulderCanCoderOffset = 10; //9.31
+        public static final double wristCanCoderOffset = -82.0;  //-53.78
 
-        public static final int handCurrentLimit = 20;
-        public static final double handCurrentThreshold = 18;
+        //woody
+        // public static final double shoulderCanCoderOffset = -54.84;
+        // public static final double wristCanCoderOffset = 151.87;
+
+        //MAIN BOT
+        public static final int handCurrentLimit = 50; // 50
+        public static final int secondHandCurrentLimit = 20; // 15
+        public static final double handCurrentThreshold = 25;
 
         public static final int shoulderUpperLimit = 0;
-        public static final int shoulderLowerLimit = -85;
+        public static final int shoulderLowerLimit = -84;
 
-        public static final int wristUpperLimit = 78;
-        public static final int wristLowerLimit = -140;
+        public static final int wristUpperLimit = 51;
+        public static final int wristLowerLimit = -62;
 
-        public static final double shoulderkP = 0.2;
+        public static final double shoulderkP = 0.3;
         public static final double shoulderkI = 0.0;
         public static final double shoulderkD = 0.0;
 
@@ -214,7 +222,7 @@ public final class Constants {
         public static final double wristkD = 0.0;
 
         //Volts
-        public static final double shoulderkS = 0.1;
+        public static final double shoulderkS = 0.05;
         public static final double shoulderkG = 0.73;
         public static final double shoulderkV = 5.54;
         public static final double shoulderkA = 0.6;
@@ -224,12 +232,11 @@ public final class Constants {
         public static final double wristkV = 4.50;
         public static final double wristkA = 0.01;
 
-        // public static final double shouldermaxAccel = 0.0; // degrees / seconds^2
-        public static final double shouldermaxVelo = Math.toRadians(80); // degrees / seconds
-        public static final double shouldermaxAccel = Math.toRadians(120); // degrees / seconds^2
+        public static final double shouldermaxVelo = Math.toRadians(180); // degrees / seconds
+        public static final double shouldermaxAccel = Math.toRadians(220); // degrees / seconds^2
 
-        public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
         public static final double wristmaxVelo = Math.toRadians(190); // degrees / seconds
+        public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
 
         public static final double speed = 0.2;
         public static final int canPause = 100;
@@ -240,20 +247,20 @@ public final class Constants {
         public static final double stowedWristAngle = Math.toRadians(35.0);
         public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double pickUpWristAngle = Math.toRadians(0.0);
-        public static final double pickUpShoulderAngle = Math.toRadians(-77.25);
+        public static final double pickUpWristAngle = Math.toRadians(3.0);
+        public static final double pickUpShoulderAngle = Math.toRadians(-67.0); // -68.25
 
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(40.0);
-        public static final double midShoulderAngle = Math.toRadians(-25.0);
+        public static final double midWristAngle = Math.toRadians(38.33);
+        public static final double midShoulderAngle = Math.toRadians(-21.0);
 
         public static final double highWristAngle = Math.toRadians(40.0);
-        public static final double highShoulderAngle = Math.toRadians(-7.0);
+        public static final double highShoulderAngle = Math.toRadians(-4.0);
 
-        public static final double shelfWristAngle = Math.toRadians(0.0);
-        public static final double shelfShoulderAngle = Math.toRadians(-7.0);
+        public static final double shelfWristAngle = Math.toRadians(-5.0);
+        public static final double shelfShoulderAngle = Math.toRadians(0.0);
 
     }
 

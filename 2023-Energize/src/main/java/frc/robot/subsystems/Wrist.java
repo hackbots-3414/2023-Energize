@@ -75,7 +75,8 @@ public class Wrist extends ProfiledPIDSubsystem {
     wrist.configReverseSoftLimitEnable(true, 100);
     wrist.setInverted(TalonFXInvertType.CounterClockwise);
     wrist.setNeutralMode(NeutralMode.Brake);
-    wrist.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 0), IntakeConstants.canPause);
+    //  wrist.setNeutralMode(NeutralMode.Coast);
+    wrist.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
   }
 
   @Override
@@ -124,7 +125,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     super.periodic();
     wrist.feed();
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Wrist pos", getPosition());
+    // SmartDashboard.putNumber("Wrist pos", getPosition());
     SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
   }
 }

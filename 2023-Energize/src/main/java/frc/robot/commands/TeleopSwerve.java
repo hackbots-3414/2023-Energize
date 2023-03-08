@@ -39,7 +39,7 @@ public class TeleopSwerve extends CommandBase {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
-        SmartDashboard.putNumber("Speed Percentage", 1);
+        //SmartDashboard.putNumber("Speed Percentage", 1);
     }
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
