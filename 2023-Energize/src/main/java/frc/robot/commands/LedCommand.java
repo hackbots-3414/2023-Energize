@@ -28,13 +28,13 @@ public class LedCommand extends CommandBase {
   @Override
   public void initialize() {
     DataLogManager.start();
-   logger.debug("it works");
+   //logger.debug("it works");
   }
 
   @Override
   public void execute() {
     m_LedSubsystem.setColor(m_ledColor);
-    logger.trace("tracking the command");
+    //logger.trace("tracking the command");
 
     // if (m_Intake.getIRInput()) {
     //   m_LedSubsystem.setColor(0.55);
