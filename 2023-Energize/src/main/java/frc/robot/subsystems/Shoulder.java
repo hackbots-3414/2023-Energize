@@ -55,7 +55,8 @@ public class Shoulder extends ProfiledPIDSubsystem {
     configMotor();
 
     m_controller.reset(getMeasurement(), getCanCoderVelo());
-
+    m_controller.enableContinuousInput(IntakeConstants.shoulderLowerLimit, IntakeConstants.shoulderUpperLimit);
+    SmartDashboard.putData(m_controller);
     setGoal(getMeasurement());
   }
 
@@ -103,9 +104,9 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
-   shoulder.setNeutralMode(NeutralMode.Brake);
-    // shoulder.setNeutralMode(NeutralMode.Coast);
-    shoulder.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 0), IntakeConstants.canPause);
+  shoulder.setNeutralMode(NeutralMode.Brake);
+    //  shoulder.setNeutralMode(NeutralMode.Coast);
+    shoulder.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
   }
 
   public double getPosition() {
@@ -130,6 +131,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
     SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
     // SmartDashboard.putNumber("Shoulder Velo", Math.toDegrees(getCanCoderVelo()));
-
+    SmartDashboard.putNumber("Shoulder Current", shoulder.getSupplyCurrent());
   }
 }

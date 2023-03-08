@@ -185,16 +185,16 @@ public final class Constants {
         public static final boolean handMotorInvert = true;
 
         public static final double intakeSpeedPercent = 1;
-        public static final double ejectSpeedPercent = -0.6;
+        public static final double ejectSpeedPercent = -0.2;
         public static final double ejectSpeedAutonPercent = -0.1;
-        public static final double objectHoldSpeedPercent = 0.3;
+        public static final double objectHoldSpeedPercent = 0.2;
 
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
         //main bot
-        public static final double shoulderCanCoderOffset = 9.31; 
-        public static final double wristCanCoderOffset = -50.18; 
+        public static final double shoulderCanCoderOffset = 10; //9.31
+        public static final double wristCanCoderOffset = -82.0;  //-53.78
 
         //woody
         // public static final double shoulderCanCoderOffset = -54.84;
@@ -202,16 +202,16 @@ public final class Constants {
 
         //MAIN BOT
         public static final int handCurrentLimit = 50; // 50
-        public static final int secondHandCurrentLimit = 10;
-        public static final double handCurrentThreshold = 40;
+        public static final int secondHandCurrentLimit = 20; // 15
+        public static final double handCurrentThreshold = 25;
 
         public static final int shoulderUpperLimit = 0;
-        public static final int shoulderLowerLimit = -85;
+        public static final int shoulderLowerLimit = -84;
 
-        public static final int wristUpperLimit = 115;
+        public static final int wristUpperLimit = 51;
         public static final int wristLowerLimit = -62;
 
-        public static final double shoulderkP = 0.2;
+        public static final double shoulderkP = 0.3;
         public static final double shoulderkI = 0.0;
         public static final double shoulderkD = 0.0;
 
@@ -220,7 +220,7 @@ public final class Constants {
         public static final double wristkD = 0.0;
 
         //Volts
-        public static final double shoulderkS = 0.1;
+        public static final double shoulderkS = 0.05;
         public static final double shoulderkG = 0.73;
         public static final double shoulderkV = 5.54;
         public static final double shoulderkA = 0.6;
@@ -245,8 +245,8 @@ public final class Constants {
         public static final double stowedWristAngle = Math.toRadians(35.0);
         public static final double stowedShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double pickUpWristAngle = Math.toRadians(0.0);
-        public static final double pickUpShoulderAngle = Math.toRadians(-64.25);
+        public static final double pickUpWristAngle = Math.toRadians(3.0);
+        public static final double pickUpShoulderAngle = Math.toRadians(-67.0); // -68.25
 
         public static final double lowWristAngle = Math.toRadians(35.0);
         public static final double lowShoulderAngle = Math.toRadians(-85.0);
@@ -257,8 +257,8 @@ public final class Constants {
         public static final double highWristAngle = Math.toRadians(40.0);
         public static final double highShoulderAngle = Math.toRadians(-4.0);
 
-        public static final double shelfWristAngle = Math.toRadians(0.0);
-        public static final double shelfShoulderAngle = Math.toRadians(-7.0);
+        public static final double shelfWristAngle = Math.toRadians(-5.0);
+        public static final double shelfShoulderAngle = Math.toRadians(0.0);
 
     }
 
