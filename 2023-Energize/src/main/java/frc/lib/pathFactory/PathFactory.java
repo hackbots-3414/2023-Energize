@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+//TODO: Hello, we noticed that some of these variables were named in a way which made it difficult to understand their meanings.  Because we didn't understand the function, we took the liberty of pointing them out using the Todo comments so we can re-name them in the future.
 package frc.lib.pathFactory;
 
 import java.util.ArrayList;
@@ -17,13 +17,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
 //import frc.robot.Constants.Swerve;
-import frc.robot.subsystems.Swerve;;
+import frc.robot.subsystems.Swerve;
 
 /** Add your docs here. */
 public class PathFactory {
+    //TODO: 'me' doesn't seem very descriptive of what the variable does.  Rename for clarity.
     private static PathFactory me = new PathFactory();
-    private Pose2d pose = new Pose2d();
-    private Translation2d translation = new Translation2d();
 
     // I made these public because they should be used when using the getPath() method.
     // TODO: Put in values for the positions of the things. Also ensure that you switch the side depending on the side of the field we're on.
@@ -59,6 +58,7 @@ public class PathFactory {
     private TreeMap<Pose2d, List<Pose2d>> paths = new TreeMap<Pose2d, List<Pose2d>>();
 
     private PathFactory() {
+        System.out.println(pA_path instanceof List<?>);
         paths.put(pA, pA_path);
         paths.put(pB, pB_path);
         paths.put(pC1, pC1_path);
@@ -66,9 +66,10 @@ public class PathFactory {
     }
 
     public static PathFactory getInstance() {
+        //TODO: Rename the variable 'me' to better fit its function
         return me;
     }
-
+    //TODO: Rename variables 'a' and 'b' for more clarity to the teammates working on the code
     private double getDistance(Pose2d a, Pose2d b) {
         return a.getTranslation().getDistance(b.getTranslation());
         // Pose2d relative = a.relativeTo(b);
@@ -81,11 +82,12 @@ public class PathFactory {
     }
 
     public List<Pose2d> getPath(Pose2d from, int toInt) {
-
+        //TODO: Rename the variable 'to' for better clarity
+        //TODO: 'figure out which scoring point to go to' could be taken as "We need to do this" or "This line of code does this"
         Pose2d to = pA_path.get(toInt); // figure out which scoring point to go to
 
         
-
+        //TODO: Which point list?  Options are pA, pB, pC1, pC2.
         // add all of the points in between:
         /*
             a. loop through all of the points in the point list
@@ -94,12 +96,13 @@ public class PathFactory {
             d. Add each point in the path.
         */
 
+        //TODO: This best_start_pose variable in the line below is never set as anything other than 'poses.get(0)'.  Ask Nolan what best_start_pose is supposed to do, then effectively set it as what it is supposed to be, as his comment suggests that best_start_pose is not supposed to stay at pose.get(0)
         Pose2d best_start_pose = poses.get(0); // It has to be initialized with something
 
         double currentDistanceToTarget = getDistance(from, to);
 
         double currentBestDistanceToNextWaypoint = getDistance(from, best_start_pose);
-        
+        //TODO: Work through this logic as a team
         for (int i = 0;i < poses.size();i ++) {
             /*
              * Find the point that is closest to the robot currently and DOES NOT take us farther away (using currentDistance)
@@ -131,7 +134,7 @@ public class PathFactory {
 
         ArrayList<Pose2d> results = new ArrayList<Pose2d>();
         results.add(from);
-
+        //TODO:  What does this logic do?
         for (int i = 0;i < path.size();i++) {
             if (path.get(i) != to) {
                 results.add(path.get(i));
@@ -139,7 +142,7 @@ public class PathFactory {
                 break;
             }
         }
-
+        //TODO: What is the meaning of the variable 'to'?  Can we name it better?
         results.add(to);
 
         return results;
