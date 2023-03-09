@@ -21,7 +21,6 @@ import frc.robot.subsystems.Swerve;
 
 /** Add your docs here. */
 public class PathFactory {
-    //TODO: 'me' doesn't seem very descriptive of what the variable does.  Rename for clarity.
     private static PathFactory me = new PathFactory();
 
     // I made these public because they should be used when using the getPath() method.
@@ -49,24 +48,31 @@ public class PathFactory {
     public Pose2d pC2 = new Pose2d(new Translation2d(/*PUT VALUES HERE*/cx, Constants.PathFactory.c2), new Rotation2d());
 
     private List<Pose2d> poses = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC1, pC2);
-
+    //FIXME: Put pA and pB inside the lists so we can drive into the entrance after hitting C1 and C2
     private List<Pose2d> pA_path = Arrays.asList(pC2, p9, p8, p7, p6, p5, p4, p3, p2, p1);
     private List<Pose2d> pB_path = Arrays.asList(pC1, p1, p2, p3, p4, p5, p6, p7, p8, p9);
     private List<Pose2d> pC1_path = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     private List<Pose2d> pC2_path = Arrays.asList(p9, p8, p7, p6, p5, p4, p3, p2, p1);
 
+    //FIXME: TreeMap doesn't work when using a Pose2d key.  We need a different way to order the lists of poses.
+
     private TreeMap<Pose2d, List<Pose2d>> paths = new TreeMap<Pose2d, List<Pose2d>>();
 
     private PathFactory() {
+        try {
         System.out.println(pA_path instanceof List<?>);
         paths.put(pA, pA_path);
         paths.put(pB, pB_path);
         paths.put(pC1, pC1_path);
-        paths.put(pC2, pC2_path);
+        paths.put(pC2, pC2_path);            
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
     }
 
     public static PathFactory getInstance() {
-        //TODO: Rename the variable 'me' to better fit its function
         return me;
     }
     //TODO: Rename variables 'a' and 'b' for more clarity to the teammates working on the code
@@ -90,10 +96,10 @@ public class PathFactory {
         //TODO: Which point list?  Options are pA, pB, pC1, pC2.
         // add all of the points in between:
         /*
-            a. loop through all of the points in the point list
-            b. find the point that would bring us closest to the destination
-            c. Find that point's path.
-            d. Add each point in the path.
+        TODO:    a. loop through all of the points in the point list
+        TODO:    b. find the point that would bring us closest to the destination
+        TODO:    c. Find that point's path.
+        TODO:    d. Add each point in the path.
         */
 
         //TODO: This best_start_pose variable in the line below is never set as anything other than 'poses.get(0)'.  Ask Nolan what best_start_pose is supposed to do, then effectively set it as what it is supposed to be, as his comment suggests that best_start_pose is not supposed to stay at pose.get(0)
