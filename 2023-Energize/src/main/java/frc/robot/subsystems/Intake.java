@@ -3,9 +3,6 @@ package frc.robot.subsystems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,9 +17,8 @@ import frc.robot.Constants.Swerve;
 
 public class Intake extends SubsystemBase {
   final static Logger logger = LoggerFactory.getLogger(Intake.class);
-  // CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
+  CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
   PowerDistribution powerDistribution = new PowerDistribution(Swerve.pdhID, ModuleType.kRev);
-  TalonFX hand = new TalonFX(Constants.IntakeConstants.handMotorID);
   private boolean hasObject = false;
   
   public Intake() {
@@ -30,18 +26,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void configMotor() {
-    // hand.clearFaults();
-    // hand.restoreFactoryDefaults();
+    hand.clearFaults();
+    hand.restoreFactoryDefaults();
     
-    // hand.setInverted(Constants.IntakeConstants.handMotorInvert);
-    // hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
+    hand.setInverted(Constants.IntakeConstants.handMotorInvert);
+    hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
 
-    // hand.burnFlash();
-    hand.configFactoryDefault();
-    // hand.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
-    hand.setInverted(false);
-    hand.setNeutralMode(NeutralMode.Coast);
-    hand.setSelectedSensorPosition(0);
+    hand.burnFlash();
   }
 
   public boolean getObjectState() {
@@ -69,11 +60,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void set(double speed) {
-    hand.set(ControlMode.PercentOutput,speed);
+    hand.set(speed);
   }
 
   public void stop() {
-    hand.set(ControlMode.PercentOutput,0.0);
+    hand.set(0.0);
   }
 
   public double getCurrent() {
