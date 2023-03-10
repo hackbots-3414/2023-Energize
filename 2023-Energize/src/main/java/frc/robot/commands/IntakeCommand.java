@@ -39,7 +39,6 @@ public class IntakeCommand extends CommandBase {
     if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
       bounces++;
     }
-
     if (!intake.getObjectState()) {
       intake.set(Constants.IntakeConstants.intakeSpeedPercent);
       
