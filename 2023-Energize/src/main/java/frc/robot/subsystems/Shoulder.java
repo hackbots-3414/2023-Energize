@@ -78,8 +78,19 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.set(ControlMode.PercentOutput, speed);
   }
 
+  public boolean atGoal() {
+    return super.m_controller.atGoal();
+  }
+
   public void stop() {
     shoulder.set(0.0);
+  }
+
+  public void moveTicks(double ticks) {
+    double originalPosition = shoulder.getSelectedSensorPosition();
+    while (Math.abs(originalPosition-shoulder.getSelectedSensorPosition()) > ticks) {
+      set(0.1);
+    }
   }
 
   private void configShoulderEncoder() {

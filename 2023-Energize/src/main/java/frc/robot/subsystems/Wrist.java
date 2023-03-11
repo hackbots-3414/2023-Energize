@@ -112,6 +112,10 @@ public class Wrist extends ProfiledPIDSubsystem {
     return wrist.getSelectedSensorPosition();
   }
 
+  public boolean atGoal() {
+    return super.m_controller.atGoal();
+  }
+
   public void stopWrist() {
     wrist.set(0.0);
   }

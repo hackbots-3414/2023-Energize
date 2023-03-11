@@ -4,6 +4,7 @@
 
 package frc.robot.autos;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,6 +14,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import ch.qos.logback.classic.pattern.Util;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -63,6 +65,7 @@ public class AutonomousFactory {
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
         eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
+        // eventMap.put("Test", new SequentialCommandGroup(new InstantCommand(() -> m_shoulder.set(0.2)), new InstantCommand(() -> Timer.delay(1)), new InstantCommand(() -> intake.set(0))));
         eventMap.put("Balance", new PIDBalance(swerve, true));
 
         autoBuilder = new SwerveAutoBuilder(

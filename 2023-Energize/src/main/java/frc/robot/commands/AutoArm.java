@@ -15,7 +15,7 @@ public class AutoArm extends CommandBase {
   private Wrist wrist;
   private Shoulder shoulder;
   private int selector;
-  private int counter;
+  private int counter = 0;
 
   public AutoArm(Shoulder shoulder, Wrist wrist, int selector) {
     this.shoulder = shoulder;
@@ -80,6 +80,6 @@ public class AutoArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return counter > 1;
+    return shoulder.atGoal() && wrist.atGoal();
   }
 }
