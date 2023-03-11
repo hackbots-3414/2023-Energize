@@ -34,8 +34,11 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
   WPI_TalonFX shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
   CANCoder shoulderCanCoder = new CANCoder(IntakeConstants.ShoulderCanCoderID);
-
-  private final ArmFeedforward m_feedforward = new ArmFeedforward(
+  private double shoulderkS = IntakeConstants.shoulderkS;
+  private double shoulderkG = IntakeConstants.shoulderkG;
+  private double shoulderkV = IntakeConstants.shoulderkV;
+  private double shoulderkA = IntakeConstants.shoulderkA;
+  private ArmFeedforward m_feedforward = new ArmFeedforward(
       IntakeConstants.shoulderkS, IntakeConstants.shoulderkG,
       IntakeConstants.shoulderkV, IntakeConstants.shoulderkA);
 
@@ -56,12 +59,21 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
     m_controller.reset(getMeasurement(), getCanCoderVelo());
     m_controller.enableContinuousInput(IntakeConstants.shoulderLowerLimit, IntakeConstants.shoulderUpperLimit);
-    SmartDashboard.putData(m_controller);
+    // SmartDashboard.putData("ShoulderPID", m_controller);
+    // SmartDashboard.putNumber("shoulderkA: ", shoulderkA);
+    // SmartDashboard.putNumber("shoulderkS: ", shoulderkS);
+    // SmartDashboard.putNumber("shoulderkG: ", shoulderkG);
+    // SmartDashboard.putNumber("shoulderkV: ", shoulderkV);
     setGoal(getMeasurement());
   }
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
+    shoulderkA = SmartDashboard.getNumber("shoulderkA: ", shoulderkA);
+    shoulderkS = SmartDashboard.getNumber("shoulderkS: ", shoulderkS);
+    shoulderkG = SmartDashboard.getNumber("shoulderkG: ", shoulderkG);
+    shoulderkV = SmartDashboard.getNumber("shoulderkV: ", shoulderkV);
+    m_feedforward = new ArmFeedforward(shoulderkS, shoulderkG, shoulderkV, shoulderkA);
     //calculate feedforward from setpoint
     double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     //add the feedforward to the PID output to get the motor output
@@ -104,7 +116,7 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
-  shoulder.setNeutralMode(NeutralMode.Brake);
+    shoulder.setNeutralMode(NeutralMode.Brake);
     //  shoulder.setNeutralMode(NeutralMode.Coast);
     shoulder.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
   }

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -17,7 +18,8 @@ public class IntakeCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(IntakeCommand.class);
 
   final Intake intake;
-  private int bounces;
+  // private int bounces;
+  
 
   public IntakeCommand(Intake intake) {
     this.intake = intake;
@@ -27,23 +29,26 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     intake.setCurrentLimitOne();
-    DataLogManager.start();
+    intake.setObjectStateFalse();
+    // DataLogManager.start();
     intake.set(Constants.IntakeConstants.intakeSpeedPercent);
-    bounces = 0;
+    //bounces = 0;
 
 
   }
 
   @Override
   public void execute() {
-    if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
-      bounces++;
-    }
+    //currentFilter.calculate(intake.getCurrent());
+    // if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
+    //   bounces++;
+    // }
 
     if (!intake.getObjectState()) {
       intake.set(Constants.IntakeConstants.intakeSpeedPercent);
       
-      if (bounces >= 9) {
+      // if (bounces >= 9) {
+        if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
         intake.setCurrentLimitTwo();
         intake.setObjectStateTrue();
         intake.set(IntakeConstants.objectHoldSpeedPercent);

@@ -48,7 +48,7 @@ public class ArmCommand extends CommandBase {
       // stowed & Low
       case 0:
         wrist.setGoal(Constants.IntakeAngles.stowedWristAngle);
-        Timer.delay(0.1);
+        //Timer.delay(0.1);
         shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
         break;
 
