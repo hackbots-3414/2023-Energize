@@ -32,6 +32,7 @@ public class ejectCommand extends CommandBase {
   public void end(boolean interrupted) {
     intake.set(0.0);
     intake.setObjectStateFalse();
+    intake.setCurrentLimitOne();
   }
 
   @Override
