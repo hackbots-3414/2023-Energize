@@ -188,7 +188,7 @@ public final class Constants {
         public static final double intakeSpeedPercent = 1;
         public static final double ejectSpeedPercent = -0.2;
         public static final double ejectSpeedAutonPercent = -0.1;
-        public static final double objectHoldSpeedPercent = 0.2;
+        public static final double objectHoldSpeedPercent = 0.1;
 
         public static final double wristMoveSpeedPercentage = 0.25;
         public static final double shoulderMoveSpeedPercentage = 0.15;
@@ -203,8 +203,8 @@ public final class Constants {
 
         //MAIN BOT
         public static final int handCurrentLimit = 50; // 50
-        public static final int secondHandCurrentLimit = 20; // 15
-        public static final double handCurrentThreshold = 25;
+        public static final int secondHandCurrentLimit = 10; // 15
+        public static final double handCurrentThreshold = 40;
 
         public static final int shoulderUpperLimit = 12;
         public static final int shoulderLowerLimit = -86;
