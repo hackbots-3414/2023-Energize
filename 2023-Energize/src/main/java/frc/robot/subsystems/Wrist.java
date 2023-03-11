@@ -35,8 +35,12 @@ public class Wrist extends ProfiledPIDSubsystem {
   /** Creates a new Wrist. */
   private CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID);;
   private WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
+  private double wristkS = IntakeConstants.wristkS;
+  private double wristkG = IntakeConstants.wristkG;
+  private double wristkV = IntakeConstants.wristkV;
+  private double wristkA = IntakeConstants.wristkA;
 
-  private final ArmFeedforward m_feedforward = new ArmFeedforward(
+  private ArmFeedforward m_feedforward = new ArmFeedforward(
       IntakeConstants.wristkS, IntakeConstants.wristkG,
       IntakeConstants.wristkV, IntakeConstants.wristkA);
 
@@ -50,6 +54,12 @@ public class Wrist extends ProfiledPIDSubsystem {
                 IntakeConstants.wristmaxVelo,
                 IntakeConstants.wristmaxAccel)),
         0.0);
+
+        SmartDashboard.putData("WristPID", m_controller);
+        SmartDashboard.putNumber("wristkA: ", wristkA);
+        SmartDashboard.putNumber("wristkS: ", wristkS);
+        SmartDashboard.putNumber("wristkG: ", wristkG);
+        SmartDashboard.putNumber("wristkV: ", wristkV);
 
     configWristEncoder();
     Timer.delay(0.1);
@@ -81,6 +91,12 @@ public class Wrist extends ProfiledPIDSubsystem {
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
+    wristkA = SmartDashboard.getNumber("wristkA: ", wristkA);
+    wristkS = SmartDashboard.getNumber("wristkS: ", wristkS);
+    wristkG = SmartDashboard.getNumber("wristkG: ", wristkG);
+    wristkV = SmartDashboard.getNumber("wristkV: ", wristkV);
+    m_feedforward = new ArmFeedforward(wristkS, wristkG, wristkV, wristkA);
+
     // calculate feedforward from setpoint
     double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     // add the feedforward to the PID output to get the motor output

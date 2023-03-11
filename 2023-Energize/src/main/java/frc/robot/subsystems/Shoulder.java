@@ -59,11 +59,11 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
     m_controller.reset(getMeasurement(), getCanCoderVelo());
     m_controller.enableContinuousInput(IntakeConstants.shoulderLowerLimit, IntakeConstants.shoulderUpperLimit);
-    SmartDashboard.putData("ShoulderPID", m_controller);
-    SmartDashboard.putNumber("shoulderkA: ", shoulderkA);
-    SmartDashboard.putNumber("shoulderkS: ", shoulderkS);
-    SmartDashboard.putNumber("shoulderkG: ", shoulderkG);
-    SmartDashboard.putNumber("shoulderkV: ", shoulderkV);
+    // SmartDashboard.putData("ShoulderPID", m_controller);
+    // SmartDashboard.putNumber("shoulderkA: ", shoulderkA);
+    // SmartDashboard.putNumber("shoulderkS: ", shoulderkS);
+    // SmartDashboard.putNumber("shoulderkG: ", shoulderkG);
+    // SmartDashboard.putNumber("shoulderkV: ", shoulderkV);
     setGoal(getMeasurement());
   }
 
@@ -116,8 +116,8 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.configForwardSoftLimitEnable(true, 100);
     shoulder.configReverseSoftLimitEnable(true, 100);
     shoulder.setInverted(TalonFXInvertType.CounterClockwise);
-    //shoulder.setNeutralMode(NeutralMode.Brake);
-      shoulder.setNeutralMode(NeutralMode.Coast);
+    shoulder.setNeutralMode(NeutralMode.Brake);
+    //  shoulder.setNeutralMode(NeutralMode.Coast);
     shoulder.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
   }
 
