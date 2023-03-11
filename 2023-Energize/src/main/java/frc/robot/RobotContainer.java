@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -125,7 +126,17 @@ public class RobotContainer {
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
-    stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
+    //stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
+    stowAndLowButton.onTrue(
+      Commands.runOnce(
+        () -> {
+        m_Shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
+        m_Wrist.setGoal(Constants.IntakeAngles.stowedWristAngle);
+        m_Wrist.enable();
+        m_Shoulder.enable();
+    },
+    m_Shoulder, m_Wrist));
+    
     midButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
     pickUpButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
