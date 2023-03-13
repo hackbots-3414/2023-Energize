@@ -7,6 +7,8 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
@@ -44,6 +46,9 @@ public class Swerve extends SubsystemBase {
     public SwerveDrivePoseEstimator poseEstimator;
     public PhotonCamera camera;
     public Field2d fieldSim;
+
+    private static Logger log = LoggerFactory.getLogger(Swerve.class);
+    private int visionError = 0;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -179,14 +184,14 @@ public class Swerve extends SubsystemBase {
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
 
-        for(SwerveModule mod : mSwerveMods){
-        SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
-        mod.getCanCoder().getDegrees());
-        SmartDashboard.putNumber("Time remaininf", DriverStation.getMatchTime());
-        // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated",
-        // mod.getPosition().angle.getDegrees());
-        // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity",
-        // mod.getState().speedMetersPerSecond);
+        for (SwerveModule mod : mSwerveMods) {
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
+                    mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Time remaininf", DriverStation.getMatchTime());
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated",
+            // mod.getPosition().angle.getDegrees());
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity",
+            // mod.getState().speedMetersPerSecond);
         }
     }
 
@@ -205,20 +210,29 @@ public class Swerve extends SubsystemBase {
 
     public void updateOdometry() {
         poseEstimator.update(getPitch(), getModulePositions());
+        try {
+            Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
 
-        Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+            if (result.isPresent()) {
+                EstimatedRobotPose camPose = result.get();
+                poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+                fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+            } else {
+                fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            }
 
-        if (result.isPresent()) {
-            EstimatedRobotPose camPose = result.get();
-            poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
-            fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-        } else {
-            fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            fieldSim.getObject("Actual Pos").setPose(getPose());
+            fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
+
+            resetOdometry(poseEstimator.getEstimatedPosition());
+        } catch (Exception e) {
+            visionError++;
+            if (visionError % 1000 == 0) {
+                log.error("Beelink exception caught: " + e.toString());
+            }
+
         }
 
-        fieldSim.getObject("Actual Pos").setPose(getPose());
-        fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
-
-        resetOdometry(poseEstimator.getEstimatedPosition());
     }
+
 }
