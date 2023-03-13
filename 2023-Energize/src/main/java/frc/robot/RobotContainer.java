@@ -3,8 +3,6 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pathplanner.lib.PathConstraints;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,15 +16,12 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
-import frc.robot.autos.AutonomousFactory.Bays;
-import frc.robot.autos.AutonomousFactory.Heights;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.PIDBalance;
-import frc.robot.commands.Rotate;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
