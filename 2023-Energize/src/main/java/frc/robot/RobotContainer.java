@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
@@ -21,6 +22,7 @@ import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LedCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.PIDBalance;
@@ -43,9 +45,12 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 13);
+  private final JoystickButton reducedSpeed = new JoystickButton(driver, 9);
   private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
+  private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
 
   /* Operator Buttons */
   private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
