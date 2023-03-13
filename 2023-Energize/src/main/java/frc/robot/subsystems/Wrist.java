@@ -62,7 +62,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("wristkV: ", wristkV);
 
     configWristEncoder();
-    Timer.delay(0.1);
+    Timer.delay(1);
     configMotor();
 
     m_controller.reset(getMeasurement(), getCanCoderVelo());
@@ -141,7 +141,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     super.periodic();
     wrist.feed();
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Wrist pos", getPosition());
+    SmartDashboard.putNumber("Wrist pos", getPosition());
     SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
   }
 }
