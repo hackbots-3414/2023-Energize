@@ -98,6 +98,8 @@ public final class Constants {
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4.5; // meters per second (Max for robot is 4.5)
         public static final double maxAngularVelocity = 11.5;
+        public static final double reducedAngVel = 6.0; 
+        public static final double reducedSpeed = 1.0; 
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -185,7 +187,7 @@ public final class Constants {
         public static final boolean handMotorInvert = true;
 
         public static final double intakeSpeedPercent = 1;
-        public static final double ejectSpeedPercent = -0.2;
+        public static final double ejectSpeedPercent = -0.4;
         public static final double ejectSpeedAutonPercent = -0.1;
         public static final double objectHoldSpeedPercent = 0.1;
 
@@ -245,16 +247,16 @@ public final class Constants {
         public static final double stowedWristAngle = Math.toRadians(5.71);
         public static final double stowedShoulderAngle = Math.toRadians(-86.57);
 
-        public static final double pickUpWristAngle = Math.toRadians(-23.64);
-        public static final double pickUpShoulderAngle = Math.toRadians(-74.882); // -68.25
+        public static final double pickUpWristAngle = Math.toRadians(-34.64);  
+        public static final double pickUpShoulderAngle = Math.toRadians(-66.882); //-74.882 // -68.25
 
         // public static final double lowWristAngle = Math.toRadians(35.0);
         // public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(-61.69);
+        public static final double midWristAngle = Math.toRadians(-43.0);
         public static final double midShoulderAngle = Math.toRadians(-3.51);
 
-        public static final double highWristAngle = Math.toRadians(-61.69);
+        public static final double highWristAngle = Math.toRadians(-43.0);
         public static final double highShoulderAngle = Math.toRadians(11.162);
 
         public static final double shelfWristAngle = Math.toRadians(-5.0);
