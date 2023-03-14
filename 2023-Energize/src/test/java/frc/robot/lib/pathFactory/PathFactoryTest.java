@@ -29,24 +29,4 @@ public class PathFactoryTest {
 
     }
 
-    @Test
-    public void testPathFactoryAgain() {
-        try {
-
-            PathFactory instance = PathFactory.getInstance();
-
-            Translation2d translation = new Translation2d(500, 40);
-            Rotation2d rotation = new Rotation2d();
-
-            List<Pose2d> path = instance.getPath(new Pose2d(translation, rotation), 9);
-
-            for (int i = 0;i < path.size();i ++ ) {
-                System.out.println(i + ": " + path.get(i));
-            }
-
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
 }

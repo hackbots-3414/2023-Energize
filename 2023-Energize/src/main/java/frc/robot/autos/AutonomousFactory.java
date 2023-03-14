@@ -6,17 +6,23 @@ package frc.robot.autos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.lib.pathFactory.PathFactory;
 import frc.robot.Constants;
 import frc.robot.commands.AutoArm;
 import frc.robot.commands.PIDBalance;
@@ -39,6 +45,24 @@ public class AutonomousFactory {
         public final String value;
 
         AutonChoice(String value) {
+            this.value = value;
+        }
+    }
+
+    public enum Bays {
+        One(1),
+        Two(2),
+        Three(3),
+        Four(4),
+        Five(5),
+        Six(6),
+        Seven(7),
+        Eight(8),
+        Nine(9);
+
+        public final int value;
+
+        Bays(int value) {
             this.value = value;
         }
     }
@@ -79,32 +103,32 @@ public class AutonomousFactory {
         return me;
     }
 
-    // public PathPoint resetToVision() {
-    //     swerve.updateOdometry();
-    //     Pose2d pose = swerve.getPose();
-    //     return new PathPoint(pose.getTranslation(), pose.getRotation());
-    // }
+    public PathPoint resetToVision() {
+        swerve.updateOdometry();
+        Pose2d pose = swerve.getPose();
+        return new PathPoint(pose.getTranslation(), pose.getRotation());
+    }
 
-    // private Command followTrajectoryOnTheFly(PathPoint... pathPoints){
-    //     ArrayList<PathPoint> points = new ArrayList<>();
-    //     for (PathPoint pathPoint : pathPoints) {
-    //         points.add(pathPoint);
-    //     }
+    private Command followTrajectoryOnTheFly(PathPoint... pathPoints){
+        ArrayList<PathPoint> points = new ArrayList<>();
+        for (PathPoint pathPoint : pathPoints) {
+            points.add(pathPoint);
+        }
 
-    //     PathPlannerTrajectory traj = PathPlanner.generatePath(new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared), points);
+        PathPlannerTrajectory traj = PathPlanner.generatePath(new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared), points);
 
-    //     return new PPSwerveControllerCommand(
-    //         traj, 
-    //         swerve::getPose, // Pose supplier
-    //         Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-    //         new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-    //         new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
-    //         new PIDController(Constants.AutoConstants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-    //         swerve::setModuleStates, // Module states consumer
-    //         true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-    //         swerve // Requires this drive subsystem
-    //     );
-    // }
+        return new PPSwerveControllerCommand(
+            traj, 
+            swerve::getPose, // Pose supplier
+            Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
+            new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+            new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
+            new PIDController(Constants.AutoConstants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+            swerve::setModuleStates, // Module states consumer
+            false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+            swerve // Requires this drive subsystem
+        );
+    }
 
     // private Command followTrajectoryCommand(String pathName, boolean isFirstPath) {
     //     PathPlannerTrajectory traj = PathPlanner.loadPath(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
@@ -136,13 +160,13 @@ public class AutonomousFactory {
         return autoBuilder.fullAuto(pathGroup);
     }
 
-    // private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
-    //     ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
+        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
-    //     swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
+        swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
         
-    //     return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
-    // }
+        return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
+    }
 
     // private Command placeCommand(Heights height) {
     //     if (height == Heights.Low) {
@@ -157,5 +181,20 @@ public class AutonomousFactory {
 
     public Command eventChooser(AutonChoice choice) {
         return followTrajectoryWithEventsCommand(choice.value);
+    }
+
+    private Command goToBayCommand(int bay) {
+        Pose2d from = swerve.getPose();
+        List<PathPoint> points =  PathFactory.getInstance().getPath(from, bay);
+        if (points.size() == 2) {
+            return followTrajectoryOnTheFly(points.get(0), points.get(1));
+        } else {
+            // Otherwise it will be three.
+            return followTrajectoryOnTheFly(points.get(0), points.get(1), points.get(2));
+        }
+    }
+
+    public Command bayChooser(Bays bay) {
+        return goToBayCommand(bay.value);
     }
 }

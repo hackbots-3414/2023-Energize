@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
+import frc.robot.autos.AutonomousFactory.Bays;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IntakeCommand;
@@ -66,6 +67,7 @@ public class RobotContainer {
   private final Wrist m_Wrist = new Wrist();
 
   SendableChooser<Command> pathChooser = new SendableChooser<>();
+  SendableChooser<Command> bayChooser = new SendableChooser<>();
 
   private AutonomousFactory autons;
 
@@ -94,6 +96,17 @@ public class RobotContainer {
     pathChooser.addOption("Left", autons.eventChooser(AutonChoice.Left));
     pathChooser.addOption("Right", autons.eventChooser(AutonChoice.Right)); 
     pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance));   
+
+    bayChooser.addOption("One", autons.bayChooser(Bays.One));
+    bayChooser.addOption("Two", autons.bayChooser(Bays.Two));
+    bayChooser.addOption("Three", autons.bayChooser(Bays.Three));
+    bayChooser.addOption("Four", autons.bayChooser(Bays.Four));
+    bayChooser.addOption("Five", autons.bayChooser(Bays.Five));
+    bayChooser.addOption("Six", autons.bayChooser(Bays.Six));
+    bayChooser.addOption("Seven", autons.bayChooser(Bays.Seven));
+    bayChooser.addOption("Eight", autons.bayChooser(Bays.Eight));
+    bayChooser.addOption("Nine", autons.bayChooser(Bays.Nine));
+
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 

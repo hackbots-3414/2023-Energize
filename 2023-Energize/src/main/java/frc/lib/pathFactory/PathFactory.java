@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.pathplanner.lib.PathPoint;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -54,7 +56,7 @@ public class PathFactory {
         return a.getTranslation().getDistance(b.getTranslation());
     }
 
-    public List<Pose2d> getPath(Pose2d from, int toInt) {
+    public List<PathPoint> getPath(Pose2d from, int toInt) {
         Pose2d target = scoring_points.get(toInt - 1); // figure out which scoring point to go to (this does that)
 
         double targetX = target.getX();
@@ -69,9 +71,9 @@ public class PathFactory {
             outside = true;
         }
 
-        List<Pose2d> result = new ArrayList<Pose2d>();
+        List<PathPoint> result = new ArrayList<PathPoint>();
 
-        result.add(from);
+        result.add(getPathPoint(from));
         Pose2d closer;
 
         if (outside) {
@@ -86,18 +88,22 @@ public class PathFactory {
                 closer = pC1;
             }
 
-            result.add(closer);
+            result.add(getPathPoint(closer));
         } else {
             closer = from;
         }
 
         Pose2d nextPoint = new Pose2d(new Translation2d(targetX, closer.getY()), new Rotation2d());
 
-        result.add(nextPoint);
+        result.add(getPathPoint(nextPoint));
 
-        result.add(target);
+        result.add(getPathPoint(target));
 
         return result;
+    }
+
+    private PathPoint getPathPoint(Pose2d original) {
+        return new PathPoint(original.getTranslation(), original.getRotation());
     }
 
 }
