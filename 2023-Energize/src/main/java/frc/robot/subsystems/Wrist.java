@@ -32,6 +32,8 @@ import frc.robot.Robot;
 public class Wrist extends ProfiledPIDSubsystem {
   final static Logger logger = LoggerFactory.getLogger(Wrist.class);
 
+  private Shoulder m_Shoulder;
+
   /** Creates a new Wrist. */
   private CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID);;
   private WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
@@ -44,7 +46,7 @@ public class Wrist extends ProfiledPIDSubsystem {
       IntakeConstants.wristkS, IntakeConstants.wristkG,
       IntakeConstants.wristkV, IntakeConstants.wristkA);
 
-  public Wrist() {
+  public Wrist(Shoulder m_Shoulder) {
     super(
         new ProfiledPIDController(
             IntakeConstants.wristkP,
@@ -54,6 +56,8 @@ public class Wrist extends ProfiledPIDSubsystem {
                 IntakeConstants.wristmaxVelo,
                 IntakeConstants.wristmaxAccel)),
         0.0);
+
+        this.m_Shoulder = m_Shoulder;
 
         SmartDashboard.putData("WristPID", m_controller);
         SmartDashboard.putNumber("wristkA: ", wristkA);
@@ -81,9 +85,9 @@ public class Wrist extends ProfiledPIDSubsystem {
         Constants.IntakeConstants.wristGearRatio), 100);
     wrist.configReverseSoftLimitThreshold(Conversions.degreesToFalcon(Constants.IntakeConstants.wristLowerLimit,
         Constants.IntakeConstants.wristGearRatio), 100);
-    wrist.configForwardSoftLimitEnable(true, 100);
-    wrist.configReverseSoftLimitEnable(true, 100);
-    wrist.setInverted(TalonFXInvertType.CounterClockwise);
+    wrist.configForwardSoftLimitEnable(false, 100);
+    wrist.configReverseSoftLimitEnable(false, 100);
+    // wrist.setInverted(TalonFXInvertType.CounterClockwise);
     wrist.setNeutralMode(NeutralMode.Brake);
     //  wrist.setNeutralMode(NeutralMode.Coast);
     wrist.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
@@ -106,7 +110,7 @@ public class Wrist extends ProfiledPIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return Math.toRadians(getCanCoder());
+    return Math.toRadians(getWristAngle());
   }
 
   public double getCanCoderVelo() {
@@ -136,6 +140,14 @@ public class Wrist extends ProfiledPIDSubsystem {
     return wristCanCoder.getAbsolutePosition();
   }
 
+  public double getWristAngle() {
+    return getCanCoder() + getShoulderCanCoder();
+  }
+
+  private double getShoulderCanCoder() {
+    return m_Shoulder.getCanCoder();
+  }
+
   @Override
   public void periodic() {
     super.periodic();
@@ -143,5 +155,6 @@ public class Wrist extends ProfiledPIDSubsystem {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Wrist pos", getPosition());
     SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
+    SmartDashboard.putNumber("Wrist Angle", getWristAngle());
   }
 }

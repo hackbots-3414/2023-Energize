@@ -228,7 +228,7 @@ public final class Constants {
         public static final double shoulderkA = 0.6;
 
         public static final double wristkS = 0.0;
-        public static final double wristkG = 0.07;
+        public static final double wristkG = 0.75;
         public static final double wristkV = 4.0;
         public static final double wristkA = 0.01;
 

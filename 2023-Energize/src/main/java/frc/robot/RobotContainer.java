@@ -71,7 +71,7 @@ public class RobotContainer {
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
   private final Intake m_Intake = new Intake();
   private final Shoulder m_Shoulder = new Shoulder();
-  private final Wrist m_Wrist = new Wrist();
+  private final Wrist m_Wrist = new Wrist(m_Shoulder);
 
   SendableChooser<Command> pathChooser = new SendableChooser<>();
 
