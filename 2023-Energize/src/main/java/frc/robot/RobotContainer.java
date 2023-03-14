@@ -59,6 +59,23 @@ public class RobotContainer {
   private final POVButton wristUp = new POVButton(operator, 0);
   private final POVButton wristDown = new POVButton(operator, 180);
 
+  /* ButtonBoard buttons */
+
+  private final Joystick buttonBoard = new Joystick(Constants.ButtonBoard.buttonBoardPort);
+
+  private final JoystickButton button1 = new JoystickButton(buttonBoard, 1);
+  private final JoystickButton button2 = new JoystickButton(buttonBoard, 2);
+  private final JoystickButton button3 = new JoystickButton(buttonBoard, 3);
+  private final JoystickButton button4 = new JoystickButton(buttonBoard, 4);
+  private final JoystickButton button5 = new JoystickButton(buttonBoard, 5);
+  private final JoystickButton button6 = new JoystickButton(buttonBoard, 6);
+  private final JoystickButton button7 = new JoystickButton(buttonBoard, 7);
+  private final JoystickButton button8 = new JoystickButton(buttonBoard, 8);
+  private final JoystickButton button9 = new JoystickButton(buttonBoard, 9);
+  private final JoystickButton button10 = new JoystickButton(buttonBoard, 10);
+  private final JoystickButton button11 = new JoystickButton(buttonBoard, 11);
+  private final JoystickButton button12 = new JoystickButton(buttonBoard, 12);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
@@ -157,6 +174,10 @@ public class RobotContainer {
     wristUp.whileTrue(new MoveWrist(m_Wrist, Constants.IntakeConstants.wristMoveSpeedPercentage));
     wristDown.whileTrue(new MoveWrist(m_Wrist, -Constants.IntakeConstants.wristMoveSpeedPercentage));
     
+    // Buttons!!!
+
+
+
   }
 
   public Command getAutonomousCommand() {
