@@ -63,6 +63,7 @@ public class RobotContainer {
 
   private final Joystick buttonBoard = new Joystick(Constants.ButtonBoard.buttonBoardPort);
 
+  private final JoystickButton button0 = new JoystickButton(buttonBoard, 0);
   private final JoystickButton button1 = new JoystickButton(buttonBoard, 1);
   private final JoystickButton button2 = new JoystickButton(buttonBoard, 2);
   private final JoystickButton button3 = new JoystickButton(buttonBoard, 3);
@@ -74,7 +75,6 @@ public class RobotContainer {
   private final JoystickButton button9 = new JoystickButton(buttonBoard, 9);
   private final JoystickButton button10 = new JoystickButton(buttonBoard, 10);
   private final JoystickButton button11 = new JoystickButton(buttonBoard, 11);
-  private final JoystickButton button12 = new JoystickButton(buttonBoard, 12);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -176,9 +176,20 @@ public class RobotContainer {
     
     // Buttons!!!
 
+    button3.onTrue(autons.bayChooser(Bays.One));
+    button4.onTrue(autons.bayChooser(Bays.Two));
+    button5.onTrue(autons.bayChooser(Bays.Three));
+    button6.onTrue(autons.bayChooser(Bays.Four));
+    button7.onTrue(autons.bayChooser(Bays.Five));
+    button8.onTrue(autons.bayChooser(Bays.Six));
+    button9.onTrue(autons.bayChooser(Bays.Seven));
+    button10.onTrue(autons.bayChooser(Bays.Eight));
+    button11.onTrue(autons.bayChooser(Bays.Nine));
 
+    /* TODO: We dont have any code yet for the Low, Medium, and High buttons yet on the ButtonBoard. Please do that! */
 
   }
+
 
   public Command getAutonomousCommand() {
     return pathChooser.getSelected();
