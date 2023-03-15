@@ -148,6 +148,14 @@ public class Wrist extends ProfiledPIDSubsystem {
     return m_Shoulder.getCanCoder();
   }
 
+  public void setBrakeMode() {
+    wrist.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void setCoastMode() {
+    wrist.setNeutralMode(NeutralMode.Coast);
+  }
+
   @Override
   public void periodic() {
     super.periodic();

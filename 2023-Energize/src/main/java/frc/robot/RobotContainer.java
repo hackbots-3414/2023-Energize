@@ -60,6 +60,7 @@ public class RobotContainer {
   private final JoystickButton highButton = new JoystickButton(operator, XboxController.Button.kY.value);
   private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton shelfButton = new JoystickButton(operator, XboxController.Button.kStart.value);
+  private final JoystickButton standingConeButton = new JoystickButton(operator, XboxController.Button.kBack.value);
 
   private final POVButton shoulderUp = new POVButton(operator, 90);
   private final POVButton shoulderDown = new POVButton(operator, 270);
@@ -113,6 +114,9 @@ public class RobotContainer {
       SmartDashboard.putString("Game part", "AUTO");
     }
 
+    SmartDashboard.putData("Coast Mode", new InstantCommand(() -> armCoastMode()));
+    SmartDashboard.putData("Brake Mode", new InstantCommand(() -> armBrakeMode()));
+
   }
 
   public Swerve getSwerve() {
@@ -141,11 +145,22 @@ public class RobotContainer {
         m_Shoulder.enable();
     },
     m_Shoulder, m_Wrist));
+
+    shelfButton.onTrue(
+      Commands.runOnce(
+      () -> {
+        m_Shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
+        m_Wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
+        m_Wrist.enable();
+        m_Shoulder.enable();
+    },
+    m_Shoulder, m_Wrist));
     
     midButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
     pickUpButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
-    shelfButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 5));
+    // shelfButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 5));
+    standingConeButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 6));
 
     shoulderUp.whileTrue(new MoveShoulder(m_Shoulder, Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
@@ -156,5 +171,15 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return pathChooser.getSelected();
+  }
+
+  public void armBrakeMode() {
+    m_Wrist.setBrakeMode();
+    m_Shoulder.setBrakeMode();
+  }
+
+  public void armCoastMode() {
+    m_Wrist.setCoastMode();
+    m_Shoulder.setCoastMode();
   }
 }
