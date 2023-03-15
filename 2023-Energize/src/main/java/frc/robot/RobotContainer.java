@@ -18,6 +18,7 @@ import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.autos.AutonomousFactory.Bays;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.AutoArm;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MoveShoulder;
@@ -186,8 +187,10 @@ public class RobotContainer {
     button10.onTrue(autons.bayChooser(Bays.Eight));
     button11.onTrue(autons.bayChooser(Bays.Nine));
 
-    /* TODO: We dont have any code yet for the Low, Medium, and High buttons yet on the ButtonBoard. Please do that! */
-
+    button0.onTrue(new AutoArm(m_Shoulder, m_Wrist, 1));
+    button1.onTrue(new AutoArm(m_Shoulder, m_Wrist, 3));
+    button2.onTrue(new AutoArm(m_Shoulder, m_Wrist, 4));
+    
   }
 
 
