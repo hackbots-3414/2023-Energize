@@ -262,6 +262,11 @@ public final class Constants {
         public static final double shelfWristAngle = Math.toRadians(-5.0);
         public static final double shelfShoulderAngle = Math.toRadians(0.0);
 
+        public static final double knockedConeShoulderAngle = Math.toRadians(-70.57);
+        public static final double KnockedConeWristAngle = Math.toRadians(-35); //estimated Wrist Angle might not work
+
+        public static final double uprightConeShoulderAngle = Math.toRadians(-51.70);
+        public static final double uprightConeWristAngle = Math.toRadians(-59); //estimated Wrist angle might not work
     }
 
     public static final class BalanceConstants {
