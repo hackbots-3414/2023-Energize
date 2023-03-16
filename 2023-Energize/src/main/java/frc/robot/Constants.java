@@ -272,8 +272,6 @@ public final class Constants {
     }
 
     public static final class PathFactory {
-        // NOTE: All measurements here are in inches. TODO: make it not inches.
-
         public static final double p1 = Conversions.inchesToMeters(20.19);
         public static final double p2 = Conversions.inchesToMeters(42.19);
         public static final double p3 = Conversions.inchesToMeters(64.19);
