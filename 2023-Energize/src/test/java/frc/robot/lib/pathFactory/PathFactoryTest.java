@@ -30,6 +30,10 @@ public class PathFactoryTest {
     }
     /*
      * TODO: Make many tests!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * What happens when the operator lets go of the button before the path finishes?
+     * What happens when the operator hits one button, changes their mind, and hits a different one before finishing the path?
+     * What happens when the operator hits 2 buttons at once?
+     * What happens when the operator hits a button before leaving the loading zone?
      */
 
 }
