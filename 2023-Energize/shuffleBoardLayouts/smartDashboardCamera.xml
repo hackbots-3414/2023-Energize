@@ -1,0 +1,40 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="4" y="1"/>
+		<width>1246</width>
+		<height>620</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<widget field="Auto Mode" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="28" y="14"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="Wrist pos"/>
+	<hidden field="Shoulder Current"/>
+	<hidden field="celcius"/>
+	<hidden field="Mod 2 Cancoder"/>
+	<hidden field="Wait Command"/>
+	<hidden field="Delay Before Shoot"/>
+	<hidden field="Hand Motor Current"/>
+	<hidden field="wristkV: "/>
+	<hidden field="Wrist Angle"/>
+	<hidden field="WristPID"/>
+	<hidden field="gyro"/>
+	<hidden field="Auton Mode"/>
+	<hidden field="wristkG: "/>
+	<hidden field="Mod 1 Cancoder"/>
+	<hidden field="Controller (false = dev, true = comp)"/>
+	<hidden field="wristkS: "/>
+	<hidden field="Shoulder CANCoder"/>
+	<hidden field="Has Object"/>
+	<hidden field="Game part:"/>
+	<hidden field="Wrist CANCoder"/>
+	<hidden field="Mod 3 Cancoder"/>
+	<hidden field="Mod 0 Cancoder"/>
+	<hidden field="Time remaining:"/>
+	<hidden field="wristkA: "/>
+	<hidden field="Auton Delay"/>
+</xml>
