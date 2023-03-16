@@ -9,6 +9,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
+import frc.lib.math.Conversions;
 
 public final class Constants {
     public static final double stickDeadband = 0.06;
@@ -273,43 +274,42 @@ public final class Constants {
     public static final class PathFactory {
         // NOTE: All measurements here are in inches. TODO: make it not inches.
 
-        public static final double p1 = 20.19;
-        public static final double p2 = 42.19;
-        public static final double p3 = 64.19;
-        public static final double p4 = 86.19;
-        public static final double p5 = 108.19;
-        public static final double p6 = 130.19;
-        public static final double p7 = 157.19;
-        public static final double p8 = 174.19;
-        public static final double p9 = 196.19;
+        public static final double p1 = Conversions.inchesToMeters(20.19);
+        public static final double p2 = Conversions.inchesToMeters(42.19);
+        public static final double p3 = Conversions.inchesToMeters(64.19);
+        public static final double p4 = Conversions.inchesToMeters(86.19);
+        public static final double p5 = Conversions.inchesToMeters(108.19);
+        public static final double p6 = Conversions.inchesToMeters(130.19);
+        public static final double p7 = Conversions.inchesToMeters(157.19);
+        public static final double p8 = Conversions.inchesToMeters(174.19);
+        public static final double p9 = Conversions.inchesToMeters(196.19);
 
-        public static final double a = 180.19;
-        public static final double b = 36.19;
+        public static final double a = Conversions.inchesToMeters(180.19);
+        public static final double b = Conversions.inchesToMeters(36.19);
 
-        public static final double c1 = 29.695;
-        public static final double c2 = 186.335;
+        public static final double c1 = Conversions.inchesToMeters(29.695);
+        public static final double c2 = Conversions.inchesToMeters(186.335);
 
         public static final class redSide {
 
-            public static final double x = 610.77;
+            public static final double x = Conversions.inchesToMeters(610.77);
 
-            public static final double abx = 372.92;
+            public static final double abx = Conversions.inchesToMeters(372.92);
 
-            public static final double cx = 438.07;
+            public static final double cx = Conversions.inchesToMeters(438.07);
 
         }
         public static final class blueSide {
-            public static final double x = 40.45;
+            public static final double x = Conversions.inchesToMeters(40.45);
             
-            public static final double abx = 278.25;
+            public static final double abx = Conversions.inchesToMeters(278.25);
 
-            public static final double cx = 132.25;
+            public static final double cx = Conversions.inchesToMeters(132.25);
             
         }
     }
 
     public static final class ButtonBoard {
         public static final int buttonBoardPort = 2;
-
     }
 }
