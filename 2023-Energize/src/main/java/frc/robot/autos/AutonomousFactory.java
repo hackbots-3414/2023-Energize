@@ -185,7 +185,11 @@ public class AutonomousFactory {
 
     private Command goToBayCommand(int bay) {
         Pose2d from = swerve.getPose();
-        List<PathPoint> points =  PathFactory.getInstance().getPath(from, bay);
+        List<Pose2d> pose2d_points =  PathFactory.getInstance().getPath(from, bay);
+        List<PathPoint> points = new ArrayList<PathPoint>();
+        for (int i = 0;i < pose2d_points.size();i ++) {
+            points.add(new PathPoint(pose2d_points.get(i).getTranslation(), pose2d_points.get(i).getRotation()));
+        }
         if (points.size() == 3) {
             return followTrajectoryOnTheFly(points.get(0), points.get(1), points.get(2));
         } else {
