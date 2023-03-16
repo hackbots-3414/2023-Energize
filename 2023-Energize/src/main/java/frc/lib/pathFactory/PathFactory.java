@@ -78,9 +78,8 @@ public class PathFactory {
 
         if (outside) {
             // which is closer: C1 or C2:
-            double distanceToC1 = getDistance(from, pC1);
-            double distanceToC2 = getDistance(from, pC2);
-
+            double distanceToC1 = getDistance(from, pC1) + getDistance(pC1, target);
+            double distanceToC2 = getDistance(from, pC2) + getDistance(pC2, target);
 
             if (distanceToC1 > distanceToC2) {
                 closer = pC2;
