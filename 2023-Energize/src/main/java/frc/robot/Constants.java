@@ -282,9 +282,6 @@ public final class Constants {
         public static final double p8 = Conversions.inchesToMeters(174.19);
         public static final double p9 = Conversions.inchesToMeters(196.19);
 
-        public static final double a = Conversions.inchesToMeters(180.19);
-        public static final double b = Conversions.inchesToMeters(36.19);
-
         public static final double c1 = Conversions.inchesToMeters(29.695);
         public static final double c2 = Conversions.inchesToMeters(186.335);
 
@@ -292,16 +289,12 @@ public final class Constants {
 
             public static final double x = Conversions.inchesToMeters(610.77);
 
-            public static final double abx = Conversions.inchesToMeters(372.92);
-
             public static final double cx = Conversions.inchesToMeters(438.07);
 
         }
         public static final class blueSide {
             public static final double x = Conversions.inchesToMeters(40.45);
             
-            public static final double abx = Conversions.inchesToMeters(278.25);
-
             public static final double cx = Conversions.inchesToMeters(132.25);
             
         }
