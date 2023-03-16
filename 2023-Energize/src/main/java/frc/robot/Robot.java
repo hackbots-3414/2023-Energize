@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,6 +24,12 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     DataLogManager.start();
+
+        // UsbCamera camera = CameraServer.startAutomaticCapture();
+        // camera.setFPS(60);
+        // camera.setResolution(320, 240);
+        setUpLimeLight();
+
 
   }
 
@@ -67,4 +76,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {}
+
+
+
+public void setUpLimeLight() {
+  NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0); // set pipeline for camera
+  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1); // force off
+  NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1); // driver cam: turns off processing
+  NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0); // Sets the display to side by side IF secondary camera is present.
+  // NetworkTableInstance.getDefault().getTable("limelight").getEntry("crop").setNumber(2);
 }
+
+}
+
