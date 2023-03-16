@@ -15,9 +15,12 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.Wait;
 import frc.robot.commands.AutoArm;
 import frc.robot.commands.PIDBalance;
 import frc.robot.subsystems.Intake;
@@ -47,6 +50,8 @@ public class AutonomousFactory {
 
     private static Swerve swerve;
     private static Intake intake;
+    private static Shoulder shoulder;
+    private static Wrist wrist;
 
     private static HashMap<String, Command> eventMap = new HashMap<>();
 
@@ -57,11 +62,11 @@ public class AutonomousFactory {
     public static AutonomousFactory getInstance(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
         swerve = m_swerve;
         intake = m_intake;
-        // eventMap.put("ShootHigh", new SequentialCommandGroup(new IntakeCommand(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
-        // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
+        shoulder = m_shoulder;
+        wrist = m_wrist;
         eventMap.put("Eject", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
-        eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
-        eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
+        eventMap.put("Mid", new ParallelCommandGroup(new AutoArm(m_shoulder, m_wrist, 3), new Wait(2.0)));
+        eventMap.put("High", new SequentialCommandGroup(new AutoArm(m_shoulder, m_wrist, 4), new Wait(2.0)));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
         eventMap.put("Balance", new PIDBalance(swerve, true));
 

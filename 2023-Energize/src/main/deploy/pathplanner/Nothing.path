@@ -16,10 +16,12 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "High"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
-        "waitTime": 0
+        "waitTime": 2.0
       }
     },
     {
@@ -45,5 +47,12 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.09696969696969766,
+      "names": [
+        "Eject"
+      ]
+    }
+  ]
 }
