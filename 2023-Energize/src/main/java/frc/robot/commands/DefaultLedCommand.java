@@ -28,7 +28,7 @@ public class DefaultLedCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    logger.info("logging");
+    // logger.info("logging");
     DataLogManager.start();
     done = false;
   }

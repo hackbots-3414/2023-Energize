@@ -59,7 +59,7 @@ public class AutonomousFactory {
         intake = m_intake;
         // eventMap.put("ShootHigh", new SequentialCommandGroup(new IntakeCommand(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
         // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
-        eventMap.put("Eject", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
+        eventMap.put("Eject", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.3)), new InstantCommand(() -> intake.set(0))));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
         eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
