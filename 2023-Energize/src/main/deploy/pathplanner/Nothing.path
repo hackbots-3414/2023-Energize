@@ -17,9 +17,10 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "High"
+          "High",
+          "Intake"
         ],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 2.0
       }
@@ -47,5 +48,12 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.3939393939393953,
+      "names": [
+        "Eject"
+      ]
+    }
+  ]
 }

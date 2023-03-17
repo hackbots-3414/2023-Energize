@@ -39,7 +39,10 @@ public class AutonomousFactory {
         Balance("Mid Balance"),
         Left("Left"),
         Right("Right"),
-        Nothing("Nothing");
+        Nothing("Nothing"),
+        WallHigh("Wall High"),
+        BarrierHigh("Barrier High"),
+        BalanceHigh("Balance High");
 
         public final String value;
 
@@ -66,9 +69,14 @@ public class AutonomousFactory {
         intake = m_intake;
         shoulder = m_shoulder;
         wrist = m_wrist;
-        eventMap.put("Eject", new ejectCommand(m_intake));
+
+        IntakeCommand intakeCommand = new IntakeCommand(m_intake);
+
+
+        eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
+        eventMap.put("Intake", new InstantCommand(() -> m_intake.set(Constants.IntakeConstants.intakeSpeedAutonPercent)));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
-        eventMap.put("High", new ParallelCommandGroup(new AutoArm(m_shoulder, m_wrist, 4), new IntakeCommand(m_intake)));
+        eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
         eventMap.put("Balance", new PIDBalance(swerve, true));
 

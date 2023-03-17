@@ -100,9 +100,12 @@ public class RobotContainer {
 
     // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
     pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
-    pathChooser.addOption("Left", autons.eventChooser(AutonChoice.Left));
-    pathChooser.addOption("Right", autons.eventChooser(AutonChoice.Right)); 
+    pathChooser.addOption("Wall", autons.eventChooser(AutonChoice.Left));
+    pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right)); 
     pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance)); 
+    pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
+    pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
+    pathChooser.addOption("Balance High", autons.eventChooser(AutonChoice.BalanceHigh));
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
