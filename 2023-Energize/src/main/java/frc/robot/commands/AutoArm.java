@@ -66,6 +66,12 @@ public class AutoArm extends CommandBase {
         shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
         wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
         break;
+
+      // Standing Cone
+      case 6:
+        wrist.setGoal(Constants.IntakeAngles.standingConeWristAngle);
+        shoulder.setGoal(Constants.IntakeAngles.standingConeShoulderAngle);
+        break;
     }
     shoulder.enable();
     wrist.enable();

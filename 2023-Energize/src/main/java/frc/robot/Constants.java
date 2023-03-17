@@ -217,19 +217,19 @@ public final class Constants {
         public static final double shoulderkI = 0.0;
         public static final double shoulderkD = 0.0;
 
-        public static final double wristkP = 0.1;
+        public static final double wristkP = 1.5;
         public static final double wristkI = 0.0;
         public static final double wristkD = 0.0;
 
         //Volts
         public static final double shoulderkS = 0;//0.05;
-        public static final double shoulderkG = 0.7458;//0.73;
+        public static final double shoulderkG = 0.9;//0.7458;
         public static final double shoulderkV = 6.0;
         public static final double shoulderkA = 0.6;
 
         public static final double wristkS = 0.0;
-        public static final double wristkG = 0.75;
-        public static final double wristkV = 4.0;
+        public static final double wristkG = 0.4;
+        public static final double wristkV = 4.5;
         public static final double wristkA = 0.01;
 
         public static final double shouldermaxVelo = Math.toRadians(180); // degrees / seconds
@@ -244,29 +244,37 @@ public final class Constants {
 
     public static final class IntakeAngles {
 
-        public static final double stowedWristAngle = Math.toRadians(5.71);
+        public static final double stowedWristAngle = Math.toRadians(0);
         public static final double stowedShoulderAngle = Math.toRadians(-86.57);
 
-        public static final double pickUpWristAngle = Math.toRadians(-34.64);  
+        public static final double pickUpWristAngle = Math.toRadians(-37);  
         public static final double pickUpShoulderAngle = Math.toRadians(-66.882); //-74.882 // -68.25
 
         // public static final double lowWristAngle = Math.toRadians(35.0);
         // public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(-43.0);
-        public static final double midShoulderAngle = Math.toRadians(-3.51);
+        public static final double midWristAngle = Math.toRadians(-61);
+        public static final double midShoulderAngle = Math.toRadians(-13);
 
-        public static final double highWristAngle = Math.toRadians(-43.0);
-        public static final double highShoulderAngle = Math.toRadians(11.162);
+        public static final double highWristAngle = Math.toRadians(-61);
+        public static final double highShoulderAngle = Math.toRadians(7);
 
-        public static final double shelfWristAngle = Math.toRadians(-5.0);
-        public static final double shelfShoulderAngle = Math.toRadians(0.0);
+        public static final double shelfWristAngle = Math.toRadians(-50);
+        public static final double shelfShoulderAngle = Math.toRadians(0);
 
+        public static final double standingConeWristAngle = Math.toRadians(-71);
+        public static final double standingConeShoulderAngle = Math.toRadians(-44);
+
+        public static final double knockedConeShoulderAngle = Math.toRadians(-70.57);
+        public static final double KnockedConeWristAngle = Math.toRadians(-35); //estimated Wrist Angle might not work
+
+        public static final double uprightConeShoulderAngle = Math.toRadians(-51.70);
+        public static final double uprightConeWristAngle = Math.toRadians(-59); //estimated Wrist angle might not work
     }
 
     public static final class BalanceConstants {
         public static final double KI = 0;
-        public static final double KP = .016;
+        public static final double KP = .01; // 0.016
         public static final double KD = 0;
     }
 }
