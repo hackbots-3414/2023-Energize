@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import java.sql.Driver;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -16,6 +19,7 @@ public class AutoArm extends CommandBase {
   private Shoulder shoulder;
   private int selector;
   private int counter;
+  private double startTime;
 
   public AutoArm(Shoulder shoulder, Wrist wrist, int selector) {
     this.shoulder = shoulder;
@@ -29,6 +33,7 @@ public class AutoArm extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    startTime = DriverStation.getMatchTime();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -75,11 +80,12 @@ public class AutoArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return counter > 1;
+    return Math.abs(DriverStation.getMatchTime() - startTime) > 2.0;
   }
 }
