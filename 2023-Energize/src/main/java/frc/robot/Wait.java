@@ -14,7 +14,7 @@ public class Wait extends CommandBase {
 
   @Override
   public void initialize() {
-    startTime = DriverStation.getMatchTime();
+    startTime = System.currentTimeMillis();
   }
 
   @Override
@@ -25,6 +25,6 @@ public class Wait extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return (DriverStation.getMatchTime() - startTime) >= time;
+    return (System.currentTimeMillis() - startTime)/1000 >= time;
   }
 }

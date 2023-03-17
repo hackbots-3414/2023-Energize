@@ -76,7 +76,7 @@ public class AutonomousFactory {
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
         eventMap.put("Intake", new InstantCommand(() -> m_intake.set(Constants.IntakeConstants.intakeSpeedAutonPercent)));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
-        eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
+        eventMap.put("High", new SequentialCommandGroup(new AutoArm(m_shoulder, m_wrist, 4), new Wait(1.0)));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
         eventMap.put("Balance", new PIDBalance(swerve, true));
 
