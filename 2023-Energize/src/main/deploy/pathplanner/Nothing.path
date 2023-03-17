@@ -19,19 +19,19 @@
         "names": [
           "High"
         ],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 2.0
       }
     },
     {
       "anchorPoint": {
-        "x": 1.8,
-        "y": 2.75
+        "x": 5.507762293720076,
+        "y": 2.772539680417707
       },
       "prevControl": {
-        "x": 1.8,
-        "y": 2.75
+        "x": 5.507762293720076,
+        "y": 2.772539680417707
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -47,12 +47,5 @@
       }
     }
   ],
-  "markers": [
-    {
-      "position": 0.09696969696969766,
-      "names": [
-        "Eject"
-      ]
-    }
-  ]
+  "markers": []
 }

@@ -22,7 +22,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Wait;
 import frc.robot.commands.AutoArm;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDBalance;
+import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
@@ -64,9 +66,9 @@ public class AutonomousFactory {
         intake = m_intake;
         shoulder = m_shoulder;
         wrist = m_wrist;
-        eventMap.put("Eject", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
+        eventMap.put("Eject", new ejectCommand(m_intake));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
-        eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
+        eventMap.put("High", new ParallelCommandGroup(new AutoArm(m_shoulder, m_wrist, 4), new IntakeCommand(m_intake)));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
         eventMap.put("Balance", new PIDBalance(swerve, true));
 
