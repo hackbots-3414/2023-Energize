@@ -160,7 +160,7 @@ public class RobotContainer {
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
     pickUpButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
     // shelfButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 5));
-    // standingConeButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 6));
+    standingConeButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 6));
 
     shoulderUp.whileTrue(new MoveShoulder(m_Shoulder, Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));

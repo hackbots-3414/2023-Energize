@@ -1,9 +1,9 @@
 <xml version="1.0">
 <dashboard>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="4" y="1"/>
-		<width>1246</width>
-		<height>620</height>
+		<location x="48" y="10"/>
+		<width>1838</width>
+		<height>978</height>
 		<property name="Camera Choice" value=""/>
 	</static-widget>
 	<widget field="Auto Mode" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
@@ -18,6 +18,8 @@
 	<hidden field="Mod 2 Cancoder"/>
 	<hidden field="Wait Command"/>
 	<hidden field="Delay Before Shoot"/>
+	<hidden field="Brake Mode"/>
+	<hidden field="Coast Mode"/>
 	<hidden field="Hand Motor Current"/>
 	<hidden field="wristkV: "/>
 	<hidden field="Wrist Angle"/>
