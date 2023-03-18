@@ -177,15 +177,15 @@ public class RobotContainer {
     
     // Buttons!!!
 
-    button3.onTrue(autons.bayChooser(Bays.One));
-    button4.onTrue(autons.bayChooser(Bays.Two));
-    button5.onTrue(autons.bayChooser(Bays.Three));
-    button6.onTrue(autons.bayChooser(Bays.Four));
-    button7.onTrue(autons.bayChooser(Bays.Five));
-    button8.onTrue(autons.bayChooser(Bays.Six));
-    button9.onTrue(autons.bayChooser(Bays.Seven));
-    button10.onTrue(autons.bayChooser(Bays.Eight));
-    button11.onTrue(autons.bayChooser(Bays.Nine));
+    button3.whileTrue(autons.bayChooser(Bays.One));
+    button4.whileTrue(autons.bayChooser(Bays.Two));
+    button5.whileTrue(autons.bayChooser(Bays.Three));
+    button6.whileTrue(autons.bayChooser(Bays.Four));
+    button7.whileTrue(autons.bayChooser(Bays.Five));
+    button8.whileTrue(autons.bayChooser(Bays.Six));
+    button9.whileTrue(autons.bayChooser(Bays.Seven));
+    button10.whileTrue(autons.bayChooser(Bays.Eight));
+    button11.whileTrue(autons.bayChooser(Bays.Nine));
 
     button0.onTrue(new AutoArm(m_Shoulder, m_Wrist, 1));
     button1.onTrue(new AutoArm(m_Shoulder, m_Wrist, 3));
