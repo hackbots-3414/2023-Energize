@@ -45,12 +45,12 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 13);
-  private final JoystickButton reducedSpeed = new JoystickButton(driver, 9);
-  private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
-  private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
+  // private final JoystickButton reducedSpeed = new JoystickButton(driver, 9);
+  // private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
+  // private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value); //fix me Swerve subsys overwrites
+  // private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
+  // private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
 
   /* Operator Buttons */
   private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -130,8 +130,8 @@ public class RobotContainer {
 
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
-    autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
+    // setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
+    // autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
     //SmartDashboard.putData(new Rotate(s_Swerve));
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
