@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.MedianFilter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +28,8 @@ public class Intake extends SubsystemBase {
   private boolean hasObject = false;
   private MedianFilter currentFilter = new MedianFilter(5);//9
   private double currentFilterValue = 0;
+
+  private DigitalInput irSensor = new DigitalInput(0);
   
   public Intake() {
     configMotor();
@@ -94,4 +97,7 @@ public class Intake extends SubsystemBase {
 
   }
 
+  public boolean getIRState() {
+    return irSensor.get();
+  }
 }

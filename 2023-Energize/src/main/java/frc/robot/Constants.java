@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.lib.math.Conversions;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -276,5 +277,9 @@ public final class Constants {
         public static final double KI = 0;
         public static final double KP = .016;
         public static final double KD = 0;
+    }
+
+    public static final class IntakeAutomatic {
+        public static final double fullSpeed = 0.01;
     }
 }

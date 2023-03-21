@@ -234,4 +234,11 @@ public class Swerve extends SubsystemBase {
 
     }
 
+    public void driveForward(double distancex, double distancey) {
+        Translation2d targetTranslation = new Translation2d(
+            distancex,
+            distancey
+        );
+        drive(targetTranslation, 0, false, false);
+    }
 }
