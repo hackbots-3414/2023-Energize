@@ -11,14 +11,12 @@ import frc.robot.subsystems.Swerve;
 
 public class IntakeAutomaticCommand extends IntakeCommand {
 
-  Intake intake;
   Swerve swerve;
 
   /** Creates a new IntakeAutomaticCommand. */
   public IntakeAutomaticCommand(Swerve swerve, Intake intake) {
     super(intake);
     this.swerve = swerve;
-    this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
