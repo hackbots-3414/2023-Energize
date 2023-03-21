@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.AddressableLED;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
@@ -17,6 +18,7 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   public IntakeAutomaticCommand(Swerve swerve, Intake intake) {
     super(intake);
     this.swerve = swerve;
+    addRequirements(swerve);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -33,7 +35,7 @@ public class IntakeAutomaticCommand extends IntakeCommand {
     // We assume that the arm is already raised.
     boolean tooClose = intake.getIRState();
     if (!tooClose) {
-      swerve.driveForward(Constants.IntakeAutomatic.fullSpeed, 0);
+      swerve.driveForward(Constants.IntakeAutomatic.shelfApproachSpeed, 0);
     }
   }
 
