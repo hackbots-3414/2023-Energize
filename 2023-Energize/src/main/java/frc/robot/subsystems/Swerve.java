@@ -72,7 +72,7 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
-        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getPitch()),
+        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getYaw()),
                 getModulePositions(), new Pose2d());
         camera = new PhotonCamera("Front_Camera");
         fieldSim = new Field2d();
@@ -88,13 +88,13 @@ public class Swerve extends SubsystemBase {
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        fieldRelative = true;
+        // fieldRelative = true;
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                         translation.getX(),
                         translation.getY(),
                         rotation,
-                        getYaw())
+                        getHeading())
                         : new ChassisSpeeds(
                                 translation.getX(),
                                 translation.getY(),
@@ -139,8 +139,25 @@ public class Swerve extends SubsystemBase {
         gyro.setYaw(0);
     }
 
+    public void resetHeading() {
+        zeroGyro();
+        swerveOdometry.update(Rotation2d.fromDegrees(0), getModulePositions());
+    }
+
     public Rotation2d getYaw() {
         double yaw = gyro.getYaw();
+        yaw %= 360;
+        yaw = (yaw + 360) % 360;
+
+        if (yaw > 180) {
+            yaw -= 360;
+        }
+
+        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(yaw * -1) : Rotation2d.fromDegrees(yaw);
+    }
+
+    public Rotation2d getHeading() {
+        double yaw = swerveOdometry.getPoseMeters().getRotation().getDegrees();
         yaw %= 360;
         yaw = (yaw + 360) % 360;
 
@@ -184,6 +201,7 @@ public class Swerve extends SubsystemBase {
         // updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
+        SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
         for(SwerveModule mod : mSwerveMods){
         SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
