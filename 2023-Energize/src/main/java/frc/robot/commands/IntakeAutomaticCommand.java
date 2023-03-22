@@ -4,13 +4,16 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.AddressableLED;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
 
 public class IntakeAutomaticCommand extends IntakeCommand {
+
+  final static Logger logger = LoggerFactory.getLogger(IntakeAutomaticCommand.class);
 
   Swerve swerve;
 
@@ -26,6 +29,7 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   @Override
   public void initialize() {
     super.initialize();
+    logger.debug("Hello and good tidings from IntakeAutomaticCommand!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,9 +37,12 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   public void execute() {
     super.execute(); // Spin the motor!
     // We assume that the arm is already raised.
-    boolean tooClose = intake.getIRState();
-    if (!tooClose) {
+    boolean notTooClose = super.intake.getIRState();
+    logger.debug("IR Sensor returned: tooClose={}", notTooClose);
+    if (notTooClose) {
       swerve.driveForward(Constants.IntakeAutomatic.shelfApproachSpeed, 0);
+    } else {
+      swerve.driveForward(0, 0);
     }
   }
 
@@ -44,11 +51,12 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   public void end(boolean interrupted) {
     super.end(interrupted);
     swerve.driveForward(0,0);
+    logger.debug("Finishing IntakeAutomaticCommand!");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.getIRState();
+    return false;
   }
 }

@@ -129,7 +129,7 @@ public class RobotContainer {
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    intakeButton.whileTrue(new IntakeCommand(m_Intake));
+    intakeButton.whileTrue(new IntakeAutomaticCommand(s_Swerve, m_Intake));
     ejectButton.whileTrue(new ejectCommand(m_Intake));
     //stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
     stowAndLowButton.onTrue(

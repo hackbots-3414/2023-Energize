@@ -280,6 +280,6 @@ public final class Constants {
     }
 
     public static final class IntakeAutomatic {
-        public static final double shelfApproachSpeed = 0.01;
+        public static final double shelfApproachSpeed = 0.1;
     }
 }
