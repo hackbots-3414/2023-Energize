@@ -28,6 +28,8 @@ public class MoveShoulder extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     shoulder.set(0.0);
+    shoulder.setGoal(shoulder.getMeasurement());
+    shoulder.enable();
   }
 
   @Override
