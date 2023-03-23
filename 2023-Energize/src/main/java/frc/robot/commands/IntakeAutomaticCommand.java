@@ -73,6 +73,8 @@ public class IntakeAutomaticCommand extends IntakeCommand {
 
     if (shouldStopDriving) {
       swerve.driveForward(0, 0);
+    } else if (shouldStopDriving && autoDrive) {
+      swerve.driveForward(Constants.IntakeAutomatic.shelfApproachSpeed, 0);
     }
 
   }
