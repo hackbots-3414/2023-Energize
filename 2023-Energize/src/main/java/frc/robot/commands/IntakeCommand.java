@@ -23,33 +23,15 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    intake.setRunningIntake(true);
     intake.setCurrentLimitOne();
     intake.setObjectStateFalse();
-    // DataLogManager.start();
     intake.set(Constants.IntakeConstants.objectHoldSpeedPercent);
-    //bounces = 0;
-
 
   }
 
   @Override
-  public void execute() {
-    //currentFilter.calculate(intake.getCurrent());
-    // if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
-    //   bounces++;
-    // }
-
-    if (!intake.getObjectState()) {
-      intake.set(Constants.IntakeConstants.intakeSpeedPercent);
-      
-      // if (bounces >= 9) {
-        if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
-        intake.setCurrentLimitTwo();
-        intake.setObjectStateTrue();
-        intake.set(IntakeConstants.objectHoldSpeedPercent);
-      }
-    }
-  }
+  public void execute() {}
 
   @Override
   public void end(boolean interrupted) {
@@ -57,6 +39,7 @@ public class IntakeCommand extends CommandBase {
       intake.set(0.0);
     }
     intake.setCurrentLimitOne();
+    intake.setRunningIntake(false);
   }
 
   @Override
