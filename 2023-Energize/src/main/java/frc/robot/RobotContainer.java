@@ -105,6 +105,7 @@ public class RobotContainer {
     pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance)); 
     pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
     pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
+    pathChooser.addOption("Barrier High Two Object", autons.eventChooser(AutonChoice.BarrierHighTwoObject));
     pathChooser.addOption("Balance High", autons.eventChooser(AutonChoice.BalanceHigh));
     pathChooser.addOption("Test", autons.eventChooser(AutonChoice.Test));
 
