@@ -8,14 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IRSensor;
 
 public class IRWait extends CommandBase {
 
   final static Logger logger = LoggerFactory.getLogger(IRWait.class);
 
-  Intake intake;
+  IRSensor intake;
   boolean autoDrive = true;
   /*
    * false means drivver remains control over the robot
@@ -23,7 +22,7 @@ public class IRWait extends CommandBase {
    */
 
   /** Creates a new IntakeAutomaticCommand. */
-  public IRWait(Intake intake) {
+  public IRWait(IRSensor intake) {
     addRequirements(intake);
     this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.

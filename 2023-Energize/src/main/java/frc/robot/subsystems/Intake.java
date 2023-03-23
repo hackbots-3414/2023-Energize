@@ -28,8 +28,6 @@ public class Intake extends SubsystemBase {
   private boolean hasObject = false;
   private MedianFilter currentFilter = new MedianFilter(5);//9
   private double currentFilterValue = 0;
-
-  private DigitalInput irSensor = new DigitalInput(0);
   
   public Intake() {
     configMotor();
@@ -97,7 +95,4 @@ public class Intake extends SubsystemBase {
 
   }
 
-  public boolean getIRState() {
-    return !irSensor.get();
-  }
 }

@@ -26,6 +26,7 @@ import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
+import frc.robot.subsystems.IRSensor;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Shoulder;
@@ -70,6 +71,7 @@ public class RobotContainer {
   private final Intake m_Intake = new Intake();
   private final Shoulder m_Shoulder = new Shoulder();
   private final Wrist m_Wrist = new Wrist(m_Shoulder);
+  private final IRSensor irSensor = new IRSensor();
 
   SendableChooser<Command> pathChooser = new SendableChooser<>();
 
@@ -136,7 +138,7 @@ public class RobotContainer {
     intakeButton.whileTrue(new ParallelCommandGroup(
         new SequentialCommandGroup(
           new ArmCommand(m_Shoulder, m_Wrist, 5),
-          new IRWait(m_Intake),
+          new IRWait(irSensor),
           new ParallelCommandGroup(
             new InstantCommand(
             () -> s_Swerve.stopDriving()
