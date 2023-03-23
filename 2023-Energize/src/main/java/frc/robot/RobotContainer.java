@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
@@ -18,11 +20,10 @@ import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultLedCommand;
-import frc.robot.commands.IntakeAutomaticCommand;
+import frc.robot.commands.IRWait;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
-import frc.robot.commands.PIDBalance;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
@@ -132,7 +133,19 @@ public class RobotContainer {
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    intakeButton.whileTrue(new IntakeAutomaticCommand(s_Swerve, m_Intake, m_Shoulder, m_Wrist));
+    intakeButton.whileTrue(new ParallelCommandGroup(
+        new SequentialCommandGroup(
+          new ArmCommand(m_Shoulder, m_Wrist, 5),
+          new IRWait(m_Intake),
+          new ParallelCommandGroup(
+            new InstantCommand(
+            () -> s_Swerve.stopDriving()
+            ),
+            new ArmCommand(m_Shoulder, m_Wrist, 7, false)
+          )),
+          new IntakeCommand(m_Intake)
+      )
+    );
     ejectButton.whileTrue(new ejectCommand(m_Intake));
     //stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
     stowAndLowButton.onTrue(

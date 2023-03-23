@@ -78,9 +78,14 @@ public class ArmCommand extends CommandBase {
 
       // standing cone
       case 6:
-      shoulder.setGoal(Constants.IntakeAngles.standingConeShoulderAngle);
-      wrist.setGoal(Constants.IntakeAngles.standingConeWristAngle);
-      break;
+        shoulder.setGoal(Constants.IntakeAngles.standingConeShoulderAngle);
+        wrist.setGoal(Constants.IntakeAngles.standingConeWristAngle);
+        break;
+
+      // slightly lower than shelf
+      case 7:
+        shoulder.setGoal(Constants.IntakeAngles.shelfShoulderDown);
+        break;
     }
     shoulder.enable();
     wrist.enable();

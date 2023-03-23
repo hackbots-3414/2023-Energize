@@ -242,4 +242,8 @@ public class Swerve extends SubsystemBase {
         );
         drive(targetTranslation, 0, false, false);
     }
+
+    public void stopDriving() {
+        drive(new Translation2d(), 0, false, false);
+    }
 }

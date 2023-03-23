@@ -98,6 +98,6 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean getIRState() {
-    return irSensor.get();
+    return !irSensor.get();
   }
 }
