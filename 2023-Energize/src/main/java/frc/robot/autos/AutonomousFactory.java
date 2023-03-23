@@ -42,7 +42,8 @@ public class AutonomousFactory {
         Nothing("Nothing"),
         WallHigh("Wall High"),
         BarrierHigh("Barrier High"),
-        BalanceHigh("Balance High");
+        BalanceHigh("Balance High"),
+        Test("Test");
 
         public final String value;
 
@@ -71,7 +72,6 @@ public class AutonomousFactory {
         wrist = m_wrist;
 
         IntakeCommand intakeCommand = new IntakeCommand(m_intake);
-
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
         eventMap.put("Intake", new InstantCommand(() -> m_intake.set(Constants.IntakeConstants.intakeSpeedAutonPercent)));
@@ -147,7 +147,7 @@ public class AutonomousFactory {
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));        
-
+        swerve.setGyroOffset(pathGroup.get(0).getInitialPose().getRotation().getDegrees());
         return autoBuilder.fullAuto(pathGroup);
     }
 

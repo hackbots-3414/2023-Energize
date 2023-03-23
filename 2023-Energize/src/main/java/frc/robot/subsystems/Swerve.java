@@ -26,14 +26,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.SwerveModule;
+import frc.robot.Wait;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -49,6 +48,8 @@ public class Swerve extends SubsystemBase {
 
     private static Logger log = LoggerFactory.getLogger(Swerve.class);
     private int visionError = 0;
+
+    private double gyroOffset = 0;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -88,7 +89,6 @@ public class Swerve extends SubsystemBase {
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        // fieldRelative = true;
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                         translation.getX(),
@@ -136,12 +136,13 @@ public class Swerve extends SubsystemBase {
     }
 
     public void zeroGyro() {
-        gyro.setYaw(0);
+        gyro.setYaw(0, Constants.IntakeConstants.canPause);
     }
 
-    public void resetHeading() {
+    public void zeroHeading() {
         zeroGyro();
-        swerveOdometry.update(Rotation2d.fromDegrees(0), getModulePositions());
+        swerveOdometry.resetPosition(getYaw(), getModulePositions(), getPose());
+        // swerveOdometry.update(Rotation2d.fromDegrees(0), getModulePositions());
     }
 
     public Rotation2d getYaw() {
@@ -157,15 +158,11 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getHeading() {
-        double yaw = swerveOdometry.getPoseMeters().getRotation().getDegrees();
-        yaw %= 360;
-        yaw = (yaw + 360) % 360;
+        return swerveOdometry.getPoseMeters().getRotation();
+    }
 
-        if (yaw > 180) {
-            yaw -= 360;
-        }
-
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(yaw * -1) : Rotation2d.fromDegrees(yaw);
+    public void setGyroOffset(double offset) {
+        gyroOffset = offset;
     }
 
     public Rotation2d getPitch() {

@@ -156,7 +156,7 @@ public final class Constants {
 
         public static final double kPXController = 2.0;
         public static final double kPYController = 2.0;
-        public static final double  kPThetaController = 1.0;
+        public static final double  kPThetaController = 2.0;
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
