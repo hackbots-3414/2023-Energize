@@ -1,14 +1,9 @@
 package frc.robot.commands;
 
-import javax.swing.text.StyleContext.SmallAttributeSet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.filter.MedianFilter;
-import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
@@ -31,7 +26,7 @@ public class IntakeCommand extends CommandBase {
     intake.setCurrentLimitOne();
     intake.setObjectStateFalse();
     // DataLogManager.start();
-    intake.set(Constants.IntakeConstants.intakeSpeedPercent);
+    intake.set(Constants.IntakeConstants.objectHoldSpeedPercent);
     //bounces = 0;
 
 

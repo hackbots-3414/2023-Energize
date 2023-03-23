@@ -190,6 +190,7 @@ public final class Constants {
         public static final double intakeSpeedPercent = 1;
         public static final double ejectSpeedPercent = -0.4;
         public static final double ejectSpeedAutonPercent = -0.7;
+        public static final double intakeSpeedAutonPercent = 0.2;
         public static final double objectHoldSpeedPercent = 0.1;
 
         public static final double wristMoveSpeedPercentage = 0.25;
@@ -261,7 +262,7 @@ public final class Constants {
         public static final double highShoulderAngle = Math.toRadians(7);
 
         public static final double shelfWristAngle = Math.toRadians(-50);
-        public static final double shelfShoulderAngle = Math.toRadians(1.48);
+        public static final double shelfShoulderAngle = Math.toRadians(0);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
         public static final double standingConeShoulderAngle = Math.toRadians(-44);
@@ -275,7 +276,7 @@ public final class Constants {
 
     public static final class BalanceConstants {
         public static final double KI = 0;
-        public static final double KP = .016;
+        public static final double KP = .01; // 0.016
         public static final double KD = 0;
     }
 
