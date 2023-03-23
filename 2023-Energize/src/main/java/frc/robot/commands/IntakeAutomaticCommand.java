@@ -10,12 +10,16 @@ import org.slf4j.LoggerFactory;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.Shoulder;
 
 public class IntakeAutomaticCommand extends IntakeCommand {
 
   final static Logger logger = LoggerFactory.getLogger(IntakeAutomaticCommand.class);
 
   Swerve swerve;
+  Shoulder shoulder;
+  Wrist wrist;
   boolean autoDrive = true;
   /*
    * false means drivver remains control over the robot
@@ -23,10 +27,14 @@ public class IntakeAutomaticCommand extends IntakeCommand {
    */
 
   /** Creates a new IntakeAutomaticCommand. */
-  public IntakeAutomaticCommand(Swerve swerve, Intake intake) {
+  public IntakeAutomaticCommand(Swerve swerve, Intake intake, Shoulder shoulder, Wrist wrist) {
     super(intake);
     this.swerve = swerve;
+    this.shoulder = shoulder;
+    this.wrist = wrist;
     addRequirements(swerve);
+    addRequirements(shoulder);
+    addRequirements(wrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -39,15 +47,34 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    super.execute(); // Spin the motor!
-    // We assume that the arm is already raised.
-    boolean notTooClose = super.intake.getIRState();
-    logger.debug("IR Sensor returned: tooClose={}", notTooClose);
-    if (notTooClose && autoDrive) {
-      swerve.driveForward(Constants.IntakeAutomatic.shelfApproachSpeed, 0);
-    } else if (autoDrive) {
+    // Step 1: Raise the arm:
+    shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
+
+    // Step 2: Align the wrist:
+    wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
+
+    // Step 3: Start the wrist and shoulder:
+    shoulder.enable();
+    wrist.enable();
+
+    // Step 4: Activate the intake:
+
+    super.execute();
+    
+    // Auto-stop feature:
+
+    // The IR sensor returns a boolean:
+    /*
+     * true means that we can keep going
+     * false means that we can stop now because the sensor is triggered. It's kind of weird.
+     */
+    
+    boolean shouldStopDriving = !super.intake.getIRState();
+
+    if (shouldStopDriving) {
       swerve.driveForward(0, 0);
     }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -56,7 +83,7 @@ public class IntakeAutomaticCommand extends IntakeCommand {
     super.end(interrupted);
     if (autoDrive) {
       swerve.driveForward(0,0);
-    } 
+    }
   }
 
   // Returns true when the command should end.
