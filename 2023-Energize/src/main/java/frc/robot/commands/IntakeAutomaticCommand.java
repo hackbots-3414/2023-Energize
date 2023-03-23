@@ -16,6 +16,11 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   final static Logger logger = LoggerFactory.getLogger(IntakeAutomaticCommand.class);
 
   Swerve swerve;
+  boolean autoDrive = true;
+  /*
+   * false means drivver remains control over the robot
+   * true means the driver aligns the robot then the code drives forward automatically.
+   */
 
   /** Creates a new IntakeAutomaticCommand. */
   public IntakeAutomaticCommand(Swerve swerve, Intake intake) {
@@ -29,7 +34,6 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   @Override
   public void initialize() {
     super.initialize();
-    logger.debug("Hello and good tidings from IntakeAutomaticCommand!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,9 +43,9 @@ public class IntakeAutomaticCommand extends IntakeCommand {
     // We assume that the arm is already raised.
     boolean notTooClose = super.intake.getIRState();
     logger.debug("IR Sensor returned: tooClose={}", notTooClose);
-    if (notTooClose) {
+    if (notTooClose && autoDrive) {
       swerve.driveForward(Constants.IntakeAutomatic.shelfApproachSpeed, 0);
-    } else {
+    } else if (autoDrive) {
       swerve.driveForward(0, 0);
     }
   }
@@ -50,8 +54,9 @@ public class IntakeAutomaticCommand extends IntakeCommand {
   @Override
   public void end(boolean interrupted) {
     super.end(interrupted);
-    swerve.driveForward(0,0);
-    logger.debug("Finishing IntakeAutomaticCommand!");
+    if (autoDrive) {
+      swerve.driveForward(0,0);
+    } 
   }
 
   // Returns true when the command should end.
