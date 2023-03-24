@@ -152,7 +152,10 @@ public class RobotContainer {
           new StopDriving(s_Swerve).withTimeout(2),
           //new ArmCommand(m_Shoulder, m_Wrist, 7, false))),
           new IntakeCommand(m_Intake))
-    )));
+        
+        )
+      )
+    );
     ejectButton.whileTrue(new ejectCommand(m_Intake));
     // stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
     stowAndLowButton.onTrue(
