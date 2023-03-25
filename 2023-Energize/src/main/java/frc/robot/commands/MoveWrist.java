@@ -32,7 +32,8 @@ public class MoveWrist extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     wrist.setSpeed(0.0);
-    
+    wrist.setGoal(wrist.getMeasurement());
+    wrist.enable();
   }
 
   @Override
