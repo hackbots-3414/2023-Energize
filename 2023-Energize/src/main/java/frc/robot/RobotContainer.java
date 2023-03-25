@@ -3,8 +3,6 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pathplanner.lib.PathConstraints;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -13,20 +11,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
+import frc.robot.autos.AutonomousFactory.Bays;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LedCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
-import frc.robot.commands.PIDBalance;
-import frc.robot.commands.Rotate;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
 import frc.robot.subsystems.Intake;
@@ -74,6 +69,22 @@ public class RobotContainer {
   private final Shoulder m_Shoulder = new Shoulder();
   private final Wrist m_Wrist = new Wrist(m_Shoulder);
 
+  /* Buttonboard things: */
+  private final Joystick buttonBoard = new Joystick(Constants.ButtonBoard.buttonBoardPort);
+  private final JoystickButton button0 = new JoystickButton(buttonBoard, 0);
+  private final JoystickButton button1 = new JoystickButton(buttonBoard, 1);
+  private final JoystickButton button2 = new JoystickButton(buttonBoard, 2);
+  private final JoystickButton button3 = new JoystickButton(buttonBoard, 3);
+  private final JoystickButton button4 = new JoystickButton(buttonBoard, 4);
+  private final JoystickButton button5 = new JoystickButton(buttonBoard, 5);
+  private final JoystickButton button6 = new JoystickButton(buttonBoard, 6);
+  private final JoystickButton button7 = new JoystickButton(buttonBoard, 7);
+  private final JoystickButton button8 = new JoystickButton(buttonBoard, 8);
+  private final JoystickButton button9 = new JoystickButton(buttonBoard, 9);
+  private final JoystickButton button10 = new JoystickButton(buttonBoard, 10);
+  private final JoystickButton button11 = new JoystickButton(buttonBoard, 11);
+
+
   SendableChooser<Command> pathChooser = new SendableChooser<>();
 
   private AutonomousFactory autons;
@@ -103,9 +114,9 @@ public class RobotContainer {
     pathChooser.addOption("Wall", autons.eventChooser(AutonChoice.Left));
     pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right)); 
     pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance)); 
-    pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
-    pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
-    pathChooser.addOption("Balance High", autons.eventChooser(AutonChoice.BalanceHigh));
+    // pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
+    // pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
+    // pathChooser.addOption("Balance High", autons.eventChooser(AutonChoice.BalanceHigh));
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
@@ -169,6 +180,21 @@ public class RobotContainer {
     shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     wristUp.whileTrue(new MoveWrist(m_Wrist, Constants.IntakeConstants.wristMoveSpeedPercentage));
     wristDown.whileTrue(new MoveWrist(m_Wrist, -Constants.IntakeConstants.wristMoveSpeedPercentage));
+
+    // Button board configurations:
+    button3.whileTrue(autons.bayChooser(Bays.One));
+    button4.whileTrue(autons.bayChooser(Bays.Two));
+    button5.whileTrue(autons.bayChooser(Bays.Three));
+    button6.whileTrue(autons.bayChooser(Bays.Four));
+    button7.whileTrue(autons.bayChooser(Bays.Five));
+    button8.whileTrue(autons.bayChooser(Bays.Six));
+    button9.whileTrue(autons.bayChooser(Bays.Seven));
+    button10.whileTrue(autons.bayChooser(Bays.Eight));
+    button11.whileTrue(autons.bayChooser(Bays.Nine));
+
+    button0.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 7));
+    button1.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
+    button2.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
     
   }
 
