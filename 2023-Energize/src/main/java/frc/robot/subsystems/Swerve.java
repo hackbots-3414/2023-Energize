@@ -102,6 +102,17 @@ public class Swerve extends SubsystemBase {
         setModuleStates(swerveModuleStates);
     }
 
+    public void autonDrive(Translation2d translation, double rotation, boolean isOpenLoop) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+            new ChassisSpeeds(
+                translation.getX(),
+                translation.getY(),
+                rotation
+            )
+        );
+        setModuleStates(swerveModuleStates);
+    }
+
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
