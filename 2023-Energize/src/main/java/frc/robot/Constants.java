@@ -106,6 +106,7 @@ public final class Constants {
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
+        // Toothless drive constants
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 { //TODO: This must be tuned to specific robot
@@ -113,6 +114,7 @@ public final class Constants {
             public static final int angleMotorID = 9;
             public static final int canCoderID = 7;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(310.95); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -123,6 +125,7 @@ public final class Constants {
             public static final int angleMotorID = 0;
             public static final int canCoderID = 2;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(72.15);
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(190.54); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -133,6 +136,7 @@ public final class Constants {
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.91);
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(330.92); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -143,6 +147,7 @@ public final class Constants {
             public static final int angleMotorID = 19;
             public static final int canCoderID = 17;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
