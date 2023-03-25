@@ -31,7 +31,14 @@ public class StopDriving extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    s_Swerve.drive(
+      new Translation2d(),
+      0,
+      false,
+      false
+    );
+  }
 
   // Called once the command ends or is interrupted.
   @Override
