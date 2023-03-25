@@ -52,7 +52,7 @@ public void setRunningIntake(boolean isRunning) {
   runningIntake = isRunning;
 }
 
-public boolean getRunningIntake(boolean isRunning) {
+public boolean getRunningIntake() {
   return runningIntake;
 }
 
@@ -101,9 +101,7 @@ public boolean getRunningIntake(boolean isRunning) {
 
     SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     SmartDashboard.putBoolean("Has Object", hasObject);
-    // SmartDashboard.putNumber("Hand Motor Temp Degrees", (hand.getTemperature() *
-    // (5.0/9.0)) + 32);
-    SmartDashboard.putNumber("celcius", hand.getTemperature());
+    SmartDashboard.putBoolean("Running Intake", getRunningIntake());
     currentFilterValue = currentFilter.calculate(hand.getSupplyCurrent());
   }
 

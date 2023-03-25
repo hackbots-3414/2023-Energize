@@ -3,6 +3,7 @@ package frc.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -26,8 +27,6 @@ public class IntakeCommand extends CommandBase {
     intake.setRunningIntake(true);
     intake.setCurrentLimitOne();
     intake.setObjectStateFalse();
-    intake.set(Constants.IntakeConstants.objectHoldSpeedPercent);
-
   }
 
   @Override
@@ -39,11 +38,13 @@ public class IntakeCommand extends CommandBase {
       intake.set(0.0);
     }
     intake.setCurrentLimitOne();
-    intake.setRunningIntake(false);
+    if (DriverStation.isTeleop()) {
+      intake.setRunningIntake(false);
+    }
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return intake.getObjectState();
   }
 }

@@ -26,6 +26,7 @@ public class ejectCommand extends CommandBase {
     intake.setRunningIntake(false);
     DataLogManager.start();    
     intake.set(Constants.IntakeConstants.ejectSpeedPercent);
+    intake.setCurrentLimitOne();
   }
 
   @Override
