@@ -280,6 +280,12 @@ public final class Constants {
         public static final double KD = 0;
     }
 
+    public static final class RobotContstants {
+        public static final double armLength = Conversions.inchesToMeters(45.5);
+        public static final double armFromCenterOfRobot = Conversions.inchesToMeters(-1);
+        public static final double armAdjustment = armLength + armFromCenterOfRobot;
+    }
+
     public static final class PathFactory {
         public static final double p1 = Conversions.inchesToMeters(20.19);
         public static final double p2 = Conversions.inchesToMeters(42.19);
@@ -296,16 +302,18 @@ public final class Constants {
 
         public static final class redSide {
 
-            public static final double x = Conversions.inchesToMeters(610.77);
+            public static final double x = Conversions.inchesToMeters(610.77) - RobotContstants.armAdjustment;
 
             public static final double cx = Conversions.inchesToMeters(438.07);
-
+            
+            public static final double offset = -RobotContstants.armAdjustment; // Negative because the red side is going to need to move left, not right.
         }
         public static final class blueSide {
-            public static final double x = Conversions.inchesToMeters(40.45);
+            public static final double x = Conversions.inchesToMeters(40.45) + RobotContstants.armAdjustment;
             
             public static final double cx = Conversions.inchesToMeters(132.25);
-            
+
+            public static final double offset = RobotContstants.armAdjustment;
         }
     }
 

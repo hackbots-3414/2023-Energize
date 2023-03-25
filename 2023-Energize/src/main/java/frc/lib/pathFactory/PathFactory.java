@@ -25,18 +25,21 @@ public class PathFactory {
 
     private double cx = (isRedSide) ? Constants.PathFactory.redSide.cx : Constants.PathFactory.blueSide.cx;
 
-    private Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), new Rotation2d());
-    private Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), new Rotation2d());
-    private Pose2d p3 = new Pose2d(new Translation2d(x, Constants.PathFactory.p3), new Rotation2d());
-    private Pose2d p4 = new Pose2d(new Translation2d(x, Constants.PathFactory.p4), new Rotation2d());
-    private Pose2d p5 = new Pose2d(new Translation2d(x, Constants.PathFactory.p5), new Rotation2d());
-    private Pose2d p6 = new Pose2d(new Translation2d(x, Constants.PathFactory.p6), new Rotation2d());
-    private Pose2d p7 = new Pose2d(new Translation2d(x, Constants.PathFactory.p7), new Rotation2d());
-    private Pose2d p8 = new Pose2d(new Translation2d(x, Constants.PathFactory.p8), new Rotation2d());
-    private Pose2d p9 = new Pose2d(new Translation2d(x, Constants.PathFactory.p9), new Rotation2d());
+    private double offset = (isRedSide) ? Constants.PathFactory.redSide.offset : Constants.PathFactory.blueSide.offset;
+    private double rot = (isRedSide) ? 0 : 180;
+ 
+    private Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), new Rotation2d(rot));
+    private Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), new Rotation2d(rot));
+    private Pose2d p3 = new Pose2d(new Translation2d(x, Constants.PathFactory.p3), new Rotation2d(rot));
+    private Pose2d p4 = new Pose2d(new Translation2d(x, Constants.PathFactory.p4), new Rotation2d(rot));
+    private Pose2d p5 = new Pose2d(new Translation2d(x, Constants.PathFactory.p5), new Rotation2d(rot));
+    private Pose2d p6 = new Pose2d(new Translation2d(x, Constants.PathFactory.p6), new Rotation2d(rot));
+    private Pose2d p7 = new Pose2d(new Translation2d(x, Constants.PathFactory.p7), new Rotation2d(rot));
+    private Pose2d p8 = new Pose2d(new Translation2d(x, Constants.PathFactory.p8), new Rotation2d(rot));
+    private Pose2d p9 = new Pose2d(new Translation2d(x, Constants.PathFactory.p9), new Rotation2d(rot));
 
-    private Pose2d pC1 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c1), new Rotation2d());
-    private Pose2d pC2 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c2), new Rotation2d());
+    private Pose2d pC1 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c1), new Rotation2d(rot));
+    private Pose2d pC2 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c2), new Rotation2d(rot));
 
     private List<Pose2d> scoring_points = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
   
@@ -78,6 +81,8 @@ public class PathFactory {
             // which is closer: C1 or C2:
             double distanceToC1 = getDistance(from, pC1) + getDistance(pC1, target);
             double distanceToC2 = getDistance(from, pC2) + getDistance(pC2, target);
+            System.out.println("distanceToC1=" + distanceToC1);
+            System.out.println("distanceToC2=" + distanceToC2);
 
             if (distanceToC1 > distanceToC2) {
                 closer = pC2;
@@ -90,7 +95,7 @@ public class PathFactory {
             closer = from;
         }
 
-        Pose2d nextPoint = new Pose2d(new Translation2d(targetX, closer.getY()), new Rotation2d());
+        Pose2d nextPoint = new Pose2d(new Translation2d(targetX, closer.getY()), new Rotation2d(rot));
 
         result.add(nextPoint);
 
