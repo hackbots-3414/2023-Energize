@@ -318,6 +318,6 @@ public final class Constants {
     }
 
     public static final class ButtonBoard {
-        public static final int buttonBoardPort = 2;
+        public static final int buttonBoardPort = 3;
     }
 }
