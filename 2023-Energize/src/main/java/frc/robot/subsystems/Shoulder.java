@@ -134,6 +134,14 @@ public class Shoulder extends ProfiledPIDSubsystem {
     return Math.toRadians(shoulderCanCoder.getVelocity());
   }
 
+  public void setBrakeMode() {
+    shoulder.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void setCoastMode() {
+    shoulder.setNeutralMode(NeutralMode.Coast);
+  }
+
   @Override
   public void periodic() {
     super.periodic();

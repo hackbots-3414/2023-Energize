@@ -99,6 +99,8 @@ public final class Constants {
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4.5; // meters per second (Max for robot is 4.5)
         public static final double maxAngularVelocity = 11.5;
+        public static final double reducedAngVel = 6.0; 
+        public static final double reducedSpeed = 1.0; 
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -106,41 +108,41 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 {
+        public static final class Mod0 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 7;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(274.69);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 {
+        public static final class Mod1 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 0;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(73.56);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(72.15);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Left Module - Module 2 */
-        public static final class Mod2 {
+        public static final class Mod2 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.56);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.91);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 {
+        public static final class Mod3 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 18;
             public static final int angleMotorID = 19;
             public static final int canCoderID = 17;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.04);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -174,7 +176,6 @@ public final class Constants {
         public static final double shoulderGearRatio = 308.34;
         public static final double wristGearRatio = 200.0;
 
-
         public static final int handMotorID = 4;
         public static final int wristMotorID = 7;
         public static final int shoulderMotorID = 6;
@@ -187,8 +188,9 @@ public final class Constants {
         public static final boolean handMotorInvert = true;
 
         public static final double intakeSpeedPercent = 1;
-        public static final double ejectSpeedPercent = -0.2;
-        public static final double ejectSpeedAutonPercent = -0.1;
+        public static final double ejectSpeedPercent = -0.4;
+        public static final double ejectSpeedAutonPercent = -0.7;
+        public static final double intakeSpeedAutonPercent = 0.2;
         public static final double objectHoldSpeedPercent = 0.1;
 
         public static final double wristMoveSpeedPercentage = 0.25;
@@ -196,7 +198,7 @@ public final class Constants {
 
         //main bot
         public static final double shoulderCanCoderOffset = 13.23;//14.67; //9.31
-        public static final double wristCanCoderOffset = -129.12;//-109.42;  //-53.78
+        public static final double wristCanCoderOffset = -13.44;//-109.42;  //-53.78
 
         //woody
         // public static final double shoulderCanCoderOffset = 135.8;
@@ -217,19 +219,19 @@ public final class Constants {
         public static final double shoulderkI = 0.0;
         public static final double shoulderkD = 0.0;
 
-        public static final double wristkP = 0.1;
+        public static final double wristkP = 1.5;
         public static final double wristkI = 0.0;
         public static final double wristkD = 0.0;
 
         //Volts
         public static final double shoulderkS = 0;//0.05;
-        public static final double shoulderkG = 0.7458;//0.73;
+        public static final double shoulderkG = 0.9;//0.7458;
         public static final double shoulderkV = 6.0;
         public static final double shoulderkA = 0.6;
 
         public static final double wristkS = 0.0;
-        public static final double wristkG = 0.07;
-        public static final double wristkV = 4.0;
+        public static final double wristkG = 0.4;
+        public static final double wristkV = 4.5;
         public static final double wristkA = 0.01;
 
         public static final double shouldermaxVelo = Math.toRadians(180); // degrees / seconds
@@ -239,35 +241,42 @@ public final class Constants {
         public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
 
         public static final double speed = 0.2;
-
         public static final int canPause = 100;
     }
 
     public static final class IntakeAngles {
 
-        public static final double stowedWristAngle = Math.toRadians(5.71);
+        public static final double stowedWristAngle = Math.toRadians(0);
         public static final double stowedShoulderAngle = Math.toRadians(-86.57);
 
-        public static final double pickUpWristAngle = Math.toRadians(-23.64);
-        public static final double pickUpShoulderAngle = Math.toRadians(-74.882); // -68.25
+        public static final double pickUpWristAngle = Math.toRadians(-37);  
+        public static final double pickUpShoulderAngle = Math.toRadians(-66.882); //-74.882 // -68.25
 
         // public static final double lowWristAngle = Math.toRadians(35.0);
         // public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(-61.69);
-        public static final double midShoulderAngle = Math.toRadians(-3.51);
+        public static final double midWristAngle = Math.toRadians(-61);
+        public static final double midShoulderAngle = Math.toRadians(-13);
 
-        public static final double highWristAngle = Math.toRadians(-61.69);
-        public static final double highShoulderAngle = Math.toRadians(11.162);
+        public static final double highWristAngle = Math.toRadians(-61);
+        public static final double highShoulderAngle = Math.toRadians(7);
 
-        public static final double shelfWristAngle = Math.toRadians(-5.0);
-        public static final double shelfShoulderAngle = Math.toRadians(0.0);
+        public static final double shelfWristAngle = Math.toRadians(-50);
+        public static final double shelfShoulderAngle = Math.toRadians(0);
 
+        public static final double standingConeWristAngle = Math.toRadians(-71);
+        public static final double standingConeShoulderAngle = Math.toRadians(-44);
+
+        public static final double knockedConeShoulderAngle = Math.toRadians(-70.57);
+        public static final double KnockedConeWristAngle = Math.toRadians(-35); //estimated Wrist Angle might not work
+
+        public static final double uprightConeShoulderAngle = Math.toRadians(-51.70);
+        public static final double uprightConeWristAngle = Math.toRadians(-59); //estimated Wrist angle might not work
     }
 
     public static final class BalanceConstants {
         public static final double KI = 0;
-        public static final double KP = .016;
+        public static final double KP = .01; // 0.016
         public static final double KD = 0;
     }
 

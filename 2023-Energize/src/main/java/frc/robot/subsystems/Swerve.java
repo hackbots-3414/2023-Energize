@@ -7,6 +7,8 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2Configuration;
@@ -44,8 +46,11 @@ public class Swerve extends SubsystemBase {
 
     public PhotonPoseEstimator photonPoseEstimator;
     public SwerveDrivePoseEstimator poseEstimator;
-    public PhotonCamera camera = new PhotonCamera("Front_Camera");
-    public Field2d fieldSim = new Field2d();
+    public PhotonCamera camera;
+    public Field2d fieldSim;
+
+    private static Logger log = LoggerFactory.getLogger(Swerve.class);
+    private int visionError = 0;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -53,54 +58,60 @@ public class Swerve extends SubsystemBase {
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants),
-            new SwerveModule(1, Constants.Swerve.Mod1.constants),
-            new SwerveModule(2, Constants.Swerve.Mod2.constants),
-            new SwerveModule(3, Constants.Swerve.Mod3.constants)
+                new SwerveModule(0, Constants.Swerve.Mod0.constants),
+                new SwerveModule(1, Constants.Swerve.Mod1.constants),
+                new SwerveModule(2, Constants.Swerve.Mod2.constants),
+                new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
+        /*
+         * By pausing init for a second before setting module offsets, we avoid a bug
+         * with inverting motors.
          * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
          */
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
-        
-        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(), getModulePositions(), new Pose2d());
-        
+
+        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getPitch()),
+                getModulePositions(), new Pose2d());
+        camera = new PhotonCamera("Front_Camera");
+        fieldSim = new Field2d();
+
         try {
-            photonPoseEstimator = new PhotonPoseEstimator(AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
+            photonPoseEstimator = new PhotonPoseEstimator(
+                    AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile),
+                    PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera,
+                    new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+        fieldRelative = true;
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation, 
-                                    getYaw()
-                                )
-                                : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation)
-                                );
+                        translation.getX(),
+                        translation.getY(),
+                        rotation,
+                        getYaw())
+                        : new ChassisSpeeds(
+                                translation.getX(),
+                                translation.getY(),
+                                rotation));
         setModuleStates(swerveModuleStates);
-    }    
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
-        
-        for(SwerveModule mod : mSwerveMods){
+
+        for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
-    }    
+    }
 
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
@@ -110,23 +121,23 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
 
-    public SwerveModuleState[] getModuleStates(){
+    public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             states[mod.moduleNumber] = mod.getState();
         }
         return states;
     }
 
-    public SwerveModulePosition[] getModulePositions(){
+    public SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             positions[mod.moduleNumber] = mod.getPosition();
         }
         return positions;
     }
 
-    public void zeroGyro(){
+    public void zeroGyro() {
         gyro.setYaw(0);
     }
 
@@ -155,7 +166,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public double getAverageSensorPositions() {
-        double[] positions = new double[4]; //FL FR BL BR
+        double[] positions = new double[4]; // FL FR BL BR
         for (SwerveModule mod : mSwerveMods) {
             positions[mod.moduleNumber] = mod.getSensorPosition();
         }
@@ -163,15 +174,15 @@ public class Swerve extends SubsystemBase {
         return ((positions[0] + positions[2]) / 2D) + ((positions[1] + positions[3]) / 2D) / 2D;
     }
 
-    public void resetModulesToAbsolute(){
-        for(SwerveModule mod : mSwerveMods){
+    public void resetModulesToAbsolute() {
+        for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
     }
 
     @Override
-    public void periodic(){
-        swerveOdometry.update(getYaw(), getModulePositions());  
+    public void periodic() {
+        swerveOdometry.update(getYaw(), getModulePositions());
         // updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
@@ -179,7 +190,6 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
         SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
         mod.getCanCoder().getDegrees());
-        SmartDashboard.putNumber("Time remaininf", DriverStation.getMatchTime());
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated",
         // mod.getPosition().angle.getDegrees());
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity",
@@ -188,7 +198,10 @@ public class Swerve extends SubsystemBase {
     }
 
     public void setX() {
-        SwerveModuleState[] states = {new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4)), new SwerveModuleState(0, new Rotation2d(Math.PI/4))};
+        SwerveModuleState[] states = { new SwerveModuleState(0, new Rotation2d(Math.PI / 4)),
+                new SwerveModuleState(0, new Rotation2d(Math.PI / 4)),
+                new SwerveModuleState(0, new Rotation2d(Math.PI / 4)),
+                new SwerveModuleState(0, new Rotation2d(Math.PI / 4)) };
         setModuleStates(states);
     }
 
@@ -197,23 +210,32 @@ public class Swerve extends SubsystemBase {
         photonPoseEstimator.setReferencePose(prevPose);
         return photonPoseEstimator.update();
     }
-    
+
     public void updateOdometry() {
         poseEstimator.update(getPitch(), getModulePositions());
+        try {
+            Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
 
-        Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+            if (result.isPresent()) {
+                EstimatedRobotPose camPose = result.get();
+                poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+                fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+            } else {
+                fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            }
 
-        if (result.isPresent()) {
-            EstimatedRobotPose camPose = result.get();
-            poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
-            fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-        } else {
-            fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            fieldSim.getObject("Actual Pos").setPose(getPose());
+            fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
+
+            resetOdometry(poseEstimator.getEstimatedPosition());
+        } catch (Exception e) {
+            visionError++;
+            if (visionError % 1000 == 0) {
+                log.error("Beelink exception caught: " + e.toString());
+            }
+
         }
 
-        fieldSim.getObject("Actual Pos").setPose(getPose());
-        fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
-
-        resetOdometry(poseEstimator.getEstimatedPosition());
     }
+
 }
