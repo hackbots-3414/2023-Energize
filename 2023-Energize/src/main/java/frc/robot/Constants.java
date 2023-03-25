@@ -201,8 +201,8 @@ public final class Constants {
         public static final double shoulderMoveSpeedPercentage = 0.15;
 
         //main bot
-        public static final double shoulderCanCoderOffset = 13.23;//14.67; //9.31
-        public static final double wristCanCoderOffset = -13.44;//-109.42;  //-53.78
+        public static final double shoulderCanCoderOffset = 4.21;//14.67; //9.31
+        public static final double wristCanCoderOffset = 77.39;//-109.42;  //-53.78
 
         //woody
         // public static final double shoulderCanCoderOffset = 135.8;
