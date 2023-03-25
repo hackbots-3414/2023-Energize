@@ -143,15 +143,13 @@ public class RobotContainer {
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(
-      new ParallelCommandGroup(
-        new SequentialCommandGroup(
-        // new ArmCommand(m_Shoulder, m_Wrist, 5),
+      new SequentialCommandGroup(
+        new ArmCommand(m_Shoulder, m_Wrist, 5, false),
         new IRWait(irSensor),
         new ParallelCommandGroup(
-          new StopDriving(s_Swerve).withTimeout(2),
-          //new ArmCommand(m_Shoulder, m_Wrist, 7, false))),
-          new IntakeCommand(m_Intake))
-        
+          new StopDriving(s_Swerve),
+          new IntakeCommand(m_Intake),
+          new ArmCommand(m_Shoulder, m_Wrist, 7)
         )
       )
     );
