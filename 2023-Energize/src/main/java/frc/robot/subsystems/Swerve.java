@@ -40,6 +40,9 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Translation2d translation2d;
+    
+    public final Field2d m_fieldRobot = new Field2d();
+    public final Field2d m_fieldVison = new Field2d();
 
     public PhotonPoseEstimator photonPoseEstimator;
     public SwerveDrivePoseEstimator poseEstimator;
@@ -86,6 +89,9 @@ public class Swerve extends SubsystemBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        SmartDashboard.putData("Robot Field", m_fieldRobot);
+        SmartDashboard.putData("Vision Field", m_fieldVison);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -199,6 +205,8 @@ public class Swerve extends SubsystemBase {
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
+        m_fieldRobot.setRobotPose(swerveOdometry.getPoseMeters());
+        m_fieldVison.setRobotPose(poseEstimator.getEstimatedPosition());
 
         for(SwerveModule mod : mSwerveMods){
         SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
