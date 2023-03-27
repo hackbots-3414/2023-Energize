@@ -48,7 +48,7 @@ public class RobotContainer {
   // private final JoystickButton reducedSpeed = new JoystickButton(driver, 9);
   // private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
   // private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value); //fix me Swerve subsys overwrites
+  private final JoystickButton robotCentric = new JoystickButton(driver, 10); //fix me Swerve subsys overwrites
   // private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
   // private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
 
