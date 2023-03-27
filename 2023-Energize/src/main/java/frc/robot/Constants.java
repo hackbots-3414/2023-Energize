@@ -292,5 +292,7 @@ public final class Constants {
         public static final double shelfApproachLimit = 80;
         public static final double redSideX = 596.51 - shelfApproachLimit;
         public static final double blueSideX = 26.19 + shelfApproachLimit;
+        public static final double redSlowDownX = 15.2707257538;   //601.21 / 39.3701;
+        public static final double blueSlowDownX = 1.63194911875;  //64.25 / 39.3701;
     }
 }

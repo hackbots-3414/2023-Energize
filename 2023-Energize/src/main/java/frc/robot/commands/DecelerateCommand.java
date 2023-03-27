@@ -16,17 +16,15 @@ import frc.robot.subsystems.IRSensor;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
 
-public class Decelerate extends CommandBase {
+public class DecelerateCommand extends CommandBase {
   private Swerve swerve;
   private IRSensor irSensor;
-  private double redSlowDownX = 601.21 / 39.3701;
-  private double blueSlowDownX = 64.25 / 39.3701;
   private DoubleSupplier translationSup;
   private DoubleSupplier strafeSup;
   private BooleanSupplier robotCentricSup;
   private double multiplier;
   /** Creates a new Decelerate. */
-  public Decelerate(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+  public DecelerateCommand(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
   BooleanSupplier robotCentricSup) {
 
     addRequirements(swerve);
@@ -49,7 +47,8 @@ public class Decelerate extends CommandBase {
     double x = currentPose.getX();
     if (irSensor.getIRState()) {
       multiplier = 0;
-    } else if (x > redSlowDownX || x < blueSlowDownX) {
+      //TODO: Ensure that these variables are stored in Constants where we want them.
+    } else if (x > Constants.IntakeAutomatic.redSlowDownX || x < Constants.IntakeAutomatic.blueSlowDownX) {
       multiplier = 0.5;
     } else {
       multiplier = 1;
