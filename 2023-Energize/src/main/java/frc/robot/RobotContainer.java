@@ -19,7 +19,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.commands.ArmCommand;
-import frc.robot.commands.Decelerate;
+import frc.robot.commands.DecelerateCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IRWait;
 import frc.robot.commands.IntakeCommand;
@@ -143,7 +143,7 @@ public class RobotContainer {
       new SequentialCommandGroup(
         
         new ArmCommand(m_Shoulder, m_Wrist, 5, false),
-        new Decelerate(
+        new DecelerateCommand(
           s_Swerve,
           irSensor,
           () -> driver.getRawAxis(1),
