@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.sql.Driver;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    logger.debug("Ended Intake");
     if (!intake.getObjectState()) {
       intake.set(0.0);
     }

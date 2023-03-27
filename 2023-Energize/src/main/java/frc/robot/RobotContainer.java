@@ -128,6 +128,10 @@ public class RobotContainer {
     return s_Swerve;
   }
 
+  public Intake getIntake() {
+    return m_Intake;
+  }
+
   private void configureButtonBindings() {
 
     /* Driver Buttons */

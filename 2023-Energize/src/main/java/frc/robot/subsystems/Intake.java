@@ -92,10 +92,15 @@ public boolean getRunningIntake() {
     return currentFilterValue;
   }
 
+  public void resetIntake() {
+    hasObject = false;
+    runningIntake = false;
+  }
+
   @Override
   public void periodic() {
     hand.feed();
-    if (runningIntake || getObjectState()) {
+    if (runningIntake) {
       intakeLogic();
     }
 
