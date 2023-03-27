@@ -15,6 +15,7 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -74,9 +75,10 @@ public class AutonomousFactory {
         wrist = m_wrist;
 
         IntakeCommand intakeCommand = new IntakeCommand(m_intake);
+        SmartDashboard.putNumber("Auton Theta kP", Constants.AutoConstants.kPThetaController);
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
-        eventMap.put("Intake", new InstantCommand(() -> new IntakeCommand(m_intake).initialize()));
+        eventMap.put("Intake", new IntakeCommand(m_intake));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
         eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
         eventMap.put("PickUp", new AutoArm(m_shoulder, m_wrist, 1));

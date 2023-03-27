@@ -220,7 +220,7 @@
       ]
     },
     {
-      "position": 4.9,
+      "position": 4.7,
       "names": [
         "High"
       ]
@@ -238,9 +238,10 @@
       ]
     },
     {
-      "position": 4.109090909090931,
+      "position": 4.030303030303025,
       "names": [
-        "Stow"
+        "Stow",
+        "Intake"
       ]
     }
   ]
