@@ -90,7 +90,7 @@ public class RobotContainer {
 
     );
 
-    m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41, m_Intake));
+    m_ledSubsystem.setDefaultCommand(new DefaultLedCommand(m_ledSubsystem, .41, m_Intake, s_Swerve));
 
     configureButtonBindings();
 
