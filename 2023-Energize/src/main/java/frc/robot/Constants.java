@@ -259,14 +259,14 @@ public final class Constants {
         // public static final double lowWristAngle = Math.toRadians(35.0);
         // public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(-61);
+        public static final double midWristAngle = Math.toRadians(-47);
         public static final double midShoulderAngle = Math.toRadians(-13);
 
-        public static final double highWristAngle = Math.toRadians(-61);
+        public static final double highWristAngle = Math.toRadians(-33);
         public static final double highShoulderAngle = Math.toRadians(7);
 
         public static final double shelfWristAngle = Math.toRadians(-50);
-        public static final double shelfShoulderAngle = Math.toRadians(0);
+        public static final double shelfShoulderAngle = Math.toRadians(9.5);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
         public static final double standingConeShoulderAngle = Math.toRadians(-44);
