@@ -87,6 +87,8 @@ public class Swerve extends SubsystemBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        SmartDashboard.putData("Field Sim", fieldSim);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -198,7 +200,8 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putBoolean("IsFieldRelative", getFieldRelative());
         swerveOdometry.update(getYaw(), getModulePositions());
-        // updateOdometry();
+        updateOdometry();
+        SmartDashboard.putString("Pose Estimator", poseEstimator.getEstimatedPosition().toString());
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
