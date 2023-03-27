@@ -18,7 +18,8 @@
       "stopEvent": {
         "names": [
           "Intake",
-          "High"
+          "High",
+          "Wait"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",

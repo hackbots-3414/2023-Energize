@@ -7,27 +7,23 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.MedianFilter;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.Swerve;
-
 
 public class Intake extends SubsystemBase {
   final static Logger logger = LoggerFactory.getLogger(Intake.class);
- //CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID, MotorType.kBrushless);
- WPI_TalonFX hand = new WPI_TalonFX(IntakeConstants.handMotorID);
+  // CANSparkMax hand = new CANSparkMax(Constants.IntakeConstants.handMotorID,
+  // MotorType.kBrushless);
+  WPI_TalonFX hand = new WPI_TalonFX(IntakeConstants.handMotorID);
   private boolean hasObject = false;
-  private MedianFilter currentFilter = new MedianFilter(5);//9
+  private boolean runningIntake = false;
+  private MedianFilter currentFilter = new MedianFilter(5);// 9
   private double currentFilterValue = 0;
-  
+
   public Intake() {
     configMotor();
   }
@@ -36,9 +32,10 @@ public class Intake extends SubsystemBase {
     hand.configFactoryDefault(IntakeConstants.canPause);
     hand.setSafetyEnabled(true);
     hand.setInverted(TalonFXInvertType.Clockwise);
-  hand.setNeutralMode(NeutralMode.Brake);
-    //  hand.setNeutralMode(NeutralMode.Coast);
-    //hand.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14, 0, 0), IntakeConstants.canPause);
+    hand.setNeutralMode(NeutralMode.Brake);
+    // hand.setNeutralMode(NeutralMode.Coast);
+    // hand.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 14,
+    // 0, 0), IntakeConstants.canPause);
     setCurrentLimitOne();
     hand.configOpenloopRamp(0.2, IntakeConstants.canPause);
   }
@@ -51,22 +48,34 @@ public class Intake extends SubsystemBase {
     hasObject = true;
   }
 
+public void setRunningIntake(boolean isRunning) {
+  runningIntake = isRunning;
+}
+
+public boolean getRunningIntake() {
+  return runningIntake;
+}
+
   public void setObjectStateFalse() {
     hasObject = false;
   }
 
   public void setCurrentLimitOne() {
-    //hand.clearFaults();
-      //hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
-      hand.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.handCurrentLimit, 0, 0), IntakeConstants.canPause);
-  //hand.burnFlash();
+    // hand.clearFaults();
+    // hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
+    hand.configSupplyCurrentLimit(
+        new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.handCurrentLimit, 0, 0),
+        IntakeConstants.canPause);
+    // hand.burnFlash();
   }
 
   public void setCurrentLimitTwo() {
-    //hand.clearFaults();
-    //hand.setSmartCurrentLimit(Constants.IntakeConstants.secondHandCurrentLimit);
-    hand.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.secondHandCurrentLimit, 0, 0), IntakeConstants.canPause);
-   // hand.burnFlash();
+    // hand.clearFaults();
+    // hand.setSmartCurrentLimit(Constants.IntakeConstants.secondHandCurrentLimit);
+    hand.configSupplyCurrentLimit(
+        new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.secondHandCurrentLimit, 0, 0),
+        IntakeConstants.canPause);
+    // hand.burnFlash();
   }
 
   public void set(double speed) {
@@ -85,13 +94,28 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
+    hand.feed();
+    if (runningIntake || getObjectState()) {
+      intakeLogic();
+    }
+
     SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     SmartDashboard.putBoolean("Has Object", hasObject);
-    //SmartDashboard.putNumber("Hand Motor Temp Degrees", (hand.getTemperature() * (5.0/9.0)) + 32);
-    SmartDashboard.putNumber("celcius", hand.getTemperature());
-    hand.feed();
+    SmartDashboard.putBoolean("Running Intake", getRunningIntake());
     currentFilterValue = currentFilter.calculate(hand.getSupplyCurrent());
-
   }
 
+
+  public void intakeLogic() {
+    
+    if (!getObjectState()) {
+      set(Constants.IntakeConstants.intakeSpeedPercent);
+
+      if (getCurrent() > IntakeConstants.handCurrentThreshold) {
+      setCurrentLimitTwo();
+      setObjectStateTrue();
+      set(IntakeConstants.objectHoldSpeedPercent);
+      }
+    }
+  }
 }
