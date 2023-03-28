@@ -14,6 +14,8 @@ import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -42,7 +44,9 @@ public class AutonomousFactory {
         Nothing("Nothing"),
         WallHigh("Wall High"),
         BarrierHigh("Barrier High"),
-        BalanceHigh("Balance High");
+        BalanceHigh("Balance High"),
+        Test("Test"),
+        BarrierHighTwoObject("Barrier High Two Object");
 
         public final String value;
 
@@ -71,14 +75,16 @@ public class AutonomousFactory {
         wrist = m_wrist;
 
         IntakeCommand intakeCommand = new IntakeCommand(m_intake);
-
+        SmartDashboard.putNumber("Auton Theta kP", Constants.AutoConstants.kPThetaController);
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
-        eventMap.put("Intake", new InstantCommand(() -> m_intake.set(Constants.IntakeConstants.intakeSpeedAutonPercent)));
+        eventMap.put("Intake", new IntakeCommand(m_intake));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
-        eventMap.put("High", new SequentialCommandGroup(new AutoArm(m_shoulder, m_wrist, 4), new Wait(1.0)));
+        eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
+        eventMap.put("PickUp", new AutoArm(m_shoulder, m_wrist, 1));
         eventMap.put("Stow", new AutoArm(m_shoulder, m_wrist, 0));
         eventMap.put("Balance", new PIDBalance(swerve, true));
+        eventMap.put("Wait", new Wait(1.0));
 
         autoBuilder = new SwerveAutoBuilder(
             swerve::getPose, 
@@ -147,7 +153,7 @@ public class AutonomousFactory {
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));        
-
+        swerve.setGyroOffset(pathGroup.get(0).getInitialPose().getRotation().getDegrees());
         return autoBuilder.fullAuto(pathGroup);
     }
 
