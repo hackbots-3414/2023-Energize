@@ -8,7 +8,7 @@
     </encoder>
   </appender>
 
-  <logger name="frc.robot.commands" level="TRACE"/>
+  <logger name="frc.robot.subsystems.Swerve" level="TRACE"/>
   <!--logger name="frc.robot.commands.MrZPrintCommand" level="TRACE"/-->
 
   <root level="WARN">
