@@ -100,9 +100,9 @@ public boolean getRunningIntake() {
   @Override
   public void periodic() {
     hand.feed();
-    if (runningIntake) {
-      intakeLogic();
-    }
+    // if (runningIntake) {
+    //   intakeLogic();
+    // }
 
     SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     SmartDashboard.putBoolean("Has Object", hasObject);
@@ -111,16 +111,16 @@ public boolean getRunningIntake() {
   }
 
 
-  public void intakeLogic() {
+  // public void intakeLogic() {
     
-    if (!getObjectState()) {
-      set(Constants.IntakeConstants.intakeSpeedPercent);
+  //   if (!getObjectState()) {
+  //     set(Constants.IntakeConstants.intakeSpeedPercent);
 
-      if (getCurrent() > IntakeConstants.handCurrentThreshold) {
-      setCurrentLimitTwo();
-      setObjectStateTrue();
-      set(IntakeConstants.objectHoldSpeedPercent);
-      }
-    }
-  }
+  //     if (getCurrent() > IntakeConstants.handCurrentThreshold) {
+  //     setCurrentLimitTwo();
+  //     setObjectStateTrue();
+  //     set(IntakeConstants.objectHoldSpeedPercent);
+  //     }
+  //   }
+  // }
 }

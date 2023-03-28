@@ -16,6 +16,7 @@ public class IntakeCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(IntakeCommand.class);
 
   final Intake intake;
+
   // private int bounces;
   
 
@@ -29,21 +30,35 @@ public class IntakeCommand extends CommandBase {
     intake.setRunningIntake(true);
     intake.setCurrentLimitOne();
     intake.setObjectStateFalse();
+    intake.setCurrentLimitOne();
+    intake.set(Constants.IntakeConstants.intakeSpeedPercent);
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    if (intake.getCurrent() > IntakeConstants.handCurrentThreshold) {
+      intake.setCurrentLimitTwo();
+      intake.setObjectStateTrue();
+      intake.set(IntakeConstants.objectHoldSpeedPercent);
+    }
+
+
+  }
 
   @Override
   public void end(boolean interrupted) {
-    logger.debug("Ended Intake");
-    if (!intake.getObjectState()) {
+    if (interrupted) { // only runs if button was let go without object
       intake.set(0.0);
-    }
-    intake.setCurrentLimitOne();
-    if (DriverStation.isTeleop()) {
       intake.setRunningIntake(false);
+      intake.setObjectStateFalse();
     }
+    // if (!intake.getObjectState()) {
+    //   intake.set(0.0);
+    // }
+    // intake.setCurrentLimitOne();
+    // if (DriverStation.isTeleop()) {
+    //   intake.setRunningIntake(false);
+    // }
   }
 
   @Override
