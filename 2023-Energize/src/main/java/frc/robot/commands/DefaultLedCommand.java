@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
-import frc.robot.subsystems.Swerve;
 
 public class DefaultLedCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(DefaultLedCommand.class);
@@ -19,13 +18,11 @@ public class DefaultLedCommand extends CommandBase {
   private boolean done;
 
   private Intake intake;
-  private Swerve swerve;
 
-  public DefaultLedCommand(LedSubsystem subsystem, double color, Intake intake, Swerve swerve) {
+  public DefaultLedCommand(LedSubsystem subsystem, double color, Intake intake) {
     m_subsystem = subsystem;
     m_color = color;
     this.intake = intake;
-    this.swerve = swerve;
     addRequirements(subsystem);
   }
 
@@ -41,8 +38,6 @@ public class DefaultLedCommand extends CommandBase {
 
     if (intake.getObjectState()) {
       m_subsystem.setColor(.75); // Dark Green
-    } else if (swerve.getFieldRelative()) {
-      m_subsystem.setColor(-.09); // Strobe Blue 
     } else if (DriverStation.isAutonomous()) {
       m_subsystem.setColor(.91); // Purple
     } else if (DriverStation.getMatchTime() < 15) {
