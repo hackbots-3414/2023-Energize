@@ -48,16 +48,21 @@ public class DecelerateCommand extends CommandBase {
   public void execute() {
     Pose2d currentPose = swerve.getPose();
     double x = currentPose.getX();
+
     if (irSensor.getIRState()) {
       multiplier = 0;
       System.out.println("Infared sensor has been triggered!");
       //TODO: Ensure that these variables are stored in Constants where we want them.
     } else if (x > Constants.IntakeAutomatic.redSlowDownX || x < Constants.IntakeAutomatic.blueSlowDownX) {
-      multiplier = 0.5;
+      multiplier = 0.2; // TODO: Find a proper number for this
       System.out.println("AprilTag Boundary crossed");
     } else {
       multiplier = 1;
     }
+
+    // Display values in SmartDashboard:
+    SmartDashboard.putNumber("Distance to AprilTag (X)", x);
+    SmartDashboard.putNumber("Multiplier", multiplier);
 
     double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
     double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
