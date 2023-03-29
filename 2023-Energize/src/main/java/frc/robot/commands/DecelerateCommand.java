@@ -10,10 +10,10 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.IRSensor;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
 
 public class DecelerateCommand extends CommandBase {
@@ -21,10 +21,12 @@ public class DecelerateCommand extends CommandBase {
   private IRSensor irSensor;
   private DoubleSupplier translationSup;
   private DoubleSupplier strafeSup;
+  private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
   private double multiplier;
   /** Creates a new Decelerate. */
   public DecelerateCommand(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+  DoubleSupplier rotationSup,
   BooleanSupplier robotCentricSup) {
 
     addRequirements(swerve);
@@ -32,6 +34,7 @@ public class DecelerateCommand extends CommandBase {
     this.irSensor = irSensor;
     this.translationSup = translationSup;
     this.strafeSup = strafeSup;
+    this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -47,16 +50,18 @@ public class DecelerateCommand extends CommandBase {
     double x = currentPose.getX();
     if (irSensor.getIRState()) {
       multiplier = 0;
+      System.out.println("Infared sensor has been triggered!");
       //TODO: Ensure that these variables are stored in Constants where we want them.
     } else if (x > Constants.IntakeAutomatic.redSlowDownX || x < Constants.IntakeAutomatic.blueSlowDownX) {
       multiplier = 0.5;
+      System.out.println("AprilTag Boundary crossed");
     } else {
       multiplier = 1;
     }
 
     double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
     double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-    double rotationVal = 0;
+    double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
     swerve.drive(
       new Translation2d(translationVal, strafeVal)

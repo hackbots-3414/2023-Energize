@@ -148,6 +148,7 @@ public class RobotContainer {
           irSensor,
           () -> driver.getRawAxis(1),
           () -> -driver.getRawAxis(0),
+          () -> -driver.getRawAxis(3),
           () -> robotCentric.getAsBoolean()
         ),
         new ParallelCommandGroup(
