@@ -54,21 +54,6 @@
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
-          },
-          "0,2": {
-            "size": [
-              8,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/IsFieldRelative",
-              "_title": "IsFieldRelative",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
           }
         }
       }
@@ -141,10 +126,10 @@
               "Visuals/Major tick spacing": 45.0,
               "Visuals/Starting angle": 180.0,
               "Visuals/Show tick mark ring": true,
-              "Visuals/Counter clockwise": false
+              "Visuals/Counter clockwise": true
             }
           },
-          "4,0": {
+          "6,0": {
             "size": [
               1,
               1
@@ -159,19 +144,21 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "4,1": {
+          "4,0": {
             "size": [
-              1,
-              1
+              2,
+              2
             ],
             "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Field Relative",
-              "_title": "/SmartDashboard/Field Relative",
+              "_type": "Gyro",
+              "_source0": "network_table:///SmartDashboard/Odometry Heading",
+              "_title": "SmartDashboard/Odometry Heading",
               "_glyph": 148,
               "_showGlyph": false,
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
+              "Visuals/Major tick spacing": 45.0,
+              "Visuals/Starting angle": 180.0,
+              "Visuals/Show tick mark ring": true,
+              "Visuals/Counter clockwise": true
             }
           }
         }
@@ -302,9 +289,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -8.0,
-    "y": -8.0,
-    "width": 1936.0,
-    "height": 1048.0
+    "x": -7.333333492279053,
+    "y": -7.333333492279053,
+    "width": 1294.6666259765625,
+    "height": 694.6666870117188
   }
 }
