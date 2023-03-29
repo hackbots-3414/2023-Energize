@@ -50,6 +50,7 @@ public class Swerve extends SubsystemBase {
     private int visionError = 0;
 
     private double gyroOffset = 0;
+    private boolean isfieldRelative;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -100,6 +101,7 @@ public class Swerve extends SubsystemBase {
                                 translation.getY(),
                                 rotation));
         setModuleStates(swerveModuleStates);
+        isfieldRelative = fieldRelative;
     }
 
     /* Used by SwerveControllerCommand in Auto */
@@ -197,6 +199,7 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getYaw(), getModulePositions());
         // updateOdometry();
         translation2d = getPose().getTranslation();
+        SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
@@ -248,6 +251,10 @@ public class Swerve extends SubsystemBase {
 
         }
 
+    }
+
+    public boolean isfieldRelative() {
+        return isfieldRelative;
     }
 
 }
