@@ -146,7 +146,7 @@ public class RobotContainer {
     intakeButton.whileTrue(
       new SequentialCommandGroup(
         
-        new ArmCommand(m_Shoulder, m_Wrist, 5, false),
+        new ArmCommand(m_Shoulder, m_Wrist, 5),
         new DecelerateCommand(
           s_Swerve,
           irSensor,
