@@ -52,9 +52,8 @@ public class DecelerateCommand extends CommandBase {
     if (irSensor.getIRState()) {
       multiplier = 0;
       System.out.println("Infared sensor has been triggered!");
-      //TODO: Ensure that these variables are stored in Constants where we want them.
-    } else if (x > Constants.IntakeAutomatic.redSlowDownX || x < Constants.IntakeAutomatic.blueSlowDownX) {
-      multiplier = 0.2; // TODO: Find a proper number for this
+    } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
+      multiplier = Constants.IntakeAutomatic.slowMultiplier;
       System.out.println("AprilTag Boundary crossed");
     } else {
       multiplier = 1;

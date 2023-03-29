@@ -44,7 +44,7 @@ public class RobotContainer {
   private final Joystick operator = new Joystick(OperatorConstants.kOperatorControllerPort);
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, 13);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, 12);
   // private final JoystickButton reducedSpeed = new JoystickButton(driver, 9);
   // private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
   // private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -146,7 +146,7 @@ public class RobotContainer {
     intakeButton.whileTrue(
       new SequentialCommandGroup(
         
-        new ArmCommand(m_Shoulder, m_Wrist, 5),
+        new ArmCommand(m_Shoulder, m_Wrist, 5, false),
         new DecelerateCommand(
           s_Swerve,
           irSensor,
