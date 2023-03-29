@@ -46,7 +46,8 @@ public class AutonomousFactory {
         BarrierHigh("Barrier High"),
         BalanceHigh("Balance High"),
         Test("Test"),
-        BarrierHighTwoObject("Barrier High Two Object");
+        BarrierHighTwoObject("Barrier High Two Object"),
+        WallHighTwoObject("Wall High Two Object");
 
         public final String value;
 
@@ -152,7 +153,13 @@ public class AutonomousFactory {
     // }
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
-        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));        
+        double maxSpeed = Constants.AutoConstants.kMaxSpeedMetersPerSecond;
+        double maxAcceleration = Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared;
+        if (pathName == "Balance High") {
+            maxSpeed = Constants.AutoConstants.kMaxBalanceSpeedMetersPerSecond;
+            maxAcceleration = Constants.AutoConstants.kMaxBalanceAccelerationMetersPerSecondSquared;
+        }
+        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));        
         swerve.setGyroOffset(pathGroup.get(0).getInitialPose().getRotation().getDegrees());
         return autoBuilder.fullAuto(pathGroup);
     }
