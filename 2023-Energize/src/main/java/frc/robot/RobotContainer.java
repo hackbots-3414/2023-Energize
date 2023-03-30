@@ -19,6 +19,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.AutoArm;
 import frc.robot.commands.DecelerateCommand;
 import frc.robot.commands.DefaultLedCommand;
 import frc.robot.commands.IRWait;
@@ -146,7 +147,7 @@ public class RobotContainer {
     intakeButton.whileTrue(
       new SequentialCommandGroup(
         
-        new ArmCommand(m_Shoulder, m_Wrist, 5, false),
+        new AutoArm(m_Shoulder, m_Wrist, 5),
         new DecelerateCommand(
           s_Swerve,
           irSensor,
