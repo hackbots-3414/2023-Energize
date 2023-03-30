@@ -264,9 +264,9 @@ public final class Constants {
         public static final double midShoulderAngle = Math.toRadians(-13);
 
         public static final double highWristAngle = Math.toRadians(-33);
-        public static final double highShoulderAngle = Math.toRadians(7);
+        public static final double highShoulderAngle = Math.toRadians(8.5);
 
-        public static final double shelfWristAngle = Math.toRadians(-50);
+        public static final double shelfWristAngle = Math.toRadians(-71);
         public static final double shelfShoulderAngle = Math.toRadians(9.5);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
@@ -278,7 +278,7 @@ public final class Constants {
         public static final double uprightConeShoulderAngle = Math.toRadians(-51.70);
         public static final double uprightConeWristAngle = Math.toRadians(-59); //estimated Wrist angle might not work
 
-        public static final double shelfShoulderDown = Math.toRadians(-10);
+        public static final double shelfShoulderDown = Math.toRadians(4.0);
     }
 
     public static final class BalanceConstants {
@@ -288,7 +288,7 @@ public final class Constants {
     }
 
     public static final class IntakeAutomatic {
-        public static final double shelfApproachSpeed = 0.01;
+        public static final double shelfApproachSpeed = 0.3;
         public static final double shelfApproachLimit = 80;
         public static final double redSideX = Units.inchesToMeters(596.51 - shelfApproachLimit);
         public static final double blueSideX = Units.inchesToMeters(26.19 + shelfApproachLimit);

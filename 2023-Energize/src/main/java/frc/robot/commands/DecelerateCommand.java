@@ -51,7 +51,8 @@ public class DecelerateCommand extends CommandBase {
 
     if (irSensor.getIRState()) {
       speedLimit = 0;
-      System.out.println("Infared sensor has been triggered!");
+      // SmartDashboard.putBoolean("Infrared sensor", irSensor.getIRState());
+      System.out.println("Infrared sensor has been triggered!");
     } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
       speedLimit = Constants.IntakeAutomatic.slowLimit;
       System.out.println("AprilTag Boundary crossed");
@@ -62,6 +63,7 @@ public class DecelerateCommand extends CommandBase {
     // Display values in SmartDashboard:
     SmartDashboard.putNumber("Distance to AprilTag (X)", x);
     SmartDashboard.putNumber("Limit", speedLimit);
+    // SmartDashboard.putBoolean("Infrared sensor", irSensor.getIRState());
 
 
     double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
