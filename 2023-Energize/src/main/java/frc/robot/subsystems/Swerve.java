@@ -84,9 +84,11 @@ public class Swerve extends SubsystemBase {
                     PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera,
                     new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
         } catch (IOException e) {
-            
+
             e.printStackTrace();
         }
+
+        SmartDashboard.putData(fieldSim);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -115,6 +117,7 @@ public class Swerve extends SubsystemBase {
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
     }
+    
 
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
@@ -196,7 +199,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         swerveOdometry.update(getYaw(), getModulePositions());
-        // updateOdometry();
+        updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
