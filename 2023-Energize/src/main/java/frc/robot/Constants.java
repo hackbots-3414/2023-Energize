@@ -294,6 +294,6 @@ public final class Constants {
         public static final double blueSideX = Units.inchesToMeters(26.19 + shelfApproachLimit);
         // public static final double redSlowDownX = 15.2707257538;   //601.21 / 39.3701;
         // public static final double blueSlowDownX = 1.63194911875;  //64.25 / 39.3701;
-        public static final double slowMultiplier = 0.2; //TODO: fine-tune slowMultiplier variable.
+        public static final double slowLimit = 0.2; //TODO: fine-tune slowMultiplier variable.
     }
 }

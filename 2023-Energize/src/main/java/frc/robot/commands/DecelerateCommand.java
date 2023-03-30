@@ -23,7 +23,7 @@ public class DecelerateCommand extends CommandBase {
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
-  private double multiplier;
+  private double speedLimit;
   /** Creates a new Decelerate. */
   public DecelerateCommand(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
   DoubleSupplier rotationSup,
@@ -50,26 +50,33 @@ public class DecelerateCommand extends CommandBase {
     double x = currentPose.getX();
 
     if (irSensor.getIRState()) {
-      multiplier = 0;
+      speedLimit = 0;
       System.out.println("Infared sensor has been triggered!");
     } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
-      multiplier = Constants.IntakeAutomatic.slowMultiplier;
+      speedLimit = Constants.IntakeAutomatic.slowLimit;
       System.out.println("AprilTag Boundary crossed");
     } else {
-      multiplier = 1;
+      speedLimit = 1;
     }
 
     // Display values in SmartDashboard:
     SmartDashboard.putNumber("Distance to AprilTag (X)", x);
-    SmartDashboard.putNumber("Multiplier", multiplier);
+    SmartDashboard.putNumber("Limit", speedLimit);
+
 
     double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
     double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
     double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
+    SmartDashboard.putNumber("translationVal", translationVal);
+    System.out.println(speedLimit);
+    if (translationVal > speedLimit) {
+      translationVal = speedLimit;
+    }
+
     swerve.drive(
       new Translation2d(translationVal, strafeVal)
-              .times(Constants.Swerve.maxSpeed * multiplier),
+              .times(Constants.Swerve.maxSpeed),
       rotationVal,
       !robotCentricSup.getAsBoolean(),
       true
