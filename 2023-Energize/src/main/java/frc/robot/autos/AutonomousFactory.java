@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -39,6 +42,7 @@ import frc.robot.subsystems.Wrist;
 public class AutonomousFactory {
 
     public int choice;
+    private static Logger log = LoggerFactory.getLogger(AutonomousFactory.class);
 
     public enum AutonChoice {
         Balance("Mid Balance"),
@@ -117,12 +121,6 @@ public class AutonomousFactory {
         return me;
     }
 
-    public PathPoint resetToVision() {
-        swerve.updateOdometry();
-        Pose2d pose = swerve.getPose();
-        return new PathPoint(pose.getTranslation(), pose.getRotation());
-    }
-
     private Command followTrajectoryOnTheFly(PathPoint... pathPoints){
         ArrayList<PathPoint> points = new ArrayList<>();
         for (PathPoint pathPoint : pathPoints) {
@@ -174,13 +172,13 @@ public class AutonomousFactory {
         return autoBuilder.fullAuto(pathGroup);
     }
 
-    private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
-        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    // private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
+    //     ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
-        swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
+    //     swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
         
-        return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
-    }
+    //     return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
+    // }
 
     // private Command placeCommand(Heights height) {
     //     if (height == Heights.Low) {
@@ -199,7 +197,9 @@ public class AutonomousFactory {
 
     private Command goToBayCommand(int bay) {
         Pose2d from = swerve.getPose();
+        System.out.println("In Bay Command:" + bay);
         List<Pose2d> pose2d_points =  PathFactory.getInstance().getPath(from, bay);
+        log.debug("Path Points: {}", pose2d_points.toString());
         List<PathPoint> points = new ArrayList<PathPoint>();
         for (int i = 0;i < pose2d_points.size();i ++) {
             points.add(new PathPoint(pose2d_points.get(i).getTranslation(), pose2d_points.get(i).getRotation()));

@@ -113,8 +113,8 @@ public final class Constants {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 7;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
-            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(310.95); // LoveLace
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(310.95); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -124,8 +124,8 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 0;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(72.15);
-            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(190.54); // LoveLace
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(72.15);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(190.54); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -135,8 +135,8 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.91);
-            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(330.92); // LoveLace
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.91);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(330.92); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -146,8 +146,8 @@ public final class Constants {
             public static final int driveMotorID = 18;
             public static final int angleMotorID = 19;
             public static final int canCoderID = 17;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
-            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
+            // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -155,8 +155,8 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 1;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxSpeedMetersPerSecond = 0.5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
@@ -314,7 +314,8 @@ public final class Constants {
             public static final double offset = -RobotContstants.armAdjustment; // Negative because the red side is going to need to move left, not right.
         }
         public static final class blueSide {
-            public static final double x = Conversions.inchesToMeters(40.45) + RobotContstants.armAdjustment;
+            // public static final double x = Conversions.inchesToMeters(40.45) + RobotContstants.armAdjustment;
+            public static final double x = Conversions.inchesToMeters(50.45) + RobotContstants.armAdjustment;
             
             public static final double cx = Conversions.inchesToMeters(132.25);
 
@@ -323,6 +324,6 @@ public final class Constants {
     }
 
     public static final class ButtonBoard {
-        public static final int buttonBoardPort = 3;
+        public static final int buttonBoardPort = 2;
     }
 }
