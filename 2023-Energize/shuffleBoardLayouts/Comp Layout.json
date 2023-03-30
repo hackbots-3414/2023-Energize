@@ -32,7 +32,7 @@
             "content": {
               "_type": "Simple Dial",
               "_source0": "network_table:///SmartDashboard/Time remaining:",
-              "_title": "/SmartDashboard/Time remaining:",
+              "_title": "Time remaining:",
               "_glyph": 148,
               "_showGlyph": false,
               "Range/Min": 0.0,
@@ -49,6 +49,21 @@
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/Has Object",
               "_title": "Has Object",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "0,2": {
+            "size": [
+              8,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/IsFieldRelative",
+              "_title": "IsFieldRelative",
               "_glyph": 148,
               "_showGlyph": false,
               "Colors/Color when true": "#7CFC00FF",
@@ -282,6 +297,38 @@
                   "_showGlyph": false
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Field",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              9,
+              4
+            ],
+            "content": {
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Field",
+              "_title": "SmartDashboard/Field",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Game/Game": "A2023_Charged_Up",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false,
+              "Colors/Actual Pos": "#00FFFFFF",
+              "Colors/Cam Est Pos": "#FF00FFFF"
             }
           }
         }

@@ -1,12 +1,14 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonTrackedTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,8 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -32,6 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
+import frc.robot.VisionWrapper;
 import frc.robot.Wait;
 
 public class Swerve extends SubsystemBase {
@@ -41,15 +46,15 @@ public class Swerve extends SubsystemBase {
 
     public Translation2d translation2d;
 
-    public PhotonPoseEstimator photonPoseEstimator;
     public SwerveDrivePoseEstimator poseEstimator;
-    public PhotonCamera camera;
     public Field2d fieldSim;
+    public VisionWrapper visionWrapper;
 
     private static Logger log = LoggerFactory.getLogger(Swerve.class);
     private int visionError = 0;
 
     private double gyroOffset = 0;
+    private boolean isfieldRelative;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -73,22 +78,20 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
+        Matrix robotSD = new Matrix<>(Nat.N3(), Nat.N1());
+        robotSD.set(0, 0, 0.1);
+        robotSD.set(1, 0, 0.1);
+        robotSD.set(2, 0, Math.toRadians(0.5));
+
+        Matrix visionSD = new Matrix<>(Nat.N3(), Nat.N1());
+        visionSD.set(0, 0, 0.01);
+        visionSD.set(1, 0, 0.9);
+        visionSD.set(2, 0, 0.01);
+
         poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getYaw()),
-                getModulePositions(), new Pose2d());
-        camera = new PhotonCamera("Front_Camera");
+                getModulePositions(), new Pose2d(), robotSD, visionSD);
         fieldSim = new Field2d();
-
-        try {
-            photonPoseEstimator = new PhotonPoseEstimator(
-                    AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile),
-                    PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera,
-                    new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0)));
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-
-        SmartDashboard.putData(fieldSim);
+        visionWrapper = new VisionWrapper();
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -103,6 +106,7 @@ public class Swerve extends SubsystemBase {
                                 translation.getY(),
                                 rotation));
         setModuleStates(swerveModuleStates);
+        isfieldRelative = fieldRelative;
     }
 
     /* Used by SwerveControllerCommand in Auto */
@@ -198,9 +202,11 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putData(fieldSim);
         swerveOdometry.update(getYaw(), getModulePositions());
         updateOdometry();
         translation2d = getPose().getTranslation();
+        SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
@@ -222,19 +228,24 @@ public class Swerve extends SubsystemBase {
         setModuleStates(states);
     }
 
-    public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevPose) {
-        photonPoseEstimator.setReferencePose(prevPose);
-        return photonPoseEstimator.update();
+    public boolean isfieldRelative() {
+        return isfieldRelative;
     }
 
     public void updateOdometry() {
-        poseEstimator.update(getPitch(), getModulePositions());
-        try {
-            Optional<EstimatedRobotPose> result = getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+        poseEstimator.update(getYaw(), getModulePositions());
 
+        Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+
+        try {
             if (result.isPresent()) {
+                poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
                 EstimatedRobotPose camPose = result.get();
-                poseEstimator.addVisionMeasurement(camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+                
+                poseEstimator.addVisionMeasurement(
+                    camPose.estimatedPose.toPose2d(),
+                    camPose.timestampSeconds);
+
                 fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
             } else {
                 fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
