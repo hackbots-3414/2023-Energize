@@ -47,12 +47,12 @@ public class Swerve extends SubsystemBase {
     public SwerveDrivePoseEstimator poseEstimator;
     public PhotonCamera camera;
     public Field2d fieldSim;
-    public boolean fieldRelative = false; 
 
     private static Logger log = LoggerFactory.getLogger(Swerve.class);
     private int visionError = 0;
 
     private double gyroOffset = 0;
+    private boolean isfieldRelative;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
@@ -89,12 +89,9 @@ public class Swerve extends SubsystemBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        SmartDashboard.putData("Field Sim", fieldSim);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        this.fieldRelative = fieldRelative;
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                         translation.getX(),
@@ -106,6 +103,7 @@ public class Swerve extends SubsystemBase {
                                 translation.getY(),
                                 rotation));
         setModuleStates(swerveModuleStates);
+        isfieldRelative = fieldRelative;
     }
 
     /* Used by SwerveControllerCommand in Auto */
@@ -200,11 +198,10 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("IsFieldRelative", getFieldRelative());
         swerveOdometry.update(getYaw(), getModulePositions());
-        updateOdometry();
-        SmartDashboard.putString("Pose Estimator", poseEstimator.getEstimatedPosition().toString());
+        // updateOdometry();
         translation2d = getPose().getTranslation();
+        SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
@@ -259,8 +256,8 @@ public class Swerve extends SubsystemBase {
 
     }
 
-    public boolean getFieldRelative() {
-        return fieldRelative; 
+    public boolean isfieldRelative() {
+        return isfieldRelative;
     }
 
 }

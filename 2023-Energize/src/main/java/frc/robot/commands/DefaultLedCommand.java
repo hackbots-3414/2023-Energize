@@ -39,10 +39,10 @@ public class DefaultLedCommand extends CommandBase {
   @Override
   public void execute() {
 
-    if (intake.getObjectState()) {
-      m_subsystem.setColor(.75); // Dark Green
-    } else if (swerve.getFieldRelative()) {
-      m_subsystem.setColor(-.09); // Strobe Blue 
+    if (swerve.isfieldRelative()) {
+      m_subsystem.setColor(-0.09); // Strobe Blue
+    } else if (intake.getObjectState()) {
+      m_subsystem.setColor(0.75); // Dark Green 
     } else if (DriverStation.isAutonomous()) {
       m_subsystem.setColor(.91); // Purple
     } else if (DriverStation.getMatchTime() < 15) {

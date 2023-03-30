@@ -96,7 +96,7 @@ public class AutonomousFactory {
         SmartDashboard.putNumber("Auton Theta kP", Constants.AutoConstants.kPThetaController);
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
-        eventMap.put("Intake", new IntakeCommand(m_intake));
+        eventMap.put("Intake", new IntakeCommand(m_intake).withTimeout(3));
         eventMap.put("Mid", new AutoArm(m_shoulder, m_wrist, 3));
         eventMap.put("High", new AutoArm(m_shoulder, m_wrist, 4));
         eventMap.put("PickUp", new AutoArm(m_shoulder, m_wrist, 1));
