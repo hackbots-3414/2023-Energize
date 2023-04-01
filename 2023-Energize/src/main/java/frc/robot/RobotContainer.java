@@ -144,7 +144,7 @@ public class RobotContainer {
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
-    intakeButton.whileTrue(
+    shelfButton.whileTrue(
       new SequentialCommandGroup(
         
         new AutoArm(m_Shoulder, m_Wrist, 5),
@@ -157,9 +157,9 @@ public class RobotContainer {
           () -> robotCentric.getAsBoolean()
         ),
         new ParallelCommandGroup(
-          new StopDriving(s_Swerve),
+          new StopDriving(s_Swerve, m_Intake),
           new IntakeCommand(m_Intake),
-          new ArmCommand(m_Shoulder, m_Wrist, 7)
+          new AutoArm(m_Shoulder, m_Wrist, 7)
         )
       )
     );
@@ -175,15 +175,15 @@ public class RobotContainer {
             },
             m_Shoulder, m_Wrist));
 
-    shelfButton.onTrue(
-        Commands.runOnce(
-            () -> {
-              m_Shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
-              m_Wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
-              m_Wrist.enable();
-              m_Shoulder.enable();
-            },
-            m_Shoulder, m_Wrist));
+    // shelfButton.onTrue(
+    //     Commands.runOnce(
+    //         () -> {
+    //           m_Shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
+    //           m_Wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
+    //           m_Wrist.enable();
+    //           m_Shoulder.enable();
+    //         },
+    //         m_Shoulder, m_Wrist));
 
     midButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));

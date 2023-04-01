@@ -7,15 +7,21 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IRSensor;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
 
 public class StopDriving extends CommandBase {
   Swerve s_Swerve;
+  //IRSensor m_IrSensor;
+  Intake m_Intake;
   /** Creates a new StopDriving. */
-  public StopDriving(Swerve s_Swerve) {
+  public StopDriving(Swerve s_Swerve, Intake m_Intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_Swerve);
     this.s_Swerve = s_Swerve;
+    //this.m_IrSensor = m_IrSensor;
+    this.m_Intake = m_Intake;
   }
 
   // Called when the command is initially scheduled.
@@ -35,6 +41,7 @@ public class StopDriving extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    //return m_IrSensor.isPickUpComplete();
+    return m_Intake.getObjectState();
   }
 }

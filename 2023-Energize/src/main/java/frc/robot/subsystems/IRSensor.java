@@ -5,18 +5,35 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Wait;
 
 public class IRSensor extends SubsystemBase {
 
   private DigitalInput irSensor = new DigitalInput(0);
-  
+  private boolean isPickUpComplete = false;
+  private double startTime;
   /** Creates a new IRSensor. */
   public IRSensor() {}
+
+  public boolean isPickUpComplete() {
+    return isPickUpComplete;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Infrared sensor", !irSensor.get());
+    if (getIRState() && !isPickUpComplete) {
+      isPickUpComplete = true;
+      //Start timer
+      startTime = System.currentTimeMillis();
+
+    }
+    if ((System.currentTimeMillis() - startTime)/1000 >= 1) {
+      isPickUpComplete = false;
+    }
   }
   
   public boolean getIRState() {

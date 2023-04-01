@@ -113,8 +113,8 @@ public final class Constants {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 7;
-             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
-           // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(310.95); // LoveLace
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
+            //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(310.95); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -125,7 +125,7 @@ public final class Constants {
             public static final int angleMotorID = 0;
             public static final int canCoderID = 2;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(72.15);
-            //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(190.54); // LoveLace
+           // public static final Rotation2d angleOffset = Rotation2d.fromDegrees(190.54); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -135,6 +135,8 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.91);
+            //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(330.92); // LoveLace
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(314.91);
             //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(330.92); // LoveLace
             public static final SwerveModuleConstants constants = 
@@ -264,9 +266,9 @@ public final class Constants {
         public static final double midShoulderAngle = Math.toRadians(-13);
 
         public static final double highWristAngle = Math.toRadians(-33);
-        public static final double highShoulderAngle = Math.toRadians(7);
+        public static final double highShoulderAngle = Math.toRadians(8.5);
 
-        public static final double shelfWristAngle = Math.toRadians(-50);
+        public static final double shelfWristAngle = Math.toRadians(-71);
         public static final double shelfShoulderAngle = Math.toRadians(9.5);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
@@ -278,7 +280,7 @@ public final class Constants {
         public static final double uprightConeShoulderAngle = Math.toRadians(-51.70);
         public static final double uprightConeWristAngle = Math.toRadians(-59); //estimated Wrist angle might not work
 
-        public static final double shelfShoulderDown = Math.toRadians(-10);
+        public static final double shelfShoulderDown = Math.toRadians(4.0);
     }
 
     public static final class BalanceConstants {
