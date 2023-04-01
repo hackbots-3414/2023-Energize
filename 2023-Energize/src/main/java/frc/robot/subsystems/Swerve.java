@@ -240,15 +240,21 @@ public class Swerve extends SubsystemBase {
             if (result.isPresent()) {
                 poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
                 EstimatedRobotPose camPose = result.get();
-                
-                poseEstimator.addVisionMeasurement(
-                    camPose.estimatedPose.toPose2d(),
-                    camPose.timestampSeconds);
+                Pose2d robotLocation = camPose.estimatedPose.toPose2d();
 
-                fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-            } else {
+
+
+                // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {
+                    poseEstimator.addVisionMeasurement(
+                    robotLocation,
+                    camPose.timestampSeconds);
+                    fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+                // }
+                
+                
+            } /* else {
                 fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
-            }
+            }*/
 
             fieldSim.getObject("Actual Pos").setPose(getPose());
             fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());

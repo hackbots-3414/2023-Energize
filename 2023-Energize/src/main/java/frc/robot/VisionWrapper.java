@@ -29,6 +29,7 @@
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -49,6 +50,8 @@ import org.photonvision.targeting.PhotonTrackedTarget;
  public class VisionWrapper {
      private PhotonCamera photonCamera;
      private PhotonPoseEstimator photonPoseEstimator;
+     private MedianFilter xDistanceFilter = new MedianFilter(1);
+     private MedianFilter yDistanceFilter = new MedianFilter(1);
  
      public VisionWrapper() {
          photonCamera = new PhotonCamera("Front_Camera");
@@ -79,10 +82,11 @@ import org.photonvision.targeting.PhotonTrackedTarget;
      public Matrix getStandardD() {
         PhotonTrackedTarget target = photonCamera.getLatestResult().getBestTarget();
         Transform3d distance = target.getBestCameraToTarget();
+
         Matrix values = new Matrix<>(Nat.N3(), Nat.N1());
-        values.set(0, 0, Math.pow(distance.getX(), 2)*0.02);
-        values.set(1, 0, Math.pow(distance.getY(), 2));
-        values.set(2, 0, Math.pow(distance.getRotation().getAngle(), 2)*0.02);
+        values.set(0, 0, Math.pow(xDistanceFilter.calculate(distance.getX()), 2)*0.01);
+        values.set(1, 0, Math.pow(yDistanceFilter.calculate(distance.getY()), 2)*0.01);
+        values.set(2, 0, Math.pow(distance.getRotation().getAngle(), 2)*1.0);
         return values;
      }
  
