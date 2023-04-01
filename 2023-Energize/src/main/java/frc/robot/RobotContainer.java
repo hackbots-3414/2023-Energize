@@ -69,7 +69,7 @@ public class RobotContainer {
   private final POVButton wristDown = new POVButton(operator, 180);
 
   /* Subsystems */
-  private final Swerve s_Swerve = new Swerve();
+  public final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
   private final Intake m_Intake = new Intake();
   private final Shoulder m_Shoulder = new Shoulder();
