@@ -122,7 +122,7 @@ public class RobotContainer {
     pathChooser.addOption("Test", autons.eventChooser(AutonChoice.Test));
 
     // Button board configurations:
-    button3.toggleOnTrue(new InstantCommand(() -> autons.bayChooser(Bays.One)));
+    button3.toggleOnTrue(autons.bayChooser(Bays.One));
     button4.toggleOnTrue(autons.bayChooser(Bays.Two));
     button5.toggleOnTrue(autons.bayChooser(Bays.Three));
     button6.toggleOnTrue(autons.bayChooser(Bays.Four));

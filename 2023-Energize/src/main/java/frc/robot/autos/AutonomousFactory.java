@@ -197,6 +197,7 @@ public class AutonomousFactory {
 
     private Command goToBayCommand(int bay) {
         Pose2d from = swerve.getPose();
+        log.warn("--------------------------------------\nHELLO! goToBayCommand has been started!\n--------------------------------------");
         System.out.println("In Bay Command:" + bay);
         List<Pose2d> pose2d_points =  PathFactory.getInstance().getPath(from, bay);
         log.debug("Path Points: {}", pose2d_points.toString());
