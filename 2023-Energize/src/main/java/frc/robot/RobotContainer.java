@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
@@ -122,15 +123,15 @@ public class RobotContainer {
     pathChooser.addOption("Test", autons.eventChooser(AutonChoice.Test));
 
     // Button board configurations:
-    button3.toggleOnTrue(autons.bayChooser(Bays.One));
-    button4.toggleOnTrue(autons.bayChooser(Bays.Two));
-    button5.toggleOnTrue(autons.bayChooser(Bays.Three));
-    button6.toggleOnTrue(autons.bayChooser(Bays.Four));
-    button7.toggleOnTrue(autons.bayChooser(Bays.Five));
-    button8.toggleOnTrue(autons.bayChooser(Bays.Six));
-    button9.toggleOnTrue(autons.bayChooser(Bays.Seven));
-    button10.toggleOnTrue(autons.bayChooser(Bays.Eight));
-    button11.toggleOnTrue(autons.bayChooser(Bays.Nine));
+    button3.whileTrue(new ProxyCommand(autons::bayChooser1));
+    button4.whileTrue(new ProxyCommand(autons::bayChooser2));
+    button5.whileTrue(new ProxyCommand(autons::bayChooser3));
+    button6.whileTrue(new ProxyCommand(autons::bayChooser4));
+    button7.whileTrue(new ProxyCommand(autons::bayChooser5));
+    button8.whileTrue(new ProxyCommand(autons::bayChooser6));
+    button9.whileTrue(new ProxyCommand(autons::bayChooser7));
+    button10.whileTrue(new ProxyCommand(autons::bayChooser8));
+    button11.whileTrue(new ProxyCommand(autons::bayChooser9));
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 

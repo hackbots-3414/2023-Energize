@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.pathFactory.PathFactory;
 import frc.robot.Constants;
@@ -197,8 +198,6 @@ public class AutonomousFactory {
 
     private Command goToBayCommand(int bay) {
         Pose2d from = swerve.getPose();
-        log.warn("--------------------------------------\nHELLO! goToBayCommand has been started!\n--------------------------------------");
-        System.out.println("In Bay Command:" + bay);
         List<Pose2d> pose2d_points =  PathFactory.getInstance().getPath(from, bay);
         log.debug("Path Points: {}", pose2d_points.toString());
         List<PathPoint> points = new ArrayList<PathPoint>();
@@ -215,5 +214,34 @@ public class AutonomousFactory {
 
     public Command bayChooser(Bays bay) {
         return goToBayCommand(bay.value);
+        //return new PrintCommand("we are going to bay: " + bay.value);
+    }
+
+    public Command bayChooser1() {
+        return bayChooser(Bays.One);
+    }
+    public Command bayChooser2() {
+        return bayChooser(Bays.Two);
+    }
+    public Command bayChooser3() {
+        return bayChooser(Bays.Three);
+    }
+    public Command bayChooser4() {
+        return bayChooser(Bays.Four);
+    }
+    public Command bayChooser5() {
+        return bayChooser(Bays.Five);
+    }
+    public Command bayChooser6() {
+        return bayChooser(Bays.Six);
+    }
+    public Command bayChooser7() {
+        return bayChooser(Bays.Seven);
+    }
+    public Command bayChooser8() {
+        return bayChooser(Bays.Eight);
+    }
+    public Command bayChooser9() {
+        return bayChooser(Bays.Nine);
     }
 }
