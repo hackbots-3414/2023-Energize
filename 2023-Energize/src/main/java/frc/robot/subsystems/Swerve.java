@@ -1,30 +1,19 @@
 package frc.robot.subsystems;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
-import org.photonvision.targeting.PhotonTrackedTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -37,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
 import frc.robot.VisionWrapper;
-import frc.robot.Wait;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -107,6 +95,17 @@ public class Swerve extends SubsystemBase {
                                 rotation));
         setModuleStates(swerveModuleStates);
         isfieldRelative = fieldRelative;
+    }
+
+    public void autonDrive(Translation2d translation, double rotation, boolean isOpenLoop) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+            new ChassisSpeeds(
+                translation.getX(),
+                translation.getY(),
+                rotation
+            )
+        );
+        setModuleStates(swerveModuleStates);
     }
 
     /* Used by SwerveControllerCommand in Auto */
@@ -269,6 +268,19 @@ public class Swerve extends SubsystemBase {
 
         }
 
+    }
+
+    public void driveForward(double distancex, double distancey) {
+        Translation2d targetTranslation = new Translation2d(
+            distancex,
+            distancey
+        );
+        drive(targetTranslation, 0, false, false);
+    }
+
+    public void stopDriving() {
+        drive(new Translation2d(), 0, false, false);
+    
     }
 
 }

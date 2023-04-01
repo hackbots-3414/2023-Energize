@@ -3,8 +3,6 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pathplanner.lib.PathConstraints;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -13,22 +11,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.AutonomousFactory;
 import frc.robot.autos.AutonomousFactory.AutonChoice;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.AutoArm;
+import frc.robot.commands.DecelerateCommand;
 import frc.robot.commands.DefaultLedCommand;
+import frc.robot.commands.IRWait;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LedCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
-import frc.robot.commands.PIDBalance;
-import frc.robot.commands.Rotate;
+import frc.robot.commands.StopDriving;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ejectCommand;
+import frc.robot.subsystems.IRSensor;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Shoulder;
@@ -73,6 +74,7 @@ public class RobotContainer {
   private final Intake m_Intake = new Intake();
   private final Shoulder m_Shoulder = new Shoulder();
   private final Wrist m_Wrist = new Wrist(m_Shoulder);
+  private final IRSensor irSensor = new IRSensor();
 
   SendableChooser<Command> pathChooser = new SendableChooser<>();
 
@@ -101,8 +103,8 @@ public class RobotContainer {
     // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
     pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
     pathChooser.addOption("Wall", autons.eventChooser(AutonChoice.Left));
-    pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right)); 
-    pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance)); 
+    pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right));
+    pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance));
     pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
     pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
     pathChooser.addOption("Barrier High Two Object", autons.eventChooser(AutonChoice.BarrierHighTwoObject));
@@ -112,10 +114,10 @@ public class RobotContainer {
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
-    if (DriverStation.getMatchTime() < 30){
+    if (DriverStation.getMatchTime() < 30) {
       SmartDashboard.putString("Game part:", "ENDGAME");
-    } else if (DriverStation.getMatchTime() < 120){
-      SmartDashboard.putString("Game part","PLAY");
+    } else if (DriverStation.getMatchTime() < 120) {
+      SmartDashboard.putString("Game part", "PLAY");
     } else {
       SmartDashboard.putString("Game part", "AUTO");
     }
@@ -139,33 +141,53 @@ public class RobotContainer {
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
     // setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
     // autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
-    //SmartDashboard.putData(new Rotate(s_Swerve));
+    // SmartDashboard.putData(new Rotate(s_Swerve));
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake));
-    ejectButton.whileTrue(new ejectCommand(m_Intake));
-    //stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
-    stowAndLowButton.onTrue(
-      Commands.runOnce(
-        () -> {
-        m_Shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
-        m_Wrist.setGoal(Constants.IntakeAngles.stowedWristAngle);
-        m_Wrist.enable();
-        m_Shoulder.enable();
-    },
-    m_Shoulder, m_Wrist));
-
-    shelfButton.onTrue(
-      Commands.runOnce(
-      () -> {
-        m_Shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
-        m_Wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
-        m_Wrist.enable();
-        m_Shoulder.enable();
-    },
-    m_Shoulder, m_Wrist));
     
+    shelfButton.whileTrue(
+      new SequentialCommandGroup(
+        
+        new AutoArm(m_Shoulder, m_Wrist, 5),
+        new DecelerateCommand(
+          s_Swerve,
+          irSensor,
+          () -> driver.getRawAxis(1),
+          () -> -driver.getRawAxis(0),
+          () -> -driver.getRawAxis(3),
+          () -> robotCentric.getAsBoolean()
+        ),
+        new ParallelCommandGroup(
+          new StopDriving(s_Swerve, m_Intake),
+          new IntakeCommand(m_Intake),
+          new AutoArm(m_Shoulder, m_Wrist, 7)
+        )
+      )
+    );
+    ejectButton.whileTrue(new ejectCommand(m_Intake));
+    // stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
+    stowAndLowButton.onTrue(
+        Commands.runOnce(
+            () -> {
+              m_Shoulder.setGoal(Constants.IntakeAngles.stowedShoulderAngle);
+              m_Wrist.setGoal(Constants.IntakeAngles.stowedWristAngle);
+              m_Wrist.enable();
+              m_Shoulder.enable();
+            },
+            m_Shoulder, m_Wrist));
+
+    // shelfButton.onTrue(
+    //     Commands.runOnce(
+    //         () -> {
+    //           m_Shoulder.setGoal(Constants.IntakeAngles.shelfShoulderAngle);
+    //           m_Wrist.setGoal(Constants.IntakeAngles.shelfWristAngle);
+    //           m_Wrist.enable();
+    //           m_Shoulder.enable();
+    //         },
+    //         m_Shoulder, m_Wrist));
+
     midButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 3));
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
     pickUpButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
@@ -176,7 +198,7 @@ public class RobotContainer {
     shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     wristUp.whileTrue(new MoveWrist(m_Wrist, Constants.IntakeConstants.wristMoveSpeedPercentage));
     wristDown.whileTrue(new MoveWrist(m_Wrist, -Constants.IntakeConstants.wristMoveSpeedPercentage));
-    
+
   }
 
   public Command getAutonomousCommand() {
