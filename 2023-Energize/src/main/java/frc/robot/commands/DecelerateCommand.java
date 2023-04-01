@@ -52,7 +52,7 @@ public class DecelerateCommand extends CommandBase {
     if (irSensor.getIRState()) {
       speedLimit = 0;
       // SmartDashboard.putBoolean("Infrared sensor", irSensor.getIRState());
-      System.out.println("Infrared sensor has been triggered!");
+      // System.out.println("Infrared sensor has been triggered!");
     } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
       speedLimit = Constants.IntakeAutomatic.slowLimit;
     } else {
