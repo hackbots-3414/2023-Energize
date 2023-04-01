@@ -66,7 +66,7 @@ public class RobotContainer {
   private final POVButton wristDown = new POVButton(operator, 180);
 
   /* Subsystems */
-  private final Swerve s_Swerve = new Swerve();
+  public final Swerve s_Swerve = new Swerve();
   private final LedSubsystem m_ledSubsystem = new LedSubsystem();
   private final Intake m_Intake = new Intake();
   private final Shoulder m_Shoulder = new Shoulder();
@@ -119,6 +119,7 @@ public class RobotContainer {
     pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
     pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
     pathChooser.addOption("Barrier High Two Object", autons.eventChooser(AutonChoice.BarrierHighTwoObject));
+    pathChooser.addOption("Wall High Two Object", autons.eventChooser(AutonChoice.WallHighTwoObject));
     pathChooser.addOption("Balance High", autons.eventChooser(AutonChoice.BalanceHigh));
     pathChooser.addOption("Test", autons.eventChooser(AutonChoice.Test));
 
