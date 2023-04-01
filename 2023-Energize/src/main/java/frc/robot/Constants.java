@@ -262,7 +262,7 @@ public final class Constants {
         // public static final double lowWristAngle = Math.toRadians(35.0);
         // public static final double lowShoulderAngle = Math.toRadians(-85.0);
 
-        public static final double midWristAngle = Math.toRadians(-47);
+        public static final double midWristAngle = Math.toRadians(-44);
         public static final double midShoulderAngle = Math.toRadians(-13);
 
         public static final double highWristAngle = Math.toRadians(-33);
