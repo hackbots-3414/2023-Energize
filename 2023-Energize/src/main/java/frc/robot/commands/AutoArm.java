@@ -18,7 +18,6 @@ public class AutoArm extends CommandBase {
   private Wrist wrist;
   private Shoulder shoulder;
   private int selector;
-  private int counter;
   private double startTime;
 
   public AutoArm(Shoulder shoulder, Wrist wrist, int selector) {
@@ -86,7 +85,6 @@ public class AutoArm extends CommandBase {
     }
     shoulder.enable();
     wrist.enable();
-    counter++;
   }
 
   // Called once the command ends or is interrupted.
@@ -96,6 +94,7 @@ public class AutoArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return counter >= 1;
+    return true;
+    // return counter >= 1;
   }
 }

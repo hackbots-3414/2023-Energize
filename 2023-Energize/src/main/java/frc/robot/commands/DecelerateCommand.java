@@ -55,7 +55,6 @@ public class DecelerateCommand extends CommandBase {
       System.out.println("Infrared sensor has been triggered!");
     } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
       speedLimit = Constants.IntakeAutomatic.slowLimit;
-      System.out.println("AprilTag Boundary crossed");
     } else {
       speedLimit = 1;
     }
@@ -71,7 +70,6 @@ public class DecelerateCommand extends CommandBase {
     double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
     SmartDashboard.putNumber("translationVal", translationVal);
-    System.out.println(speedLimit);
     if (translationVal > speedLimit) {
       translationVal = speedLimit;
     }

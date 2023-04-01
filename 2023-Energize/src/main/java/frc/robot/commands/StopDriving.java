@@ -27,7 +27,7 @@ public class StopDriving extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Swerve.drive(new Translation2d(), 0, true, false);
+    s_Swerve.drive(new Translation2d(), 0, true, true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

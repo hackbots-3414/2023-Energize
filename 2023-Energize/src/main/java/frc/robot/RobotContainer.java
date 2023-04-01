@@ -144,6 +144,8 @@ public class RobotContainer {
     /* Operator Buttons */
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
+    intakeButton.whileTrue(new IntakeCommand(m_Intake));
+    
     shelfButton.whileTrue(
       new SequentialCommandGroup(
         
