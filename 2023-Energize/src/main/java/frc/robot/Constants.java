@@ -151,6 +151,18 @@ public final class Constants {
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
+
+         /* Spare - Module 4 */
+        // public static final class SpareMod { //TODO: This must be tuned to specific robot
+        //     public static final int driveMotorID = 30;
+        //     public static final int angleMotorID = 31;
+        //     public static final int canCoderID = 32;
+        //     public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
+        //     //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
+        //     public static final SwerveModuleConstants constants = 
+        //         new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+        // }
+        
     }
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
