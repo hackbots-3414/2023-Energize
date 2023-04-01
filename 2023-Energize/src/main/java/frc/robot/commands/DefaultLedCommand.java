@@ -39,7 +39,7 @@ public class DefaultLedCommand extends CommandBase {
   @Override
   public void execute() {
 
-    if (swerve.isfieldRelative()) {
+    if (!swerve.isfieldRelative()) {
       m_subsystem.setColor(-0.09); // Strobe Blue
     } else if (intake.getObjectState()) {
       m_subsystem.setColor(0.75); // Dark Green 

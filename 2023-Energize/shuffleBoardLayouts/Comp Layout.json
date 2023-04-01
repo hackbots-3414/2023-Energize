@@ -249,7 +249,7 @@
       }
     },
     {
-      "title": "Tab 4",
+      "title": "Field",
       "autoPopulate": false,
       "autoPopulatePrefix": "",
       "widgetPane": {
@@ -257,49 +257,24 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
+        "titleType": 0,
         "tiles": {
-          "4,1": {
+          "0,0": {
             "size": [
-              1,
-              1
+              9,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Distance to AprilTag (X)",
-              "_title": "SmartDashboard/Distance to AprilTag (X)"
-            }
-          },
-          "5,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Limit",
-              "_title": "SmartDashboard/Limit"
-            }
-          },
-          "6,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Wrist Angle",
-              "_title": "SmartDashboard/Wrist Angle"
-            }
-          },
-          "7,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/translationVal",
-              "_title": "SmartDashboard/translationVal"
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Field",
+              "_title": "SmartDashboard/Field",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Game/Game": "A2023_Charged_Up",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false,
+              "Colors/Actual Pos": "#00FFFFFF",
+              "Colors/Cam Est Pos": "#FF00FFFF"
             }
           }
         }
