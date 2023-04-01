@@ -48,7 +48,7 @@ public class Swerve extends SubsystemBase {
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
         gyro.configFactoryDefault();
-        zeroGyro();
+        gyro.setYaw(0, Constants.IntakeConstants.canPause);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -124,7 +124,8 @@ public class Swerve extends SubsystemBase {
     
 
     public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+        gyro.setYaw(pose.getRotation().getDegrees(), Constants.IntakeConstants.canPause);
+        swerveOdometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
     }
 
     public SwerveModuleState[] getModuleStates() {
@@ -145,12 +146,12 @@ public class Swerve extends SubsystemBase {
 
     public void zeroGyro() {
         gyro.setYaw(0, Constants.IntakeConstants.canPause);
+        swerveOdometry.resetPosition(new Rotation2d(0), getModulePositions(), new Pose2d(new Translation2d(getPose().getX(), getPose().getY()), Rotation2d.fromDegrees(0)));
     }
 
     public void zeroHeading() {
-        zeroGyro();
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), getPose());
-        // swerveOdometry.update(Rotation2d.fromDegrees(0), getModulePositions());
+        gyro.setYaw(0, Constants.IntakeConstants.canPause);
+        swerveOdometry.resetPosition(new Rotation2d(0), getModulePositions(), new Pose2d(new Translation2d(getPose().getX(), getPose().getY()), Rotation2d.fromDegrees(0)));
     }
 
     public Rotation2d getYaw() {
@@ -204,7 +205,7 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putData(fieldSim);
         swerveOdometry.update(getYaw(), getModulePositions());
-        updateOdometry();
+        // updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());

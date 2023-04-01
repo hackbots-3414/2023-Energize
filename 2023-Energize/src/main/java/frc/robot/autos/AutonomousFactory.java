@@ -174,8 +174,7 @@ public class AutonomousFactory {
             maxSpeed = Constants.AutoConstants.kMaxBalanceSpeedMetersPerSecond;
             maxAcceleration = Constants.AutoConstants.kMaxBalanceAccelerationMetersPerSecondSquared;
         }
-        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));        
-        // swerve.setGyroOffset(pathGroup.get(0).getInitialPose().getRotation().getDegrees());
+        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));
         return autoBuilder.fullAuto(pathGroup);
     }
 
