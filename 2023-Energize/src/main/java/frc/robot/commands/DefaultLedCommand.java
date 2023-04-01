@@ -48,7 +48,7 @@ public class DefaultLedCommand extends CommandBase {
     } else if (DriverStation.getMatchTime() < 15) {
       m_subsystem.setColor(-0.05); // Strobe white
     } else if (DriverStation.getMatchTime() <= 30) {
-      m_subsystem.setColor(-.25); //heart beat red
+      m_subsystem.setColor(-0.11); // Strobe red
     } else {
       m_subsystem.setColor(m_color);
     }

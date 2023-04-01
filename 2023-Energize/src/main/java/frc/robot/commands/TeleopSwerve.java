@@ -28,18 +28,16 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
     private double multiplier = 1;
-    private boolean isReduced;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
             DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, boolean isReduced) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
-        this.isReduced = isReduced;
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
-        //SmartDashboard.putNumber("Speed Percentage", 1);
+        SmartDashboard.putNumber("Speed Percentage", 1);
     }
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
@@ -57,22 +55,11 @@ public class TeleopSwerve extends CommandBase {
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
         
         /* Drive */
-        if (isReduced) {
-
-            s_Swerve.drive(
-                    new Translation2d(translationVal, strafeVal)
-                            .times(Constants.Swerve.reducedSpeed * SmartDashboard.getNumber("Speed Percentage", 1)),
-                    rotationVal * Constants.Swerve.reducedAngVel,
-                    !robotCentricSup.getAsBoolean(),
-                    true);
-
-        } else {
-            s_Swerve.drive(
-                    new Translation2d(translationVal, strafeVal)
-                            .times(Constants.Swerve.maxSpeed * SmartDashboard.getNumber("Speed Percentage", 1)),
-                    rotationVal * Constants.Swerve.maxAngularVelocity,
-                    !robotCentricSup.getAsBoolean(),
-                    true);
-        }
+        s_Swerve.drive(
+                new Translation2d(translationVal, strafeVal)
+                        .times(Constants.Swerve.maxSpeed * SmartDashboard.getNumber("Speed Percentage", 1)),
+                rotationVal * Constants.Swerve.maxAngularVelocity,
+                !robotCentricSup.getAsBoolean(),
+                true);
     }
 }
