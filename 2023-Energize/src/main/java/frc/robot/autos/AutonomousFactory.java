@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.pathFactory.PathFactory;
 import frc.robot.Constants;
@@ -176,7 +175,7 @@ public class AutonomousFactory {
             maxAcceleration = Constants.AutoConstants.kMaxBalanceAccelerationMetersPerSecondSquared;
         }
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));        
-        swerve.setGyroOffset(pathGroup.get(0).getInitialPose().getRotation().getDegrees());
+        // swerve.setGyroOffset(pathGroup.get(0).getInitialPose().getRotation().getDegrees());
         return autoBuilder.fullAuto(pathGroup);
     }
 
