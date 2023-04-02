@@ -19,6 +19,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,12 +67,12 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
-        Matrix robotSD = new Matrix<>(Nat.N3(), Nat.N1());
+        Matrix<N3, N1> robotSD = new Matrix<>(Nat.N3(), Nat.N1());
         robotSD.set(0, 0, 0.1);
         robotSD.set(1, 0, 0.1);
         robotSD.set(2, 0, Math.toRadians(0.5));
 
-        Matrix visionSD = new Matrix<>(Nat.N3(), Nat.N1());
+        Matrix<N3, N1> visionSD = new Matrix<>(Nat.N3(), Nat.N1());
         visionSD.set(0, 0, 0.01);
         visionSD.set(1, 0, 0.9);
         visionSD.set(2, 0, 0.01);

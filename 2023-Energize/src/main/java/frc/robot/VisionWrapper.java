@@ -19,6 +19,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
  
  public class VisionWrapper {
@@ -49,15 +51,15 @@ import edu.wpi.first.wpilibj.DriverStation;
          }
      }
 
-     public List getTargets() {
+     public List<PhotonTrackedTarget> getTargets() {
         return photonCamera.getLatestResult().targets;
      }
 
-     public Matrix getStandardD() {
+     public Matrix<N3, N1> getStandardD() {
         PhotonTrackedTarget target = photonCamera.getLatestResult().getBestTarget();
         Transform3d distance = target.getBestCameraToTarget();
 
-        Matrix values = new Matrix<>(Nat.N3(), Nat.N1());
+        Matrix<N3, N1> values = new Matrix<>(Nat.N3(), Nat.N1());
         values.set(0, 0, Math.pow(xDistanceFilter.calculate(distance.getX()), 2)*0.01);
         values.set(1, 0, Math.pow(yDistanceFilter.calculate(distance.getY()), 2)*0.01);
         values.set(2, 0, Math.pow(distance.getRotation().getAngle(), 2)*1.0);
