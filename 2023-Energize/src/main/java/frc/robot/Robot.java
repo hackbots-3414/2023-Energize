@@ -1,14 +1,13 @@
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Robot extends TimedRobot {
   final static Logger logger = LoggerFactory.getLogger(Constants.class);
@@ -24,13 +23,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     DataLogManager.start();
-
-        // UsbCamera camera = CameraServer.startAutomaticCapture();
-        // camera.setFPS(60);
-        // camera.setResolution(320, 240);
-        setUpLimeLight();
-
-
+    
+    setUpLimeLight();
   }
 
   @Override
@@ -48,7 +42,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }

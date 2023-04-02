@@ -1,12 +1,8 @@
 package frc.robot.commands;
 
-import java.sql.Driver;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
@@ -15,10 +11,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(IntakeCommand.class);
 
-  final Intake intake;
-
-  // private int bounces;
-  
+  final Intake intake;  
 
   public IntakeCommand(Intake intake) {
     this.intake = intake;
@@ -41,8 +34,6 @@ public class IntakeCommand extends CommandBase {
       intake.setObjectStateTrue();
       intake.set(IntakeConstants.objectHoldSpeedPercent);
     }
-
-
   }
 
   @Override
@@ -52,13 +43,6 @@ public class IntakeCommand extends CommandBase {
       intake.setRunningIntake(false);
       intake.setObjectStateFalse();
     }
-    // if (!intake.getObjectState()) {
-    //   intake.set(0.0);
-    // }
-    // intake.setCurrentLimitOne();
-    // if (DriverStation.isTeleop()) {
-    //   intake.setRunningIntake(false);
-    // }
   }
 
   @Override

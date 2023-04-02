@@ -1,7 +1,5 @@
 package frc.robot;
 
-import ch.qos.logback.core.db.DriverManagerConnectionSource;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Wait extends CommandBase {
@@ -16,12 +14,6 @@ public class Wait extends CommandBase {
   public void initialize() {
     startTime = System.currentTimeMillis();
   }
-
-  @Override
-  public void execute() {}
-
-  @Override
-  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

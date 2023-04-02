@@ -22,7 +22,6 @@ import frc.robot.commands.ArmCommand;
 import frc.robot.commands.AutoArm;
 import frc.robot.commands.DecelerateCommand;
 import frc.robot.commands.DefaultLedCommand;
-import frc.robot.commands.IRWait;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MoveShoulder;
 import frc.robot.commands.MoveWrist;
@@ -100,7 +99,6 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auton Mode", pathChooser);
 
-    // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
     pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
     pathChooser.addOption("Wall", autons.eventChooser(AutonChoice.Left));
     pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right));

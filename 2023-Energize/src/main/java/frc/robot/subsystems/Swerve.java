@@ -2,11 +2,11 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 
+import com.ctre.phoenix.sensors.Pigeon2;
+
 import org.photonvision.EstimatedRobotPose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
@@ -40,8 +40,7 @@ public class Swerve extends SubsystemBase {
 
     private static Logger log = LoggerFactory.getLogger(Swerve.class);
     private int visionError = 0;
-
-    private double gyroOffset = 0;
+    
     private boolean isfieldRelative;
 
     public Swerve() {
@@ -167,10 +166,6 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d getHeading() {
         return swerveOdometry.getPoseMeters().getRotation();
-    }
-
-    public void setGyroOffset(double offset) {
-        gyroOffset = offset;
     }
 
     public Rotation2d getPitch() {
