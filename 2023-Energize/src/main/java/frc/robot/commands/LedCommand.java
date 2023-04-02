@@ -7,11 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.wpi.first.wpilibj.DataLogManager;
 
-
-
 public class LedCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(LedCommand.class);
-
 
   private LedSubsystem m_LedSubsystem;
   final Intake m_Intake; 
@@ -28,21 +25,16 @@ public class LedCommand extends CommandBase {
   @Override
   public void initialize() {
     DataLogManager.start();
-   //logger.debug("it works");
   }
 
   @Override
   public void execute() {
     m_LedSubsystem.setColor(m_ledColor);
-    //logger.trace("tracking the command");
 
     // if (m_Intake.getIRInput()) {
     //   m_LedSubsystem.setColor(0.55);
     // }
   }
-
-  @Override
-  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

@@ -13,14 +13,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Wait;
 import frc.robot.commands.AutoArm;
@@ -59,9 +52,6 @@ public class AutonomousFactory {
     private static final AutonomousFactory me = new AutonomousFactory();
 
     private static Swerve swerve;
-    private static Intake intake;
-    private static Shoulder shoulder;
-    private static Wrist wrist;
 
     private static HashMap<String, Command> eventMap = new HashMap<>();
 
@@ -71,12 +61,6 @@ public class AutonomousFactory {
 
     public static AutonomousFactory getInstance(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
         swerve = m_swerve;
-        intake = m_intake;
-        shoulder = m_shoulder;
-        wrist = m_wrist;
-
-        IntakeCommand intakeCommand = new IntakeCommand(m_intake);
-        SmartDashboard.putNumber("Auton Theta kP", Constants.AutoConstants.kPThetaController);
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
         eventMap.put("Intake", new IntakeCommand(m_intake).withTimeout(3));
@@ -100,12 +84,6 @@ public class AutonomousFactory {
 
         return me;
     }
-
-    // public PathPoint resetToVision() {
-    //     swerve.updateOdometry();
-    //     Pose2d pose = swerve.getPose();
-    //     return new PathPoint(pose.getTranslation(), pose.getRotation());
-    // }
 
     // private Command followTrajectoryOnTheFly(PathPoint... pathPoints){
     //     ArrayList<PathPoint> points = new ArrayList<>();
@@ -162,25 +140,6 @@ public class AutonomousFactory {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));
         return autoBuilder.fullAuto(pathGroup);
     }
-
-    // private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
-    //     ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-
-    //     swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
-        
-    //     return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
-    // }
-
-    // private Command placeCommand(Heights height) {
-    //     if (height == Heights.Low) {
-    //         // code to place object low
-    //     } else if (height == Heights.Mid) {
-    //         // code to place object mid
-    //     } else if (height == Heights.High) {
-    //         // code to place objects high
-    //     }
-    //     return null;
-    // }
 
     public Command eventChooser(AutonChoice choice) {
         return followTrajectoryWithEventsCommand(choice.value);

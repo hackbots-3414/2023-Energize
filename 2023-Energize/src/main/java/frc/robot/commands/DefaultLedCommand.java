@@ -16,8 +16,6 @@ public class DefaultLedCommand extends CommandBase {
   private final LedSubsystem m_subsystem;
   private double m_color;
 
-  private boolean done;
-
   private Intake intake;
   private Swerve swerve;
 
@@ -31,14 +29,11 @@ public class DefaultLedCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    // logger.info("logging");
     DataLogManager.start();
-    done = false;
   }
 
   @Override
   public void execute() {
-
     if (!swerve.isfieldRelative()) {
       m_subsystem.setColor(-0.09); // Strobe Blue
     } else if (intake.getObjectState()) {
@@ -52,12 +47,6 @@ public class DefaultLedCommand extends CommandBase {
     } else {
       m_subsystem.setColor(m_color);
     }
-    done = true;
-
-  }
-
-  @Override
-  public void end(boolean interrupted) {
   }
 
   @Override
