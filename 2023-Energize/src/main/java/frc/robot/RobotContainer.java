@@ -116,7 +116,6 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auton Mode", pathChooser);
 
-    // pathChooser.setDefaultOption("Drive Out Bottom", AutonChoice.Balance);
     pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
     pathChooser.addOption("Wall", autons.eventChooser(AutonChoice.Left));
     pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right));
