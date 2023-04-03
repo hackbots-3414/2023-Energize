@@ -18,35 +18,6 @@ import frc.robot.Constants;
 public class PathFactory {
     private static PathFactory me = new PathFactory();
 
-    private boolean isRedSide = (DriverStation.getAlliance() == Alliance.Red); // If driver station is NOT open, it will evaluate to true for some reason.
-
-    private double x = (isRedSide) ? Constants.PathFactory.redSide.x : Constants.PathFactory.blueSide.x;
-
-    private double cx = (isRedSide) ? Constants.PathFactory.redSide.cx : Constants.PathFactory.blueSide.cx;
-
-    // private double offset = (isRedSide) ? Constants.PathFactory.redSide.offset : Constants.PathFactory.blueSide.offset;
-    private double rot = (isRedSide) ? 0 : 180;
- 
-    private Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), Rotation2d.fromDegrees(rot));
-    private Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), Rotation2d.fromDegrees(rot));
-    private Pose2d p3 = new Pose2d(new Translation2d(x, Constants.PathFactory.p3), Rotation2d.fromDegrees(rot));
-    private Pose2d p4 = new Pose2d(new Translation2d(x, Constants.PathFactory.p4), Rotation2d.fromDegrees(rot));
-    private Pose2d p5 = new Pose2d(new Translation2d(x, Constants.PathFactory.p5), Rotation2d.fromDegrees(rot));
-    private Pose2d p6 = new Pose2d(new Translation2d(x, Constants.PathFactory.p6), Rotation2d.fromDegrees(rot));
-    private Pose2d p7 = new Pose2d(new Translation2d(x, Constants.PathFactory.p7), Rotation2d.fromDegrees(rot));
-    private Pose2d p8 = new Pose2d(new Translation2d(x, Constants.PathFactory.p8), Rotation2d.fromDegrees(rot));
-    private Pose2d p9 = new Pose2d(new Translation2d(x, Constants.PathFactory.p9), Rotation2d.fromDegrees(rot));
-
-    private Pose2d pC1 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c1), Rotation2d.fromDegrees(rot));
-    private Pose2d pC2 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c2), Rotation2d.fromDegrees(rot));
-
-    private List<Pose2d> scoring_points = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
-  
-    int pA_INDEX = 0;
-    int pB_INDEX = 1;
-    int pC1_INDEX = 2;
-    int pC2_INDEX = 3;
-
     private PathFactory() {}
 
     public static PathFactory getInstance() {
@@ -57,6 +28,27 @@ public class PathFactory {
     }
 
     public List<Pose2d> getPath(Pose2d from, int toInt) {
+
+        boolean isRedSide = (DriverStation.getAlliance() == Alliance.Red);
+
+        double x = (isRedSide) ? Constants.PathFactory.redSide.x : Constants.PathFactory.blueSide.x;
+        double cx = (isRedSide) ? Constants.PathFactory.redSide.cx : Constants.PathFactory.blueSide.cx;
+        double rot = (isRedSide) ? 0 : 180;
+
+        Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), Rotation2d.fromDegrees(rot));
+        Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), Rotation2d.fromDegrees(rot));
+        Pose2d p3 = new Pose2d(new Translation2d(x, Constants.PathFactory.p3), Rotation2d.fromDegrees(rot));
+        Pose2d p4 = new Pose2d(new Translation2d(x, Constants.PathFactory.p4), Rotation2d.fromDegrees(rot));
+        Pose2d p5 = new Pose2d(new Translation2d(x, Constants.PathFactory.p5), Rotation2d.fromDegrees(rot));
+        Pose2d p6 = new Pose2d(new Translation2d(x, Constants.PathFactory.p6), Rotation2d.fromDegrees(rot));
+        Pose2d p7 = new Pose2d(new Translation2d(x, Constants.PathFactory.p7), Rotation2d.fromDegrees(rot));
+        Pose2d p8 = new Pose2d(new Translation2d(x, Constants.PathFactory.p8), Rotation2d.fromDegrees(rot));
+        Pose2d p9 = new Pose2d(new Translation2d(x, Constants.PathFactory.p9), Rotation2d.fromDegrees(rot));
+        Pose2d pC1 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c1), Rotation2d.fromDegrees(rot));
+        Pose2d pC2 = new Pose2d(new Translation2d(cx, Constants.PathFactory.c2), Rotation2d.fromDegrees(rot));
+
+        List<Pose2d> scoring_points = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+
         Pose2d target = scoring_points.get(toInt - 1); // figure out which scoring point to go to (this does that)
 
         double targetX = target.getX();
