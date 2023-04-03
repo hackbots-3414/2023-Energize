@@ -1,5 +1,11 @@
 package frc.robot;
 
+import com.ctre.phoenix.ErrorCode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -8,12 +14,6 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
-
-import com.ctre.phoenix.ErrorCode;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
 
 public class SwerveModule {
     public int moduleNumber;
@@ -32,15 +32,12 @@ public class SwerveModule {
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
 
-        /* Angle Encoder Config */
         angleEncoder = new CANCoder(moduleConstants.cancoderID, Constants.Swerve.canbusString);
         configAngleEncoder();
 
-        /* Angle Motor Config */
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID, Constants.Swerve.canbusString);
         configAngleMotor();
 
-        /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID, Constants.Swerve.canbusString);
         configDriveMotor();
 
