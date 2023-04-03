@@ -86,7 +86,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
         Matrix values = new Matrix<>(Nat.N3(), Nat.N1());
         values.set(0, 0, Math.pow(xDistanceFilter.calculate(distance.getX()), 2)*0.01);
         values.set(1, 0, Math.pow(yDistanceFilter.calculate(distance.getY()), 2)*0.01);
-        values.set(2, 0, Math.pow(distance.getRotation().getAngle(), 2)*1.0);
+        values.set(2, 0, Math.pow(distance.getRotation().getAngle(), 2)*0.01);
         return values;
      }
  
