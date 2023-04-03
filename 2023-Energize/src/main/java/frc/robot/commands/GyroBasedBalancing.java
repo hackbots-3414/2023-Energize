@@ -50,7 +50,7 @@ public class GyroBasedBalancing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("IN EXECUTE");
+    // System.out.println("IN EXECUTE");
     yaw = swerve.getYaw(); 
     pitch = swerve.getPitch();
     roll = swerve.getRoll();
