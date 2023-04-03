@@ -24,28 +24,26 @@
 
  package frc.robot;
 
- import edu.wpi.first.apriltag.AprilTagFieldLayout;
- import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.cameraserver.CameraServer;
+ import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
- import java.io.IOException;
-import java.lang.annotation.Target;
-import java.util.List;
-import java.util.Optional;
- import org.photonvision.EstimatedRobotPose;
- import org.photonvision.PhotonCamera;
- import org.photonvision.PhotonPoseEstimator;
- import org.photonvision.PhotonPoseEstimator.PoseStrategy;
-import org.photonvision.targeting.PhotonTrackedTarget;
  
  public class VisionWrapper {
      private PhotonCamera photonCamera;
@@ -54,7 +52,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
      private MedianFilter yDistanceFilter = new MedianFilter(1);
  
      public VisionWrapper() {
-         photonCamera = new PhotonCamera("Front_Camera");
+         photonCamera = new PhotonCamera(Constants.PhotonConstants.cameraString);
  
          try {
              AprilTagFieldLayout fieldLayout = AprilTagFields.k2023ChargedUp.loadAprilTagLayoutField();
@@ -64,7 +62,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
                              PoseStrategy.MULTI_TAG_PNP, 
                              photonCamera, 
                              new Transform3d(
-                                new Translation3d(0, 0, 0), 
+                                new Translation3d(Constants.PhotonConstants.cameraX, Constants.PhotonConstants.cameraY, Constants.PhotonConstants.cameraZ),
                                 new Rotation3d(0, 0, 0)));
 
              photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
