@@ -182,6 +182,15 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 
+    public static final class PhotonConstants {
+
+        public static final String cameraString = "Front_Camera";
+        
+        public static final double cameraX = Units.inchesToMeters(3.9764);
+        public static final double cameraY = Units.inchesToMeters(-0.7953);
+        public static final double cameraZ = Units.inchesToMeters(23.45);
+    }
+
     public static final class OperatorConstants {
         public static final int kDriverControllerPort = 0;
         public static final int kOperatorControllerPort = 1;

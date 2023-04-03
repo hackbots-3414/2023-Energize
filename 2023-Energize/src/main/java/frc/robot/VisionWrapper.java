@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.DriverStation;
      private MedianFilter yDistanceFilter = new MedianFilter(1);
  
      public VisionWrapper() {
-         photonCamera = new PhotonCamera("Front_Camera");
+         photonCamera = new PhotonCamera(Constants.PhotonConstants.cameraString);
  
          try {
              AprilTagFieldLayout fieldLayout = AprilTagFields.k2023ChargedUp.loadAprilTagLayoutField();
@@ -40,7 +40,7 @@ import edu.wpi.first.wpilibj.DriverStation;
                              PoseStrategy.MULTI_TAG_PNP, 
                              photonCamera, 
                              new Transform3d(
-                                new Translation3d(0, 0, 0), 
+                                new Translation3d(Constants.PhotonConstants.cameraX, Constants.PhotonConstants.cameraY, Constants.PhotonConstants.cameraZ),
                                 new Rotation3d(0, 0, 0)));
 
              photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
