@@ -23,7 +23,6 @@ public class MoveShoulder extends CommandBase {
   public void execute() {
     shoulder.set(speed);
   }
-    
 
   @Override
   public void end(boolean interrupted) {
