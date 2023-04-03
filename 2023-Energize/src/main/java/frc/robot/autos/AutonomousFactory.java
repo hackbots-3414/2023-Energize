@@ -84,7 +84,6 @@ public class AutonomousFactory {
     private static final AutonomousFactory me = new AutonomousFactory();
 
     private static Swerve swerve;
-    private static Intake intake;
 
     private static HashMap<String, Command> eventMap = new HashMap<>();
 
@@ -94,11 +93,6 @@ public class AutonomousFactory {
 
     public static AutonomousFactory getInstance(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
         swerve = m_swerve;
-        intake = m_intake;
-        // eventMap.put("ShootHigh", new SequentialCommandGroup(new IntakeCommand(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(Constants.IntakeConstants.intakeSpeedPercent))));
-        // eventMap.put("IntakeEnd", new SequentialCommandGroup(new IntakeAuto(wrist, shoulder, 0), new InstantCommand(() -> intake.spinHand(0))));
-        eventMap.put("Eject", new SequentialCommandGroup(new InstantCommand(() -> intake.set(Constants.IntakeConstants.ejectSpeedAutonPercent)), new InstantCommand(() -> Timer.delay(0.1)), new InstantCommand(() -> intake.set(0))));
-        SmartDashboard.putNumber("Auton Theta kP", Constants.AutoConstants.kPThetaController);
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
         eventMap.put("Intake", new IntakeCommand(m_intake).withTimeout(3));
@@ -177,25 +171,6 @@ public class AutonomousFactory {
         ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));
         return autoBuilder.fullAuto(pathGroup);
     }
-
-    // private Command followTrajectoryWithEventsAndOnTheFlyCommand(String pathName) {
-    //     ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-
-    //     swerve.resetOdometry(pathGroup.get(0).getInitialHolonomicPose());
-        
-    //     return new SequentialCommandGroup(followTrajectoryOnTheFly(resetToVision(), new PathPoint(pathGroup.get(0).getInitialPose().getTranslation(), pathGroup.get(0).getInitialPose().getRotation())), autoBuilder.fullAuto(pathGroup));
-    // }
-
-    // private Command placeCommand(Heights height) {
-    //     if (height == Heights.Low) {
-    //         // code to place object low
-    //     } else if (height == Heights.Mid) {
-    //         // code to place object mid
-    //     } else if (height == Heights.High) {
-    //         // code to place objects high
-    //     }
-    //     return null;
-    // }
 
     public Command eventChooser(AutonChoice choice) {
         return followTrajectoryWithEventsCommand(choice.value);
