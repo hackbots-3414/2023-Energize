@@ -168,12 +168,12 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 2 / 2; // FIXME: Revert these back to normal
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05 / 2; // FIXME: Revert these back to normal
+        public static final double kMaxSpeedMetersPerSecond = 2;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05;
         public static final double kMaxBalanceSpeedMetersPerSecond = 1;
         public static final double kMaxBalanceAccelerationMetersPerSecondSquared = 1;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI / 2; // FIXME: Revert these back to normal
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 2; // FIXME: Revert these back to normal
+        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
         public static final double kPXController = 2.0;
         public static final double kPYController = 2.0;
