@@ -7,9 +7,6 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
-import ch.qos.logback.core.util.CachingDateFormatter;
-import frc.robot.subsystems.Shoulder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
