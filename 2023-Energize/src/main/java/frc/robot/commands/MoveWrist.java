@@ -1,10 +1,6 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Wrist;
 
 public class MoveWrist extends CommandBase {
@@ -16,7 +12,6 @@ public class MoveWrist extends CommandBase {
     this.wrist = wrist;
     this.speed = speed;
     addRequirements(wrist);
-
   }
 
   @Override
@@ -40,5 +35,4 @@ public class MoveWrist extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-
 }

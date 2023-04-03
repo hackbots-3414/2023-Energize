@@ -1,30 +1,6 @@
-/*
- * MIT License
- *
- * Copyright (c) 2022 PhotonVision
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+package frc.robot;
 
- package frc.robot;
-
- import java.io.IOException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +19,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
  
  public class VisionWrapper {
@@ -73,15 +51,15 @@ import edu.wpi.first.wpilibj.DriverStation;
          }
      }
 
-     public List getTargets() {
+     public List<PhotonTrackedTarget> getTargets() {
         return photonCamera.getLatestResult().targets;
      }
 
-     public Matrix getStandardD() {
+     public Matrix<N3, N1> getStandardD() {
         PhotonTrackedTarget target = photonCamera.getLatestResult().getBestTarget();
         Transform3d distance = target.getBestCameraToTarget();
 
-        Matrix values = new Matrix<>(Nat.N3(), Nat.N1());
+        Matrix<N3, N1> values = new Matrix<>(Nat.N3(), Nat.N1());
         values.set(0, 0, Math.pow(xDistanceFilter.calculate(distance.getX()), 2)*0.01);
         values.set(1, 0, Math.pow(yDistanceFilter.calculate(distance.getY()), 2)*0.01);
         values.set(2, 0, Math.pow(distance.getRotation().getAngle(), 2)*1.0);
