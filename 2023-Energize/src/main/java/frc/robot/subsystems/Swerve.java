@@ -203,8 +203,8 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putData(fieldSim);
-        // swerveOdometry.update(getYaw(), getModulePositions());
-        updateOdometry();
+        swerveOdometry.update(getYaw(), getModulePositions());
+        //updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
