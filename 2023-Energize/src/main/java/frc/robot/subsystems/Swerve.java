@@ -84,6 +84,7 @@ public class Swerve extends SubsystemBase {
                 getModulePositions(), new Pose2d(), robotSD, visionSD);
         fieldSim = new Field2d();
         visionWrapper = new VisionWrapper();
+        updateOdometry();
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -203,8 +204,9 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putData(fieldSim);
+        updateOdometry();
         swerveOdometry.update(getYaw(), getModulePositions());
-        //updateOdometry();
+        // updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
@@ -233,44 +235,44 @@ public class Swerve extends SubsystemBase {
     }
 
     public void updateOdometry() {
-        poseEstimator.update(getYaw(), getModulePositions());
+        Pose2d newPose = poseEstimator.update(getYaw(), getModulePositions());
 
-        Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+        // Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
 
-        try {
-            if (result.isPresent()) {
-                poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
-                EstimatedRobotPose camPose = result.get();
-                Pose2d robotLocation = camPose.estimatedPose.toPose2d();
+        // try {
+        //     if (result.isPresent()) {
+        //         poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
+        //         EstimatedRobotPose camPose = result.get();
+        //         Pose2d robotLocation = camPose.estimatedPose.toPose2d();
 
 
 
-                // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {
-                    poseEstimator.addVisionMeasurement(
-                    robotLocation,
-                    camPose.timestampSeconds);
-                    fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-                // }
+        //         // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {
+        //             poseEstimator.addVisionMeasurement(
+        //             robotLocation,
+        //             camPose.timestampSeconds);
+        //             fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+        //         // }
                 
                 
-            } /* else {
-                fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
-            }*/
+        //     } /*else {
+        //         fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+        //     } */
 
-            fieldSim.getObject("Actual Pos").setPose(getPose());
-            fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
+        //     fieldSim.getObject("Actual Pos").setPose(getPose());
+        //     fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
             
-            Pose2d estimatedPose = poseEstimator.getEstimatedPosition();
-            Pose2d newPose = new Pose2d(estimatedPose.getTranslation(), getYaw());
+        //     Pose2d estimatedPose = poseEstimator.getEstimatedPosition();
+        //     Pose2d newPose = new Pose2d(estimatedPose.getTranslation(), getYaw());
 
             resetOdometry(newPose);
-        } catch (Exception e) {
-            visionError++;
-            if (visionError % 1000 == 0) {
-                log.error("Beelink exception caught: " + e.toString());
-            }
+        // } catch (Exception e) {
+        //     visionError++;
+        //     if (visionError % 1000 == 0) {
+        //         log.error("Beelink exception caught: " + e.toString());
+        //     }
 
-        }
+        // }
 
     }
 
