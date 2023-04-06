@@ -56,7 +56,7 @@ public class DecelerateCommand extends CommandBase {
     // Display values in SmartDashboard:
     SmartDashboard.putNumber("Distance to AprilTag (X)", x);
     SmartDashboard.putNumber("Limit", speedLimit);
-    // SmartDashboard.putBoolean("Infrared sensor", irSensor.getIRState());
+    SmartDashboard.putBoolean("Infrared sensor in Dec", irSensor.getIRState());
 
 
     double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);

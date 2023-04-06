@@ -122,7 +122,7 @@ public class RobotContainer {
 
     SmartDashboard.putData("Coast Mode", new InstantCommand(() -> armCoastMode()));
     SmartDashboard.putData("Brake Mode", new InstantCommand(() -> armBrakeMode()));
-
+    SmartDashboard.putData("Reset Wheels", new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
   }
 
   public Swerve getSwerve() {

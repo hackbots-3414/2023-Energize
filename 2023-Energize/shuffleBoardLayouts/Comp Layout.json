@@ -11,10 +11,10 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "4,0": {
+          "2,0": {
             "size": [
-              5,
-              3
+              4,
+              1
             ],
             "content": {
               "_type": "ComboBox Chooser",
@@ -24,26 +24,10 @@
               "_showGlyph": false
             }
           },
-          "9,0": {
-            "size": [
-              4,
-              3
-            ],
-            "content": {
-              "_type": "Simple Dial",
-              "_source0": "network_table:///SmartDashboard/Time remaining:",
-              "_title": "Time remaining:",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Range/Min": 0.0,
-              "Range/Max": 150.0,
-              "Visuals/Show value": true
-            }
-          },
           "0,0": {
             "size": [
-              4,
-              3
+              2,
+              1
             ],
             "content": {
               "_type": "Boolean Box",
@@ -55,10 +39,10 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "0,3": {
+          "0,1": {
             "size": [
-              13,
-              3
+              3,
+              2
             ],
             "content": {
               "_type": "Boolean Box",
@@ -68,6 +52,35 @@
               "_showGlyph": false,
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,0": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Time remaining:",
+              "_title": "Time remaining:",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 145.0,
+              "Visuals/Show value": true
+            }
+          },
+          "3,1": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Reset Wheels",
+              "_title": "Reset Wheels",
+              "_glyph": 148,
+              "_showGlyph": false
             }
           }
         }
@@ -174,6 +187,21 @@
               "Visuals/Starting angle": 180.0,
               "Visuals/Show tick mark ring": true,
               "Visuals/Counter clockwise": false
+            }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Infrared sensor",
+              "_title": "SmartDashboard/Infrared sensor",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
@@ -334,9 +362,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -651.0,
-    "y": -11.0,
-    "width": 1942.0,
-    "height": 1042.0
+    "x": -7.333333492279053,
+    "y": -7.333333492279053,
+    "width": 1294.6666259765625,
+    "height": 694.6666870117188
   }
 }

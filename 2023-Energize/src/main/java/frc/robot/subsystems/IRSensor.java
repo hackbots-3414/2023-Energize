@@ -23,7 +23,7 @@ public class IRSensor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Infrared sensor", !irSensor.get());
+    SmartDashboard.putBoolean("Infrared sensor", irSensor.get());
     if (getIRState() && !isPickUpComplete) {
       isPickUpComplete = true;
       //Start timer
