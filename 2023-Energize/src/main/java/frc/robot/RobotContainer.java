@@ -51,6 +51,7 @@ public class RobotContainer {
   private final JoystickButton robotCentric = new JoystickButton(driver, 10); //fix me Swerve subsys overwrites
   // private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
   // private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
+  private final JoystickButton resetModsToAbs = new JoystickButton(driver, 16);
 
   /* Operator Buttons */
   private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -144,6 +145,7 @@ public class RobotContainer {
     // aButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     // xButton.whileTrue(new LedCommand(m_ledSubsystem, m_Intake));
     intakeButton.whileTrue(new IntakeCommand(m_Intake));
+    resetModsToAbs.whileTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
     
     shelfButton.whileTrue(
       new SequentialCommandGroup(

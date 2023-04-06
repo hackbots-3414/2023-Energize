@@ -195,6 +195,7 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
+        log.warn("Mod positions set to absolute");
     }
 
     @Override
