@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
     ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
 
-    DataLogManager.start();
+    // DataLogManager.start();
     
     setUpLimeLight();
   }
