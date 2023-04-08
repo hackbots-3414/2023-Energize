@@ -65,7 +65,7 @@ public boolean getRunningIntake() {
     // hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
     hand.configSupplyCurrentLimit(
         new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.handCurrentLimit, 0, 0),
-        IntakeConstants.canPause);
+        10);
     // hand.burnFlash();
   }
 
@@ -73,7 +73,8 @@ public boolean getRunningIntake() {
     // hand.clearFaults();
     // hand.setSmartCurrentLimit(Constants.IntakeConstants.secondHandCurrentLimit);
     hand.configSupplyCurrentLimit(
-        new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.secondHandCurrentLimit, 0, 0));
+        new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.secondHandCurrentLimit, 0, 0),
+        10);
     // COMMENTED THE CANPAUSE
     // hand.burnFlash();
   }
