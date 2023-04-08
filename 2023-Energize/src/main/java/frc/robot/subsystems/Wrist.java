@@ -158,8 +158,8 @@ public class Wrist extends ProfiledPIDSubsystem {
     super.periodic();
     wrist.feed();
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Wrist pos", getPosition());
-    SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
+    // SmartDashboard.putNumber("Wrist pos", getPosition());
+    // SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
     SmartDashboard.putNumber("Wrist Angle", getWristAngle());
   }
 }

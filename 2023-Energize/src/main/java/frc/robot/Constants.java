@@ -166,8 +166,8 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 2;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05;
+        public static final double kMaxSpeedMetersPerSecond = 2; // 2
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05; // 1.05
         public static final double kMaxBalanceSpeedMetersPerSecond = 1;
         public static final double kMaxBalanceAccelerationMetersPerSecondSquared = 1;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -175,6 +175,7 @@ public final class Constants {
 
         public static final double kPXController = 2.0;
         public static final double kPYController = 2.0;
+
         public static final double kPThetaController = 3.80;
 
         /* Constraint for the motion profilied robot angle controller */
@@ -225,7 +226,7 @@ public final class Constants {
 
         //main bot
         public static final double shoulderCanCoderOffset = 4.21;//14.67; //9.31
-        public static final double wristCanCoderOffset = 77.39;//-109.42;  //-53.78
+        public static final double wristCanCoderOffset = 69.6;// 77.39 //-109.42;  //-53.78
 
         //woody
         // public static final double shoulderCanCoderOffset = 135.8;
@@ -285,7 +286,7 @@ public final class Constants {
         public static final double midWristAngle = Math.toRadians(-44);
         public static final double midShoulderAngle = Math.toRadians(-13);
 
-        public static final double highWristAngle = Math.toRadians(-33);
+        public static final double highWristAngle = Math.toRadians(-47);
         public static final double highShoulderAngle = Math.toRadians(8.5);
 
         public static final double shelfWristAngle = Math.toRadians(-71);

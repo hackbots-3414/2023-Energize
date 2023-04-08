@@ -104,9 +104,9 @@ public boolean getRunningIntake() {
     //   intakeLogic();
     // }
 
-    SmartDashboard.putNumber("Hand Motor Current", getCurrent());
+    // SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     SmartDashboard.putBoolean("Has Object", hasObject);
-    SmartDashboard.putBoolean("Running Intake", getRunningIntake());
+    // SmartDashboard.putBoolean("Running Intake", getRunningIntake());
     currentFilterValue = currentFilter.calculate(hand.getSupplyCurrent());
   }
 

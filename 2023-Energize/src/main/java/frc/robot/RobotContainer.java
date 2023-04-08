@@ -46,9 +46,11 @@ public class RobotContainer {
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 13);
   // private final JoystickButton reducedSpeed = new JoystickButton(driver, 9);
-  // private final JoystickButton autoBalance = new JoystickButton(driver, XboxController.Button.kA.value);
-  // private final JoystickButton setX = new JoystickButton(driver, XboxController.Button.kX.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, 10); //fix me Swerve subsys overwrites
+  // private final JoystickButton autoBalance = new JoystickButton(driver,
+  // XboxController.Button.kA.value);
+  // private final JoystickButton setX = new JoystickButton(driver,
+  // XboxController.Button.kX.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, 10); // fix me Swerve subsys overwrites
   // private final JoystickButton ledConeButton = new JoystickButton(driver, 2);
   // private final JoystickButton ledCubeButton = new JoystickButton(driver, 3);
   private final JoystickButton resetModsToAbs = new JoystickButton(driver, 16);
@@ -61,6 +63,7 @@ public class RobotContainer {
   private final JoystickButton highButton = new JoystickButton(operator, XboxController.Button.kY.value);
   private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton shelfButton = new JoystickButton(operator, XboxController.Button.kStart.value);
+  private final JoystickButton shelfSequence = new JoystickButton(operator, XboxController.Button.kRightStick.value);
   private final JoystickButton standingConeButton = new JoystickButton(operator, XboxController.Button.kBack.value);
 
   private final POVButton shoulderUp = new POVButton(operator, 90);
@@ -166,6 +169,14 @@ public class RobotContainer {
         )
       )
     );
+
+    shelfSequence.whileTrue(
+      new ParallelCommandGroup(
+        new IntakeCommand(m_Intake),
+        new AutoArm(m_Shoulder, m_Wrist, 7)
+      ).andThen(new AutoArm(m_Shoulder, m_Wrist, 5))
+    );
+
     ejectButton.whileTrue(new ejectCommand(m_Intake));
     // stowAndLowButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 0));
     stowAndLowButton.onTrue(

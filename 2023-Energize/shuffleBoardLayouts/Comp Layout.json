@@ -249,8 +249,7 @@
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul",
-              "Visible data/SmartDashboard/Hand Motor Current": true
+              "Y-axis/Unit": "ul"
             }
           },
           "0,0": {
@@ -362,9 +361,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.333333492279053,
-    "y": -7.333333492279053,
-    "width": 1294.6666259765625,
-    "height": 694.6666870117188
+    "x": -6.666666507720947,
+    "y": 0.0,
+    "width": 1289.3333740234375,
+    "height": 686.6666870117188
   }
 }

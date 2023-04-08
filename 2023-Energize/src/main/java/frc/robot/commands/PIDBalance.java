@@ -29,7 +29,7 @@ public class PIDBalance extends PIDCommand {
     );
     getController().enableContinuousInput(-180, 180);
     getController().setTolerance(1.8, .1);
-    SmartDashboard.putData(getController());
+    // SmartDashboard.putData(getController());
     this.alwaysRun = alwaysRun;
     
     addRequirements(swerve);
