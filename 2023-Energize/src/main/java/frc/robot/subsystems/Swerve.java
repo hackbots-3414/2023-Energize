@@ -195,26 +195,27 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
+        log.warn("Mod positions set to absolute");
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putData(fieldSim);
+        // SmartDashboard.putData(fieldSim);
         swerveOdometry.update(getYaw(), getModulePositions());
         // updateOdometry();
         translation2d = getPose().getTranslation();
         SmartDashboard.putBoolean("IsFieldRelative", isfieldRelative);
-        SmartDashboard.putNumber("gyro", getYaw().getDegrees());
-        SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
+        // SmartDashboard.putNumber("gyro", getYaw().getDegrees());
+        // SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
-        for(SwerveModule mod : mSwerveMods){
-        SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
-        mod.getCanCoder().getDegrees());
+        // for(SwerveModule mod : mSwerveMods){
+        // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
+        // mod.getCanCoder().getDegrees());
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated",
         // mod.getPosition().angle.getDegrees());
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity",
         // mod.getState().speedMetersPerSecond);
-        }
+        // }
     }
 
     public void setX() {

@@ -65,7 +65,7 @@ public boolean getRunningIntake() {
     // hand.setSmartCurrentLimit(Constants.IntakeConstants.handCurrentLimit);
     hand.configSupplyCurrentLimit(
         new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.handCurrentLimit, 0, 0),
-        IntakeConstants.canPause);
+        10);
     // hand.burnFlash();
   }
 
@@ -74,7 +74,8 @@ public boolean getRunningIntake() {
     // hand.setSmartCurrentLimit(Constants.IntakeConstants.secondHandCurrentLimit);
     hand.configSupplyCurrentLimit(
         new SupplyCurrentLimitConfiguration(true, Constants.IntakeConstants.secondHandCurrentLimit, 0, 0),
-        IntakeConstants.canPause);
+        10);
+    // COMMENTED THE CANPAUSE
     // hand.burnFlash();
   }
 
@@ -104,9 +105,9 @@ public boolean getRunningIntake() {
     //   intakeLogic();
     // }
 
-    SmartDashboard.putNumber("Hand Motor Current", getCurrent());
+    // SmartDashboard.putNumber("Hand Motor Current", getCurrent());
     SmartDashboard.putBoolean("Has Object", hasObject);
-    SmartDashboard.putBoolean("Running Intake", getRunningIntake());
+    // SmartDashboard.putBoolean("Running Intake", getRunningIntake());
     currentFilterValue = currentFilter.calculate(hand.getSupplyCurrent());
   }
 

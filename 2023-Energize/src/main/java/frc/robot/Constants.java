@@ -112,7 +112,7 @@ public final class Constants {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 7;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(260.51);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(259.80);
             //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(310.95); // LoveLace
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -141,33 +141,33 @@ public final class Constants {
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 18;
-            public static final int angleMotorID = 19;
-            public static final int canCoderID = 17;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
-            //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
-            public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-        }
-
-         /* Spare - Module 4 */
-        // public static final class SpareMod { //TODO: This must be tuned to specific robot
-        //     public static final int driveMotorID = 30;
-        //     public static final int angleMotorID = 31;
-        //     public static final int canCoderID = 32;
+        // public static final class Mod3 { //TODO: This must be tuned to specific robot
+        //     public static final int driveMotorID = 18;
+        //     public static final int angleMotorID = 19;
+        //     public static final int canCoderID = 17;
         //     public static final Rotation2d angleOffset = Rotation2d.fromDegrees(70.48);
         //     //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
         //     public static final SwerveModuleConstants constants = 
         //         new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         // }
+
+         /* Spare - Module 4 */
+        public static final class Mod3 { //TODO: This must be tuned to specific robot
+            public static final int driveMotorID = 30; //THIS IS SPARE
+            public static final int angleMotorID = 31;
+            public static final int canCoderID = 32;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(94.13);
+            //public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.96); //Lovelace
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+        }
         
     }
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 2;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05;
+        public static final double kMaxSpeedMetersPerSecond = 2; // 2
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05; // 1.05
         public static final double kMaxBalanceSpeedMetersPerSecond = 1;
         public static final double kMaxBalanceAccelerationMetersPerSecondSquared = 1;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -175,6 +175,7 @@ public final class Constants {
 
         public static final double kPXController = 2.0;
         public static final double kPYController = 2.0;
+
         public static final double kPThetaController = 3.80;
 
         /* Constraint for the motion profilied robot angle controller */
@@ -225,7 +226,7 @@ public final class Constants {
 
         //main bot
         public static final double shoulderCanCoderOffset = 4.21;//14.67; //9.31
-        public static final double wristCanCoderOffset = 77.39;//-109.42;  //-53.78
+        public static final double wristCanCoderOffset = 69.6;// 77.39 //-109.42;  //-53.78
 
         //woody
         // public static final double shoulderCanCoderOffset = 135.8;
@@ -276,7 +277,7 @@ public final class Constants {
         public static final double stowedWristAngle = Math.toRadians(0);
         public static final double stowedShoulderAngle = Math.toRadians(-86.57);
 
-        public static final double pickUpWristAngle = Math.toRadians(-37);  
+        public static final double pickUpWristAngle = Math.toRadians(-37.5);  
         public static final double pickUpShoulderAngle = Math.toRadians(-66.882); //-74.882 // -68.25
 
         // public static final double lowWristAngle = Math.toRadians(35.0);
@@ -285,11 +286,11 @@ public final class Constants {
         public static final double midWristAngle = Math.toRadians(-44);
         public static final double midShoulderAngle = Math.toRadians(-13);
 
-        public static final double highWristAngle = Math.toRadians(-33);
+        public static final double highWristAngle = Math.toRadians(-47);
         public static final double highShoulderAngle = Math.toRadians(8.5);
 
         public static final double shelfWristAngle = Math.toRadians(-71);
-        public static final double shelfShoulderAngle = Math.toRadians(15.5);
+        public static final double shelfShoulderAngle = Math.toRadians(14);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
         public static final double standingConeShoulderAngle = Math.toRadians(-44);
@@ -300,7 +301,7 @@ public final class Constants {
         public static final double uprightConeShoulderAngle = Math.toRadians(-51.70);
         public static final double uprightConeWristAngle = Math.toRadians(-59); //estimated Wrist angle might not work
 
-        public static final double shelfShoulderDown = Math.toRadians(2.0);
+        public static final double shelfShoulderDown = Math.toRadians(1.0);
     }
 
     public static final class BalanceConstants {

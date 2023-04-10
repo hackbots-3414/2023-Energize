@@ -24,7 +24,7 @@ public class LedCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    DataLogManager.start();
+    // DataLogManager.start();
   }
 
   @Override

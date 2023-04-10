@@ -34,10 +34,10 @@ public class Wrist extends ProfiledPIDSubsystem {
   /** Creates a new Wrist. */
   private CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID);;
   private WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
-  private double wristkS = IntakeConstants.wristkS;
-  private double wristkG = IntakeConstants.wristkG;
-  private double wristkV = IntakeConstants.wristkV;
-  private double wristkA = IntakeConstants.wristkA;
+  // private double wristkS = IntakeConstants.wristkS;
+  // private double wristkG = IntakeConstants.wristkG;
+  // private double wristkV = IntakeConstants.wristkV;
+  // private double wristkA = IntakeConstants.wristkA;
 
   private ArmFeedforward m_feedforward = new ArmFeedforward(
       IntakeConstants.wristkS, IntakeConstants.wristkG,
@@ -56,11 +56,11 @@ public class Wrist extends ProfiledPIDSubsystem {
 
         this.m_Shoulder = m_Shoulder;
 
-        SmartDashboard.putData("WristPID", m_controller);
-        SmartDashboard.putNumber("wristkA: ", wristkA);
-        SmartDashboard.putNumber("wristkS: ", wristkS);
-        SmartDashboard.putNumber("wristkG: ", wristkG);
-        SmartDashboard.putNumber("wristkV: ", wristkV);
+        // SmartDashboard.putData("WristPID", m_controller);
+        // SmartDashboard.putNumber("wristkA: ", wristkA);
+        // SmartDashboard.putNumber("wristkS: ", wristkS);
+        // SmartDashboard.putNumber("wristkG: ", wristkG);
+        // SmartDashboard.putNumber("wristkV: ", wristkV);
 
     configWristEncoder();
     Timer.delay(1);
@@ -92,11 +92,11 @@ public class Wrist extends ProfiledPIDSubsystem {
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    wristkA = SmartDashboard.getNumber("wristkA: ", wristkA);
-    wristkS = SmartDashboard.getNumber("wristkS: ", wristkS);
-    wristkG = SmartDashboard.getNumber("wristkG: ", wristkG);
-    wristkV = SmartDashboard.getNumber("wristkV: ", wristkV);
-    m_feedforward = new ArmFeedforward(wristkS, wristkG, wristkV, wristkA);
+    // wristkA = SmartDashboard.getNumber("wristkA: ", wristkA);
+    // wristkS = SmartDashboard.getNumber("wristkS: ", wristkS);
+    // wristkG = SmartDashboard.getNumber("wristkG: ", wristkG);
+    // wristkV = SmartDashboard.getNumber("wristkV: ", wristkV);
+    // m_feedforward = new ArmFeedforward(wristkS, wristkG, wristkV, wristkA);
 
     // calculate feedforward from setpoint
     double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
@@ -158,8 +158,8 @@ public class Wrist extends ProfiledPIDSubsystem {
     super.periodic();
     wrist.feed();
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Wrist pos", getPosition());
-    SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
+    // SmartDashboard.putNumber("Wrist pos", getPosition());
+    // SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());
     SmartDashboard.putNumber("Wrist Angle", getWristAngle());
   }
 }

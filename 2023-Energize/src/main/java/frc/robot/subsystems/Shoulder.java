@@ -34,10 +34,10 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
   WPI_TalonFX shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
   CANCoder shoulderCanCoder = new CANCoder(IntakeConstants.ShoulderCanCoderID);
-  private double shoulderkS = IntakeConstants.shoulderkS;
-  private double shoulderkG = IntakeConstants.shoulderkG;
-  private double shoulderkV = IntakeConstants.shoulderkV;
-  private double shoulderkA = IntakeConstants.shoulderkA;
+  // private double shoulderkS = IntakeConstants.shoulderkS;
+  // private double shoulderkG = IntakeConstants.shoulderkG;
+  // private double shoulderkV = IntakeConstants.shoulderkV;
+  // private double shoulderkA = IntakeConstants.shoulderkA;
   private ArmFeedforward m_feedforward = new ArmFeedforward(
       IntakeConstants.shoulderkS, IntakeConstants.shoulderkG,
       IntakeConstants.shoulderkV, IntakeConstants.shoulderkA);
@@ -69,11 +69,11 @@ public class Shoulder extends ProfiledPIDSubsystem {
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    shoulderkA = SmartDashboard.getNumber("shoulderkA: ", shoulderkA);
-    shoulderkS = SmartDashboard.getNumber("shoulderkS: ", shoulderkS);
-    shoulderkG = SmartDashboard.getNumber("shoulderkG: ", shoulderkG);
-    shoulderkV = SmartDashboard.getNumber("shoulderkV: ", shoulderkV);
-    m_feedforward = new ArmFeedforward(shoulderkS, shoulderkG, shoulderkV, shoulderkA);
+    // shoulderkA = SmartDashboard.getNumber("shoulderkA: ", shoulderkA);
+    // shoulderkS = SmartDashboard.getNumber("shoulderkS: ", shoulderkS);
+    // shoulderkG = SmartDashboard.getNumber("shoulderkG: ", shoulderkG);
+    // shoulderkV = SmartDashboard.getNumber("shoulderkV: ", shoulderkV);
+    // m_feedforward = new ArmFeedforward(shoulderkS, shoulderkG, shoulderkV, shoulderkA);
     //calculate feedforward from setpoint
     double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     //add the feedforward to the PID output to get the motor output
@@ -149,8 +149,8 @@ public class Shoulder extends ProfiledPIDSubsystem {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Shoulder pos", getPosition());
 
-    SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
+    // SmartDashboard.putNumber("Shoulder CANCoder", getCanCoder());
     // SmartDashboard.putNumber("Shoulder Velo", Math.toDegrees(getCanCoderVelo()));
-    SmartDashboard.putNumber("Shoulder Current", shoulder.getSupplyCurrent());
+    // SmartDashboard.putNumber("Shoulder Current", shoulder.getSupplyCurrent());
   }
 }

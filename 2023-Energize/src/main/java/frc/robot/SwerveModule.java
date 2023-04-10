@@ -159,24 +159,34 @@ public class SwerveModule {
     }
 
     private void configAngleEncoder() {
-        angleEncoder.configFactoryDefault();
-        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+        angleEncoder.configFactoryDefault(Constants.IntakeConstants.canPause);
+        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig, Constants.IntakeConstants.canPause);
     }
 
     private void configAngleMotor() {
-        mAngleMotor.configFactoryDefault();
-        mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
+        mAngleMotor.configFactoryDefault(Constants.IntakeConstants.canPause);
+        mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig, Constants.IntakeConstants.canPause);
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            System.out.println("Angle Neutral Mode Delay: " + e);
+        }
         resetToAbsolute();
     }
 
     private void configDriveMotor() {
-        mDriveMotor.configFactoryDefault();
-        mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
+        mDriveMotor.configFactoryDefault(Constants.IntakeConstants.canPause);
+        mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig, Constants.IntakeConstants.canPause);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
-        mDriveMotor.setSelectedSensorPosition(0);
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            System.out.println("Drive Neutral Mode Delay: " + e);
+        }
+        mDriveMotor.setSelectedSensorPosition(0, 0, Constants.IntakeConstants.canPause);
     }
 
     public SwerveModuleState getState() {
