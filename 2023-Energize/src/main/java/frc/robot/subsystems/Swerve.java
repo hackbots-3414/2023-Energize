@@ -71,7 +71,12 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        for (SwerveModule mod : mSwerveMods) {
+            swerveModulePositions[mod.moduleNumber] = mod.getPosition();
+            swerveModuleSensorPositions[mod.moduleNumber] = mod.getSensorPosition();
+        }
+
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getHardwareYaw(), getModulePositions());
 
         Matrix<N3, N1> robotSD = new Matrix<>(Nat.N3(), Nat.N1());
         robotSD.set(0, 0, 0.1);
