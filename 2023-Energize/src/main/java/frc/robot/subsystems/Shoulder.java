@@ -32,7 +32,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
   final static Logger logger = LoggerFactory.getLogger(Shoulder.class);
 
   private double shoulderPosition;
-  private double shoulderCanCoderPosition;
   private double shoulderCanCoderVelocity;
 
   WPI_TalonFX shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
@@ -129,7 +128,7 @@ public class Shoulder extends ProfiledPIDSubsystem {
   }
 
   public double getCanCoder() {
-    return shoulderCanCoderPosition;
+    return shoulderCanCoder.getAbsolutePosition();
   }
 
   public double getCanCoderVelo() {
@@ -150,7 +149,6 @@ public class Shoulder extends ProfiledPIDSubsystem {
     shoulder.feed();
 
     shoulderPosition = shoulder.getSelectedSensorPosition();
-    shoulderCanCoderPosition = shoulderCanCoder.getAbsolutePosition();
     shoulderCanCoderVelocity = shoulderCanCoder.getVelocity();
 
     // This method will be called once per scheduler run
