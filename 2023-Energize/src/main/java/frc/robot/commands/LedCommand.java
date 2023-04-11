@@ -5,7 +5,6 @@ import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.Intake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import edu.wpi.first.wpilibj.DataLogManager;
 
 public class LedCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(LedCommand.class);

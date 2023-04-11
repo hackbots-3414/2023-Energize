@@ -31,6 +31,11 @@ public class Wrist extends ProfiledPIDSubsystem {
 
   private Shoulder m_Shoulder;
 
+  private double canCoderPosition;
+  private double shoulderCanCoderPosition;
+  private double wristSensorPosition;
+  private double wristVelocity;
+
   /** Creates a new Wrist. */
   private CANCoder wristCanCoder = new CANCoder(IntakeConstants.wristCanCoderID);;
   private WPI_TalonFX wrist = new WPI_TalonFX(IntakeConstants.wristMotorID);
@@ -111,7 +116,7 @@ public class Wrist extends ProfiledPIDSubsystem {
   }
 
   public double getCanCoderVelo() {
-    return Math.toRadians(wristCanCoder.getVelocity());
+    return Math.toRadians(wristVelocity);
   }
 
   private void configWristEncoder() {
@@ -125,8 +130,7 @@ public class Wrist extends ProfiledPIDSubsystem {
   }
 
   public double getPosition() {
-    // FIX ME USE CAN CODER
-    return wrist.getSelectedSensorPosition();
+    return wristSensorPosition;
   }
 
   public void stopWrist() {
@@ -134,7 +138,7 @@ public class Wrist extends ProfiledPIDSubsystem {
   }
 
   public double getCanCoder() {
-    return wristCanCoder.getAbsolutePosition();
+    return canCoderPosition;
   }
 
   public double getWristAngle() {
@@ -142,7 +146,7 @@ public class Wrist extends ProfiledPIDSubsystem {
   }
 
   private double getShoulderCanCoder() {
-    return m_Shoulder.getCanCoder();
+    return shoulderCanCoderPosition;
   }
 
   public void setBrakeMode() {
@@ -157,6 +161,12 @@ public class Wrist extends ProfiledPIDSubsystem {
   public void periodic() {
     super.periodic();
     wrist.feed();
+
+    wristSensorPosition = wrist.getSelectedSensorPosition();
+    canCoderPosition = wristCanCoder.getAbsolutePosition();
+    shoulderCanCoderPosition = m_Shoulder.getCanCoder();
+    wristVelocity = wristCanCoder.getVelocity();
+
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Wrist pos", getPosition());
     // SmartDashboard.putNumber("Wrist CANCoder", getCanCoder());

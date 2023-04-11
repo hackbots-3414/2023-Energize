@@ -13,6 +13,8 @@ public class IRSensor extends SubsystemBase {
   private DigitalInput irSensor = new DigitalInput(0);
   private boolean isPickUpComplete = false;
   private double startTime;
+
+  private boolean irSensorState;
   /** Creates a new IRSensor. */
   public IRSensor() {}
 
@@ -23,7 +25,8 @@ public class IRSensor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Infrared sensor", irSensor.get());
+    irSensorState = irSensor.get();
+    SmartDashboard.putBoolean("Infrared sensor", irSensorState);
     if (getIRState() && !isPickUpComplete) {
       isPickUpComplete = true;
       //Start timer
@@ -36,6 +39,6 @@ public class IRSensor extends SubsystemBase {
   }
   
   public boolean getIRState() {
-    return !irSensor.get();
+    return !irSensorState;
   }
 }
