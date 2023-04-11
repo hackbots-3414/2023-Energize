@@ -76,7 +76,7 @@ public class AutonomousFactory {
             swerve::resetOdometry,
             Constants.Swerve.swerveKinematics,
             new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0), 
-            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, 0.0),
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, Constants.AutoConstants.kDThetaController),
             swerve::setModuleStates,
             eventMap,
             true,

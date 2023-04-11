@@ -23,9 +23,9 @@ public final class Constants {
                 COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(25.86); // TODO: This must be tuned to specific
+        public static final double trackWidth = Units.inchesToMeters(21.125); // TODO: This must be tuned to specific
                                                                              // robot
-        public static final double wheelBase = Units.inchesToMeters(26.125); // TODO: This must be tuned to specific
+        public static final double wheelBase = Units.inchesToMeters(21.125); // TODO: This must be tuned to specific
                                                                              // robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
@@ -167,16 +167,19 @@ public final class Constants {
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 2; // 2
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.05; // 1.05
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.15; // 1.05
+
         public static final double kMaxBalanceSpeedMetersPerSecond = 1;
         public static final double kMaxBalanceAccelerationMetersPerSecondSquared = 1;
+
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
         public static final double kPXController = 2.0;
         public static final double kPYController = 2.0;
 
-        public static final double kPThetaController = 3.80;
+        public static final double kPThetaController = 3.80; // 3.80 states value
+        public static final double kDThetaController = 0.0;
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
