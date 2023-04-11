@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import javax.management.relation.RoleNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,8 +11,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeCommand extends CommandBase {
   final static Logger logger = LoggerFactory.getLogger(IntakeCommand.class);
 
-  final Intake intake;  
-  private boolean ranCurrentLimits = false;
+  final Intake intake;
 
   public IntakeCommand(Intake intake) {
     this.intake = intake;

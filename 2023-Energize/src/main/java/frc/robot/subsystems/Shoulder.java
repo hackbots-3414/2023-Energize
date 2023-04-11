@@ -20,7 +20,6 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.lib.math.Conversions;
 import frc.robot.Constants;
@@ -31,6 +30,9 @@ public class Shoulder extends ProfiledPIDSubsystem {
   /** Creates a new Shoulder. */
 
   final static Logger logger = LoggerFactory.getLogger(Shoulder.class);
+
+  private double shoulderPosition;
+  private double shoulderCanCoderVelocity;
 
   WPI_TalonFX shoulder = new WPI_TalonFX(IntakeConstants.shoulderMotorID);
   CANCoder shoulderCanCoder = new CANCoder(IntakeConstants.ShoulderCanCoderID);
@@ -122,8 +124,7 @@ public class Shoulder extends ProfiledPIDSubsystem {
   }
 
   public double getPosition() {
-    // FIXME USE CAN CODER
-    return shoulder.getSelectedSensorPosition();
+    return shoulderPosition;
   }
 
   public double getCanCoder() {
@@ -131,7 +132,7 @@ public class Shoulder extends ProfiledPIDSubsystem {
   }
 
   public double getCanCoderVelo() {
-    return Math.toRadians(shoulderCanCoder.getVelocity());
+    return Math.toRadians(shoulderCanCoderVelocity);
   }
 
   public void setBrakeMode() {
@@ -146,6 +147,10 @@ public class Shoulder extends ProfiledPIDSubsystem {
   public void periodic() {
     super.periodic();
     shoulder.feed();
+
+    shoulderPosition = shoulder.getSelectedSensorPosition();
+    shoulderCanCoderVelocity = shoulderCanCoder.getVelocity();
+
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Shoulder pos", getPosition());
 

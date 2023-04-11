@@ -64,7 +64,7 @@ public class RobotContainer {
   private final JoystickButton pickUpButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton shelfButton = new JoystickButton(operator, XboxController.Button.kStart.value);
   private final JoystickButton shelfSequence = new JoystickButton(operator, XboxController.Button.kRightStick.value);
-  private final JoystickButton standingConeButton = new JoystickButton(operator, XboxController.Button.kBack.value);
+  private final JoystickButton shelfHeightButton = new JoystickButton(operator, XboxController.Button.kBack.value);
 
   private final POVButton shoulderUp = new POVButton(operator, 90);
   private final POVButton shoulderDown = new POVButton(operator, 270);
@@ -88,9 +88,9 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
-            () -> driver.getRawAxis(1),
-            () -> -driver.getRawAxis(0),
-            () -> -driver.getRawAxis(3),
+            () -> driver.getRawAxis(1)/0.7,
+            () -> -driver.getRawAxis(0)/0.9,
+            () -> -driver.getRawAxis(3)/0.85,
             () -> robotCentric.getAsBoolean())
 
     );
@@ -203,7 +203,7 @@ public class RobotContainer {
     highButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 4));
     pickUpButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 1));
     // shelfButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 5));
-    standingConeButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 6));
+    shelfHeightButton.whileTrue(new ArmCommand(m_Shoulder, m_Wrist, 5));
 
     shoulderUp.whileTrue(new MoveShoulder(m_Shoulder, Constants.IntakeConstants.shoulderMoveSpeedPercentage));
     shoulderDown.whileTrue(new MoveShoulder(m_Shoulder, -Constants.IntakeConstants.shoulderMoveSpeedPercentage));
