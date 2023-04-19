@@ -166,8 +166,8 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 2; // 2
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.15; // 1.05
+        public static final double kMaxSpeedMetersPerSecond = 1.9; // 2
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.13; // 1.05
 
         public static final double kMaxBalanceSpeedMetersPerSecond = 1;
         public static final double kMaxBalanceAccelerationMetersPerSecondSquared = 1;
