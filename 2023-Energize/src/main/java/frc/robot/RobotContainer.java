@@ -90,7 +90,7 @@ public class RobotContainer {
             s_Swerve,
             () -> driver.getRawAxis(1)/0.7,
             () -> -driver.getRawAxis(0)/0.9,
-            () -> -driver.getRawAxis(3)/0.85,
+            () -> -driver.getRawAxis(3),
             () -> robotCentric.getAsBoolean())
 
     );
