@@ -4,11 +4,16 @@
 
 package frc.robot.subsystems;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IRSensor extends SubsystemBase {
+
+  final static Logger logger = LoggerFactory.getLogger(IRSensor.class);
 
   private DigitalInput irSensor = new DigitalInput(0);
   private boolean isPickUpComplete = false;
@@ -31,6 +36,7 @@ public class IRSensor extends SubsystemBase {
       isPickUpComplete = true;
       //Start timer
       startTime = System.currentTimeMillis();
+      logger.warn("IR Sensor Triggered");
 
     }
     if ((System.currentTimeMillis() - startTime)/1000 >= 1) {

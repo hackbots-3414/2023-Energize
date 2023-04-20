@@ -160,7 +160,8 @@ public class RobotContainer {
           () -> driver.getRawAxis(1),
           () -> -driver.getRawAxis(0),
           () -> -driver.getRawAxis(3),
-          () -> robotCentric.getAsBoolean()
+          () -> robotCentric.getAsBoolean(),
+          m_Shoulder
         ),
         new ParallelCommandGroup(
           // new StopDriving(s_Swerve, m_Intake),

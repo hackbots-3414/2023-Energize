@@ -13,7 +13,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeAngles;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IRSensor;
+import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
 
 public class DecelerateCommand extends CommandBase {
@@ -24,10 +27,11 @@ public class DecelerateCommand extends CommandBase {
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
   private double speedLimit;
+  private Shoulder shoulder;
   /** Creates a new Decelerate. */
   public DecelerateCommand(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
   DoubleSupplier rotationSup,
-  BooleanSupplier robotCentricSup) {
+  BooleanSupplier robotCentricSup, Shoulder shoulder) {
 
     addRequirements(swerve);
     this.swerve = swerve;
@@ -36,6 +40,7 @@ public class DecelerateCommand extends CommandBase {
     this.strafeSup = strafeSup;
     this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
+    this.shoulder = shoulder;
   }
 
   @Override
@@ -80,6 +85,6 @@ public class DecelerateCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return irSensor.getIRState();
+    return (shoulder.getCanCoder() > IntakeAngles.shelfShoulderAngle - 15) && irSensor.getIRState();
   }
 }
