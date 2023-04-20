@@ -163,7 +163,7 @@ public class RobotContainer {
           () -> robotCentric.getAsBoolean()
         ),
         new ParallelCommandGroup(
-          new StopDriving(s_Swerve, m_Intake),
+          // new StopDriving(s_Swerve, m_Intake),
           new IntakeCommand(m_Intake),
           new AutoArm(m_Shoulder, m_Wrist, 7)
         )
