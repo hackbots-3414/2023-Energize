@@ -87,7 +87,7 @@ public class RobotContainer {
 
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
-            s_Swerve,
+            s_Swerve, m_Shoulder,
             () -> driver.getRawAxis(1)/0.7,
             () -> -driver.getRawAxis(0)/0.9,
             () -> -driver.getRawAxis(3),
