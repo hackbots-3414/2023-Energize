@@ -316,7 +316,7 @@ public final class Constants {
     }
 
     public static final class IntakeAutomatic {
-        public static final double shelfApproachSpeed = 0.01;
+        public static final double shelfApproachSpeed = 0.3;
         public static final double shelfApproachLimit = 80;
         public static final double redSideX = Units.inchesToMeters(596.51 - shelfApproachLimit);
         public static final double blueSideX = Units.inchesToMeters(26.19 + shelfApproachLimit);

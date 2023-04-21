@@ -26,7 +26,6 @@ public class DecelerateCommand extends CommandBase {
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
-  private double speedLimit;
   private Shoulder shoulder;
   /** Creates a new Decelerate. */
   public DecelerateCommand(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
@@ -86,10 +85,10 @@ public class DecelerateCommand extends CommandBase {
     //   translationVal *= speedLimit;
     // }  
 
-  @Override
-  public void end(boolean isInterrupted) {
-    swerve.drive(new Translation2d(0,0), 0, true, true);
-  }
+  // @Override
+  // public void end(boolean isInterrupted) {
+  //   swerve.drive(new Translation2d(0,0), 0, true, true);
+  // }
 
   @Override
   public boolean isFinished() {
