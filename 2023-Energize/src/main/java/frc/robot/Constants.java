@@ -271,7 +271,7 @@ public final class Constants {
         public static final double wristmaxVelo = Math.toRadians(190); // degrees / seconds
         public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
 
-        public static final double slowTurn = 0.7;
+        public static final double slowTurn = 0.6;
 
         public static final double speed = 0.2;
         public static final int canPause = 100;

@@ -45,18 +45,10 @@ public class DecelerateCommand extends CommandBase {
 
   @Override
   public void execute() {
-    Pose2d currentPose = swerve.getPose();
-    double x = currentPose.getX();
+    // Pose2d currentPose = swerve.getPose();
+    // double x = currentPose.getX();
 
-    if (irSensor.getIRState()) {
-      speedLimit = 0;
-      // SmartDashboard.putBoolean("Infrared sensor", irSensor.getIRState());
-      // System.out.println("Infrared sensor has been triggered!");
-    } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
-      speedLimit = Constants.IntakeAutomatic.slowLimit;
-    } else {
-      speedLimit = 1;
-    }
+    
 
     // Display values in SmartDashboard:
     // SmartDashboard.putNumber("Distance to AprilTag (X)", x);
@@ -68,10 +60,15 @@ public class DecelerateCommand extends CommandBase {
     double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
     double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
-    SmartDashboard.putNumber("translationVal", translationVal);
-    if (translationVal > speedLimit) {
-      translationVal = speedLimit;
+    if (shoulder.getCanCoder() > Constants.IntakeAngles.midShoulderAngle - 5) {
+      rotationVal *= Constants.IntakeConstants.slowTurn;
     }
+
+    // SmartDashboard.putNumber("translationVal", translationVal);
+    
+    // if (shoulder.getCanCoder() > Constants.IntakeAngles.shelfShoulderAngle - 15) {
+    //   translationVal *= speedLimit;
+    // }
 
     swerve.drive(
       new Translation2d(translationVal, strafeVal)
@@ -82,9 +79,20 @@ public class DecelerateCommand extends CommandBase {
     );
     
   }
+  // TODO: Move this code into end:
+  // SmartDashboard.putNumber("translationVal", translationVal);
+    
+    // if (shoulder.getCanCoder() > Constants.IntakeAngles.shelfShoulderAngle - 15) {
+    //   translationVal *= speedLimit;
+    // }  
+
+  @Override
+  public void end(boolean isInterrupted) {
+    swerve.drive(new Translation2d(0,0), 0, true, true);
+  }
 
   @Override
   public boolean isFinished() {
-    return (shoulder.getCanCoder() > IntakeAngles.shelfShoulderAngle - 15) && irSensor.getIRState();
+    return (shoulder.getCanCoder() > Constants.IntakeAngles.shelfShoulderAngle - 15) && irSensor.getIRState();
   }
 }
