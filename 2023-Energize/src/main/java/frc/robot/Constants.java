@@ -295,7 +295,7 @@ public final class Constants {
         public static final double highShoulderAngle = Math.toRadians(8.5);
 
         public static final double shelfWristAngle = Math.toRadians(-71);
-        public static final double shelfShoulderAngle = Math.toRadians(14);
+        public static final double shelfShoulderAngle = Math.toRadians(13.5);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
         public static final double standingConeShoulderAngle = Math.toRadians(-44);
