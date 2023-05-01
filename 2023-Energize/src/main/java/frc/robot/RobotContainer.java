@@ -87,10 +87,10 @@ public class RobotContainer {
 
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
-            s_Swerve,
+            s_Swerve, m_Shoulder,
             () -> driver.getRawAxis(1)/0.7,
             () -> -driver.getRawAxis(0)/0.9,
-            () -> -driver.getRawAxis(3)/0.85,
+            () -> -driver.getRawAxis(3),
             () -> robotCentric.getAsBoolean())
 
     );
@@ -160,10 +160,16 @@ public class RobotContainer {
           () -> driver.getRawAxis(1),
           () -> -driver.getRawAxis(0),
           () -> -driver.getRawAxis(3),
-          () -> robotCentric.getAsBoolean()
+          () -> robotCentric.getAsBoolean(),
+          m_Shoulder
         ),
         new ParallelCommandGroup(
-          new StopDriving(s_Swerve, m_Intake),
+          new StopDriving(s_Swerve,
+          m_Intake,
+          () -> driver.getRawAxis(1),
+          () -> -driver.getRawAxis(0),
+          () -> -driver.getRawAxis(3),
+          () -> robotCentric.getAsBoolean()),
           new IntakeCommand(m_Intake),
           new AutoArm(m_Shoulder, m_Wrist, 7)
         )

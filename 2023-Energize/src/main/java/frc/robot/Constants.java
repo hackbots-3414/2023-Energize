@@ -166,8 +166,8 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 2; // 2
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.15; // 1.05
+        public static final double kMaxSpeedMetersPerSecond = 1.9; // 2
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.13; // 1.05
 
         public static final double kMaxBalanceSpeedMetersPerSecond = 1;
         public static final double kMaxBalanceAccelerationMetersPerSecondSquared = 1;
@@ -271,6 +271,8 @@ public final class Constants {
         public static final double wristmaxVelo = Math.toRadians(190); // degrees / seconds
         public static final double wristmaxAccel = Math.toRadians(190); // degrees / seconds^2
 
+        public static final double slowTurn = 0.6;
+
         public static final double speed = 0.2;
         public static final int canPause = 100;
     }
@@ -293,7 +295,7 @@ public final class Constants {
         public static final double highShoulderAngle = Math.toRadians(8.5);
 
         public static final double shelfWristAngle = Math.toRadians(-71);
-        public static final double shelfShoulderAngle = Math.toRadians(14);
+        public static final double shelfShoulderAngle = Math.toRadians(13.5);
 
         public static final double standingConeWristAngle = Math.toRadians(-71);
         public static final double standingConeShoulderAngle = Math.toRadians(-44);
@@ -314,7 +316,7 @@ public final class Constants {
     }
 
     public static final class IntakeAutomatic {
-        public static final double shelfApproachSpeed = 0.01;
+        public static final double shelfApproachSpeed = 0.3;
         public static final double shelfApproachLimit = 80;
         public static final double redSideX = Units.inchesToMeters(596.51 - shelfApproachLimit);
         public static final double blueSideX = Units.inchesToMeters(26.19 + shelfApproachLimit);

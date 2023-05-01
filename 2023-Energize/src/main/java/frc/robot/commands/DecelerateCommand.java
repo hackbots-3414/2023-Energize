@@ -13,7 +13,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeAngles;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IRSensor;
+import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
 
 public class DecelerateCommand extends CommandBase {
@@ -23,11 +26,11 @@ public class DecelerateCommand extends CommandBase {
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
-  private double speedLimit;
+  private Shoulder shoulder;
   /** Creates a new Decelerate. */
   public DecelerateCommand(Swerve swerve, IRSensor irSensor, DoubleSupplier translationSup, DoubleSupplier strafeSup,
   DoubleSupplier rotationSup,
-  BooleanSupplier robotCentricSup) {
+  BooleanSupplier robotCentricSup, Shoulder shoulder) {
 
     addRequirements(swerve);
     this.swerve = swerve;
@@ -36,22 +39,15 @@ public class DecelerateCommand extends CommandBase {
     this.strafeSup = strafeSup;
     this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
+    this.shoulder = shoulder;
   }
 
   @Override
   public void execute() {
-    Pose2d currentPose = swerve.getPose();
-    double x = currentPose.getX();
+    // Pose2d currentPose = swerve.getPose();
+    // double x = currentPose.getX();
 
-    if (irSensor.getIRState()) {
-      speedLimit = 0;
-      // SmartDashboard.putBoolean("Infrared sensor", irSensor.getIRState());
-      // System.out.println("Infrared sensor has been triggered!");
-    } else if (x > Constants.IntakeAutomatic.redSideX || x < Constants.IntakeAutomatic.blueSideX) {
-      speedLimit = Constants.IntakeAutomatic.slowLimit;
-    } else {
-      speedLimit = 1;
-    }
+    
 
     // Display values in SmartDashboard:
     // SmartDashboard.putNumber("Distance to AprilTag (X)", x);
@@ -63,10 +59,15 @@ public class DecelerateCommand extends CommandBase {
     double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
     double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
-    SmartDashboard.putNumber("translationVal", translationVal);
-    if (translationVal > speedLimit) {
-      translationVal = speedLimit;
+    if (shoulder.getCanCoder() > Constants.IntakeAngles.midShoulderAngle - 5) {
+      rotationVal *= Constants.IntakeConstants.slowTurn;
     }
+
+    // SmartDashboard.putNumber("translationVal", translationVal);
+    
+    // if (shoulder.getCanCoder() > Constants.IntakeAngles.shelfShoulderAngle - 15) {
+    //   translationVal *= speedLimit;
+    // }
 
     swerve.drive(
       new Translation2d(translationVal, strafeVal)
@@ -77,9 +78,20 @@ public class DecelerateCommand extends CommandBase {
     );
     
   }
+  // TODO: Move this code into end:
+  // SmartDashboard.putNumber("translationVal", translationVal);
+    
+    // if (shoulder.getCanCoder() > Constants.IntakeAngles.shelfShoulderAngle - 15) {
+    //   translationVal *= speedLimit;
+    // }  
+
+  // @Override
+  // public void end(boolean isInterrupted) {
+  //   swerve.drive(new Translation2d(0,0), 0, true, true);
+  // }
 
   @Override
   public boolean isFinished() {
-    return irSensor.getIRState();
+    return (shoulder.getCanCoder() > Constants.IntakeAngles.shelfShoulderAngle - 15) && irSensor.getIRState();
   }
 }
