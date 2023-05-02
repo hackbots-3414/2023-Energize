@@ -325,7 +325,7 @@ public final class Constants {
 
             public static final double x = Conversions.inchesToMeters(610.77) - RobotContstants.armAdjustment;
 
-            public static final double cx = Conversions.inchesToMeters(438.07);
+            public static final double cx = Conversions.inchesToMeters(457.64);
             
             public static final double offset = -RobotContstants.armAdjustment; // Negative because the red side is going to need to move left, not right.
         }
@@ -333,7 +333,7 @@ public final class Constants {
             // public static final double x = Conversions.inchesToMeters(40.45) + RobotContstants.armAdjustment;
             public static final double x = Conversions.inchesToMeters(50.45) + RobotContstants.armAdjustment;
             
-            public static final double cx = Conversions.inchesToMeters(132.25);
+            public static final double cx = Conversions.inchesToMeters(165.06);
 
             public static final double offset = RobotContstants.armAdjustment;
         }
