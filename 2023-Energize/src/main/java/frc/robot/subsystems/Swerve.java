@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import org.photonvision.EstimatedRobotPose;
+import org.photonvision.targeting.PhotonTrackedTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -243,6 +245,12 @@ public class Swerve extends SubsystemBase {
             if (result.isPresent()) {
                 poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
                 EstimatedRobotPose camPose = result.get();
+                // Iterator<PhotonTrackedTarget> targets = camPose.targetsUsed.iterator();
+                // while(targets.hasNext()){
+                //     if (targets.next().getPoseAmbiguity() >= 0.5) {
+                //         targets.remove();
+                //     }
+                // }
                 Pose2d robotLocation = camPose.estimatedPose.toPose2d();
 
                 // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {

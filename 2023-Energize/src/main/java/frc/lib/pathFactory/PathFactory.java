@@ -33,7 +33,7 @@ public class PathFactory {
 
         double x = (isRedSide) ? Constants.PathFactory.redSide.x : Constants.PathFactory.blueSide.x;
         double cx = (isRedSide) ? Constants.PathFactory.redSide.cx : Constants.PathFactory.blueSide.cx;
-        double rot = (isRedSide) ? 0 : 180;
+        double rot = 0;
 
         Pose2d p1 = new Pose2d(new Translation2d(x, Constants.PathFactory.p1), Rotation2d.fromDegrees(rot));
         Pose2d p2 = new Pose2d(new Translation2d(x, Constants.PathFactory.p2), Rotation2d.fromDegrees(rot));

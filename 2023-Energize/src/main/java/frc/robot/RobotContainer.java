@@ -165,6 +165,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+    SmartDashboard.putData(new InstantCommand(() -> s_Swerve.zeroHeading()));
     // setX.whileTrue(new InstantCommand(() -> s_Swerve.setX()));
     // autoBalance.whileTrue(new PIDBalance(s_Swerve, true));
     // SmartDashboard.putData(new Rotate(s_Swerve));
