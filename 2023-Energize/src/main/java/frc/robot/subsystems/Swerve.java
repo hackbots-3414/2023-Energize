@@ -128,7 +128,7 @@ public class Swerve extends SubsystemBase {
     
 
     public void resetOdometry(Pose2d pose) {
-        gyro.setYaw(pose.getRotation().getDegrees(), Constants.IntakeConstants.canPause);
+        // gyro.setYaw(pose.getRotation().getDegrees(), Constants.IntakeConstants.canPause);
         swerveOdometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
     }
 
@@ -237,43 +237,41 @@ public class Swerve extends SubsystemBase {
     public void updateOdometry() {
         Pose2d newPose = poseEstimator.update(getYaw(), getModulePositions());
 
-        // Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+        Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+        
+        try {
+            if (result.isPresent()) {
+                poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
+                EstimatedRobotPose camPose = result.get();
+                Pose2d robotLocation = camPose.estimatedPose.toPose2d();
 
-        // try {
-        //     if (result.isPresent()) {
-        //         poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
-        //         EstimatedRobotPose camPose = result.get();
-        //         Pose2d robotLocation = camPose.estimatedPose.toPose2d();
+                // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {
+                    poseEstimator.addVisionMeasurement(
+                    robotLocation,
+                    camPose.timestampSeconds);
+                    fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
 
-
-
-        //         // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {
-        //             poseEstimator.addVisionMeasurement(
-        //             robotLocation,
-        //             camPose.timestampSeconds);
-        //             fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-        //         // }
+                    Pose2d estimatedPose = poseEstimator.getEstimatedPosition();
+                    newPose = new Pose2d(estimatedPose.getTranslation(), getYaw());
+                // }
                 
                 
-        //     } /*else {
-        //         fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
-        //     } */
+            } /*else {
+                fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            } */
 
-        //     fieldSim.getObject("Actual Pos").setPose(getPose());
-        //     fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
-            
-        //     Pose2d estimatedPose = poseEstimator.getEstimatedPosition();
-        //     Pose2d newPose = new Pose2d(estimatedPose.getTranslation(), getYaw());
+            fieldSim.getObject("Actual Pos").setPose(getPose());
+            fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
+
 
             resetOdometry(newPose);
-        // } catch (Exception e) {
-        //     visionError++;
-        //     if (visionError % 1000 == 0) {
-        //         log.error("Beelink exception caught: " + e.toString());
-        //     }
+        } catch (Exception e) {
+            visionError++;
+            if (visionError % 1000 == 0) {
+                log.error("Beelink exception caught: " + e.toString());
+            }
 
-        // }
-
+        }
     }
 
     public void driveForward(double distancex, double distancey) {
