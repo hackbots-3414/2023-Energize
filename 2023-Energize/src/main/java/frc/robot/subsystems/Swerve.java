@@ -38,6 +38,8 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    private int AprilTagUpdateCounter = 0;
+    private boolean disableAprilTag = true;
 
     public Translation2d translation2d;
 
@@ -238,11 +240,19 @@ public class Swerve extends SubsystemBase {
 
     public void updateOdometry() {
         Pose2d newPose = poseEstimator.update(getYaw(), getModulePositions());
+        fieldSim.getObject("Actual Pos").setPose(getPose());
+        AprilTagUpdateCounter++;
+        double maxUpdateCountForAprilTag = SmartDashboard.getNumber("April Tag Update Counter", 650);
+        SmartDashboard.putNumber("April Tag Update Counter",maxUpdateCountForAprilTag);
+        if (AprilTagUpdateCounter < maxUpdateCountForAprilTag || disableAprilTag) {
+           return;
+        }
 
         Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
-        
+       
         try {
             if (result.isPresent()) {
+                AprilTagUpdateCounter = 0;
                 poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
                 EstimatedRobotPose camPose = result.get();
                 // Iterator<PhotonTrackedTarget> targets = camPose.targetsUsed.iterator();
@@ -268,7 +278,7 @@ public class Swerve extends SubsystemBase {
                 fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
             } */
 
-            fieldSim.getObject("Actual Pos").setPose(getPose());
+            
             fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
 
 
@@ -293,6 +303,14 @@ public class Swerve extends SubsystemBase {
     public void stopDriving() {
         drive(new Translation2d(), 0, false, false);
     
+    }
+
+    public void disableAprilTags() {
+        disableAprilTag = true;
+    }
+
+    public void enableApriltags() {
+        disableAprilTag = false;
     }
 
 }

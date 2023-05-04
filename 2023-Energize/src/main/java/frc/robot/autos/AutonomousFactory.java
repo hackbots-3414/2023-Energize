@@ -185,11 +185,19 @@ public class AutonomousFactory {
             points.add(new PathPoint(pose2d_points.get(i).getTranslation(), pose2d_points.get(i).getRotation()));
         }
         if (points.size() == 3) {
-            return followTrajectoryOnTheFly(points.get(0), points.get(1), points.get(2));
+            return safeAprilTag(followTrajectoryOnTheFly(points.get(0), points.get(1), points.get(2)));
         } else {
             // Otherwise it will be four.
-            return followTrajectoryOnTheFly(points.get(0), points.get(1), points.get(2), points.get(3));
+            return safeAprilTag(followTrajectoryOnTheFly(points.get(0), points.get(1), points.get(2), points.get(3)));
         }
+    }
+
+    private Command safeAprilTag(Command pathCommand) {
+        return new InstantCommand(() -> {
+            swerve.disableAprilTags();
+        }).andThen(pathCommand).andThen(new InstantCommand(() -> {
+            swerve.enableApriltags();
+        }));
     }
 
     public Command bayChooser(Bays bay) {
