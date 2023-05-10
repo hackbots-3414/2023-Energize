@@ -39,7 +39,7 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
     private int AprilTagUpdateCounter = 0;
-    private boolean disableAprilTag = true;
+    private boolean disableAprilTag = false;
 
     public Translation2d translation2d;
 
@@ -216,6 +216,8 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         SmartDashboard.putNumber("Odometry Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
+        SmartDashboard.putBoolean("disableAprilTag", disableAprilTag);
+
         for(SwerveModule mod : mSwerveMods){
         SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder",
         mod.getCanCoder().getDegrees());
@@ -242,7 +244,7 @@ public class Swerve extends SubsystemBase {
         Pose2d newPose = poseEstimator.update(getYaw(), getModulePositions());
         fieldSim.getObject("Actual Pos").setPose(getPose());
         AprilTagUpdateCounter++;
-        double maxUpdateCountForAprilTag = SmartDashboard.getNumber("April Tag Update Counter", 650);
+        double maxUpdateCountForAprilTag = SmartDashboard.getNumber("April Tag Update Counter", 50);
         SmartDashboard.putNumber("April Tag Update Counter",maxUpdateCountForAprilTag);
         if (AprilTagUpdateCounter < maxUpdateCountForAprilTag || disableAprilTag) {
            return;

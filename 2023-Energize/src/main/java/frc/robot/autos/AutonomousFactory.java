@@ -193,9 +193,12 @@ public class AutonomousFactory {
     }
 
     private Command safeAprilTag(Command pathCommand) {
+        log.debug("Disabled April Tag", pathCommand.toString());
         return new InstantCommand(() -> {
             swerve.disableAprilTags();
-        }).andThen(pathCommand).andThen(new InstantCommand(() -> {
+        }).andThen(pathCommand).handleInterrupt( () -> {
+            swerve.enableApriltags();
+        }).andThen(new InstantCommand( () ->{
             swerve.enableApriltags();
         }));
     }
