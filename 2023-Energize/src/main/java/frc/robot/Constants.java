@@ -29,6 +29,8 @@ public final class Constants {
                                                                              // robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
+        public static final double centerToModule = 0.3727; //meters, distance from center of robot to center of wheel axis
+
         public static final double inchesPerTick = 4.42 * Math.PI / 2048;
 
         /*
