@@ -183,6 +183,8 @@ public final class Constants {
         public static final double kPThetaController = 3.80; // 3.80 states value
         public static final double kDThetaController = 0.0;
 
+        public static final double kDriveBaseRadius = 0.3302; // TODO FIXME NOTE Read below!
+
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);

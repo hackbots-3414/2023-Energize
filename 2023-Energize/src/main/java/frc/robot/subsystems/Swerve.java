@@ -304,4 +304,9 @@ public class Swerve extends SubsystemBase {
         return new ChassisSpeeds(vx, vy, omega);
     }
 
+    public void setCurrentChassisSpeeds(ChassisSpeeds chassisSpeeds) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+        setModuleStates(swerveModuleStates);
+    }
+
 }
