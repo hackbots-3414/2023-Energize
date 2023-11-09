@@ -4,14 +4,13 @@
 
 package frc.robot.autos;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -55,8 +54,6 @@ public class AutonomousFactory {
 
     private static HashMap<String, Command> eventMap = new HashMap<>();
 
-    private static SwerveAutoBuilder autoBuilder;
-
     private AutonomousFactory() {}
 
     public static AutonomousFactory getInstance(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
@@ -71,74 +68,29 @@ public class AutonomousFactory {
         eventMap.put("Balance", new PIDBalance(swerve, true));
         eventMap.put("Wait", new Wait(1.0));
 
-        autoBuilder = new SwerveAutoBuilder(
+
+        // generate a configuration:
+        HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(
+            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0),
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, Constants.AutoConstants.kDThetaController),
+            Constants.AutoConstants.kMaxSpeedMetersPerSecond,
+            Constants.AutoConstants.kDriveBaseRadius,
+            new ReplanningConfig(true, true)
+            );
+
+        AutoBuilder.configureHolonomic(
             swerve::getPose, 
             swerve::resetOdometry,
-            Constants.Swerve.swerveKinematics,
-            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0), 
-            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, Constants.AutoConstants.kDThetaController),
-            swerve::setModuleStates,
-            eventMap,
-            true,
+            swerve::getCurrentChassisSpeeds,
+            swerve::setCurrentChassisSpeeds,
+            config,
             swerve);
 
         return me;
     }
 
-    // private Command followTrajectoryOnTheFly(PathPoint... pathPoints){
-    //     ArrayList<PathPoint> points = new ArrayList<>();
-    //     for (PathPoint pathPoint : pathPoints) {
-    //         points.add(pathPoint);
-    //     }
-
-    //     PathPlannerTrajectory traj = PathPlanner.generatePath(new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared), points);
-
-    //     return new PPSwerveControllerCommand(
-    //         traj, 
-    //         swerve::getPose, // Pose supplier
-    //         Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-    //         new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-    //         new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
-    //         new PIDController(Constants.AutoConstants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-    //         swerve::setModuleStates, // Module states consumer
-    //         true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-    //         swerve // Requires this drive subsystem
-    //     );
-    // }
-
-    // private Command followTrajectoryCommand(String pathName, boolean isFirstPath) {
-    //     PathPlannerTrajectory traj = PathPlanner.loadPath(pathName, new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-        
-    //     return new SequentialCommandGroup(
-    //          new InstantCommand(() -> {
-    //            // Reset odometry for the first path you run during auto
-    //            if(isFirstPath){
-    //                swerve.resetOdometry(traj.getInitialHolonomicPose());
-    //            }
-    //          }),
-    //          new PPSwerveControllerCommand(
-    //              traj, 
-    //              swerve::getPose, // Pose supplier
-    //              Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-    //              new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-    //              new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
-    //              new PIDController(Constants.AutoConstants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-    //              swerve::setModuleStates, // Module states consumer
-    //              false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-    //              swerve // Requires this drive subsystem
-    //          )
-    //     );
-    // }
-
     private Command followTrajectoryWithEventsCommand(String pathName) {
-        double maxSpeed = Constants.AutoConstants.kMaxSpeedMetersPerSecond;
-        double maxAcceleration = Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared;
-        if (pathName == "Balance High") {
-            maxSpeed = Constants.AutoConstants.kMaxBalanceSpeedMetersPerSecond;
-            maxAcceleration = Constants.AutoConstants.kMaxBalanceAccelerationMetersPerSecondSquared;
-        }
-        ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup(pathName, new PathConstraints(maxSpeed, maxAcceleration));
-        return autoBuilder.fullAuto(pathGroup);
+        return new PathPlannerAuto(pathName);
     }
 
     public Command eventChooser(AutonChoice choice) {

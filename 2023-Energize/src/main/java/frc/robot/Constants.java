@@ -29,6 +29,8 @@ public final class Constants {
                                                                              // robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
+        public static final double centerToModule = 0.3727; //meters, distance from center of robot to center of wheel axis
+
         public static final double inchesPerTick = 4.42 * Math.PI / 2048;
 
         /*
@@ -180,6 +182,8 @@ public final class Constants {
 
         public static final double kPThetaController = 3.80; // 3.80 states value
         public static final double kDThetaController = 0.0;
+
+        public static final double kDriveBaseRadius = 0.3302; // TODO FIXME NOTE Read below!
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(

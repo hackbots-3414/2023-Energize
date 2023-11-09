@@ -92,6 +92,7 @@ public class Swerve extends SubsystemBase {
                 getModulePositions(), new Pose2d(), robotSD, visionSD);
         fieldSim = new Field2d();
         visionWrapper = new VisionWrapper();
+
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -178,6 +179,26 @@ public class Swerve extends SubsystemBase {
         return ((swerveModuleSensorPositions[0] + swerveModuleSensorPositions[2]) / 2D) + ((swerveModuleSensorPositions[1] + swerveModuleSensorPositions[3]) / 2D) / 2D;
     }
 
+    public double getAverageSensorDriveVelocity() {
+        double sum = 0;
+        double total = 0;
+        for (SwerveModule module : mSwerveMods) {
+            sum += module.getDriveSensorSpeed();
+            total += 1;
+        }
+        return sum / total;
+    }
+
+    public double getAverageSensorAngleVelocity() {
+        double sum = 0;
+        double total = 0;
+        for (SwerveModule module : mSwerveMods) {
+            sum += module.getAngleSensorSpeed();
+            total += 1;
+        }
+        return sum / total;
+    }
+
     public void resetModulesToAbsolute() {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
@@ -195,7 +216,6 @@ public class Swerve extends SubsystemBase {
         }
         processedYaw = getHardwareYaw();
         gyro.getYawPitchRoll(ypr);
-        
 
         // SmartDashboard.putData(fieldSim);
         swerveOdometry.update(getYaw(), getModulePositions());
@@ -213,6 +233,9 @@ public class Swerve extends SubsystemBase {
         // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity",
         // mod.getState().speedMetersPerSecond);
         // }
+
+        // update speeds in the chassisSpeeds
+
     }
 
     public boolean isfieldRelative() {
@@ -268,7 +291,22 @@ public class Swerve extends SubsystemBase {
 
     public void stopDriving() {
         drive(new Translation2d(), 0, false, false);
-    
+    }
+
+    public ChassisSpeeds getCurrentChassisSpeeds() {
+        double omega = getAverageSensorAngleVelocity();
+
+        double c = getAverageSensorDriveVelocity() / Constants.Swerve.distanceToTicks;
+
+        double vx = c * Math.sin(omega);
+        double vy = c * Math.cos(omega);
+
+        return new ChassisSpeeds(vx, vy, omega);
+    }
+
+    public void setCurrentChassisSpeeds(ChassisSpeeds chassisSpeeds) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+        setModuleStates(swerveModuleStates);
     }
 
 }

@@ -205,6 +205,15 @@ public class SwerveModule {
 
     public double getSensorPosition() {
         return mDriveMotor.getSelectedSensorPosition();
+        
+    }
+
+    public double getDriveSensorSpeed() {
+        return mDriveMotor.getSelectedSensorVelocity();
+    }
+
+    public double getAngleSensorSpeed() {
+        return mAngleMotor.getSelectedSensorVelocity();
     }
 
 }
