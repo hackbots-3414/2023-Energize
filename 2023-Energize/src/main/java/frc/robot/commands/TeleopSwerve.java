@@ -11,7 +11,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Swerve;
 
 public class TeleopSwerve extends CommandBase {
@@ -19,16 +18,14 @@ public class TeleopSwerve extends CommandBase {
     final static SlewRateLimiter filter = new SlewRateLimiter(0.5);
 
     private Swerve s_Swerve;
-    private Shoulder shoulder;
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
 
-    public TeleopSwerve(Swerve s_Swerve, Shoulder shoulder, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
             DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, boolean isReduced) {
         this.s_Swerve = s_Swerve;
-        this.shoulder = shoulder;
         addRequirements(s_Swerve);
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
@@ -36,8 +33,8 @@ public class TeleopSwerve extends CommandBase {
         this.robotCentricSup = robotCentricSup;
     }
 
-    public TeleopSwerve(Swerve s_Swerve, Shoulder shoulder, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
-        this(s_Swerve, shoulder, translationSup, strafeSup, rotationSup, robotCentricSup, false);
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+        this(s_Swerve, translationSup, strafeSup, rotationSup, robotCentricSup, false);
     }
 
     @Override
@@ -47,9 +44,6 @@ public class TeleopSwerve extends CommandBase {
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
-        if (shoulder.getCanCoder() > Constants.IntakeAngles.midShoulderAngle - 5) {
-            rotationVal *= Constants.IntakeConstants.slowTurn;
-        }
         
         /* Drive */
         s_Swerve.drive(
