@@ -90,7 +90,14 @@ public class AutonomousFactory {
     }
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
-        return new PathPlannerAuto(pathName);
+        return null;
+        // try {
+        //     return new PathPlannerAuto(pathName);
+        // } catch (Exception e) {
+        //     System.out.println("****************************************FLAG***************************************");
+        //     return null;
+        // }
+        
     }
 
     public Command eventChooser(AutonChoice choice) {
