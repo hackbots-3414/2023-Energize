@@ -3,6 +3,7 @@ package frc.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -79,7 +80,7 @@ public class RobotContainer {
   private final Wrist m_Wrist = new Wrist(m_Shoulder);
   private final IRSensor irSensor = new IRSensor();
 
-  SendableChooser<Command> pathChooser = new SendableChooser<>();
+  SendableChooser<Command> pathChooser;
 
   private AutonomousFactory autons;
 
@@ -99,20 +100,11 @@ public class RobotContainer {
 
     configureButtonBindings();
 
-    autons = AutonomousFactory.getInstance(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
+    // AutonomousFactory.setup(s_Swerve, m_Intake, m_Wrist, m_Shoulder);
+
+    // pathChooser = AutoBuilder.buildAutoChooser("None");
 
     SmartDashboard.putData("Auton Mode", pathChooser);
-
-    pathChooser.setDefaultOption("Nothing", autons.eventChooser(AutonChoice.Nothing));
-    pathChooser.addOption("Wall", autons.eventChooser(AutonChoice.Left));
-    pathChooser.addOption("Barrier", autons.eventChooser(AutonChoice.Right));
-    pathChooser.addOption("Balance", autons.eventChooser(AutonChoice.Balance));
-    pathChooser.addOption("Wall High", autons.eventChooser(AutonChoice.WallHigh));
-    pathChooser.addOption("Barrier High", autons.eventChooser(AutonChoice.BarrierHigh));
-    pathChooser.addOption("Barrier High Two Object", autons.eventChooser(AutonChoice.BarrierHighTwoObject));
-    pathChooser.addOption("Wall High Two Object", autons.eventChooser(AutonChoice.WallHighTwoObject));
-    pathChooser.addOption("Balance High", autons.eventChooser(AutonChoice.BalanceHigh));
-    pathChooser.addOption("Test", autons.eventChooser(AutonChoice.Test));
 
     SmartDashboard.putNumber("Time remaining:", DriverStation.getMatchTime());
 
@@ -219,7 +211,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return pathChooser.getSelected();
+    // return pathChooser.getSelected();
+    return null;
   }
 
   public void armBrakeMode() {

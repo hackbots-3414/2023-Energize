@@ -56,7 +56,7 @@ public class AutonomousFactory {
 
     private AutonomousFactory() {}
 
-    public static AutonomousFactory getInstance(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
+    public static void setup(Swerve m_swerve, Intake m_intake, Wrist m_wrist, Shoulder m_shoulder) {
         swerve = m_swerve;
 
         eventMap.put("Eject", new ejectCommand(m_intake).withTimeout(0.2));
@@ -85,18 +85,10 @@ public class AutonomousFactory {
             swerve::setCurrentChassisSpeeds,
             config,
             swerve);
-
-        return me;
     }
 
     private Command followTrajectoryWithEventsCommand(String pathName) {
-        return null;
-        // try {
-        //     return new PathPlannerAuto(pathName);
-        // } catch (Exception e) {
-        //     System.out.println("****************************************FLAG***************************************");
-        //     return null;
-        // }
+        return new PathPlannerAuto(pathName);
         
     }
 
