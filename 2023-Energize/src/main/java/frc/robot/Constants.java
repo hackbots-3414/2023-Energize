@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -102,10 +100,6 @@ public final class Constants {
         public static final double maxAngularVelocity = 11.5;
         public static final double reducedAngVel = 6.0; 
         public static final double reducedSpeed = 1.0; 
-
-        /* Neutral Modes */
-        public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
-        public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         // Toothless drive constants
         /* Module Specific Constants */

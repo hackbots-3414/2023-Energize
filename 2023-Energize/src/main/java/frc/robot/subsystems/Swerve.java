@@ -1,12 +1,9 @@
 package frc.robot.subsystems;
 
-import java.util.Optional;
-
-import com.ctre.phoenix.sensors.Pigeon2;
-
-import org.photonvision.EstimatedRobotPose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
@@ -27,7 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
-import frc.robot.VisionWrapper;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -38,10 +34,8 @@ public class Swerve extends SubsystemBase {
 
     public SwerveDrivePoseEstimator poseEstimator;
     public Field2d fieldSim;
-    public VisionWrapper visionWrapper;
 
     private static Logger log = LoggerFactory.getLogger(Swerve.class);
-    private int visionError = 0;
     
     private boolean isfieldRelative;
 
@@ -53,7 +47,7 @@ public class Swerve extends SubsystemBase {
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.canbusString);
-        gyro.configFactoryDefault();
+        gyro.reset();
         gyro.setYaw(0, Constants.IntakeConstants.canPause);
 
         mSwerveMods = new SwerveModule[] {
@@ -88,10 +82,9 @@ public class Swerve extends SubsystemBase {
         visionSD.set(1, 0, 0.9);
         visionSD.set(2, 0, 0.01);
 
-        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getYaw()),
+        poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, new Rotation2d(gyro.getYaw().getValueAsDouble()),
                 getModulePositions(), new Pose2d(), robotSD, visionSD);
         fieldSim = new Field2d();
-        visionWrapper = new VisionWrapper();
 
     }
 
@@ -148,7 +141,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getHardwareYaw() {
-        double yaw = gyro.getYaw();
+        double yaw = gyro.getYaw().getValueAsDouble();
         yaw %= 360;
         yaw = (yaw + 360) % 360;
 
@@ -215,7 +208,13 @@ public class Swerve extends SubsystemBase {
             swerveModuleSensorPositions[mod.moduleNumber] = mod.getSensorPosition();
         }
         processedYaw = getHardwareYaw();
-        gyro.getYawPitchRoll(ypr);
+
+        double yaw = getYaw().getDegrees();
+        double pitch = getPitch().getDegrees();
+        double roll = getRoll().getDegrees();
+        ypr[0] = yaw;
+        ypr[1] = pitch;
+        ypr[2] = roll;
 
         // SmartDashboard.putData(fieldSim);
         swerveOdometry.update(getYaw(), getModulePositions());
@@ -244,41 +243,6 @@ public class Swerve extends SubsystemBase {
 
     public void updateOdometry() {
         poseEstimator.update(getYaw(), getModulePositions());
-
-        Optional<EstimatedRobotPose> result = visionWrapper.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
-
-        try {
-            if (result.isPresent()) {
-                poseEstimator.setVisionMeasurementStdDevs(visionWrapper.getStandardD());
-                EstimatedRobotPose camPose = result.get();
-                Pose2d robotLocation = camPose.estimatedPose.toPose2d();
-
-
-
-                // if (Math.abs(getPose().getTranslation().getDistance(robotLocation.getTranslation())) < 1) {
-                    poseEstimator.addVisionMeasurement(
-                    robotLocation,
-                    camPose.timestampSeconds);
-                    fieldSim.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
-                // }
-                
-                
-            } /* else {
-                fieldSim.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
-            }*/
-
-            fieldSim.getObject("Actual Pos").setPose(getPose());
-            fieldSim.setRobotPose(poseEstimator.getEstimatedPosition());
-
-            resetOdometry(poseEstimator.getEstimatedPosition());
-        } catch (Exception e) {
-            visionError++;
-            if (visionError % 1000 == 0) {
-                log.error("Beelink exception caught: " + e.toString());
-            }
-
-        }
-
     }
 
     public void driveForward(double distancex, double distancey) {
