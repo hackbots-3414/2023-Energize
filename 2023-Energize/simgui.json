@@ -1,9 +1,0 @@
-{
-  "NTProvider": {
-    "types": {
-      "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/PIDBalance": "Command",
-      "/SmartDashboard/PIDController[1]": "PIDController"
-    }
-  }
-}
